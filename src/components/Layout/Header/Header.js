@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SearchInput from './SearchInput';
+import IconProfilePicture from './IconProfilePicture';
 
 export default function Header() {
     return (
@@ -20,6 +21,9 @@ export default function Header() {
                     </Typography>
                     <Box sx={{ flexGrow: 1 }}>
                         <SearchInput />
+                    </Box>
+                    <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
+                        <IconProfilePicture />
                     </Box>
                 </Toolbar>
             </AppBar>
