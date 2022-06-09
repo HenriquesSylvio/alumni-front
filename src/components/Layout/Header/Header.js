@@ -3,6 +3,8 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import SearchInput from './SearchInput';
+
 export default function Header() {
     return (
         <Box>
@@ -16,6 +18,9 @@ export default function Header() {
                     >
                         Alumni NWS
                     </Typography>
+                    <Box sx={{ flexGrow: 1 }}>
+                        <SearchInput />
+                    </Box>
                 </Toolbar>
             </AppBar>
         </Box>
