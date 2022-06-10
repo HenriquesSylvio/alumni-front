@@ -7,6 +7,7 @@ import SearchInput from './SearchInput';
 import IconProfilePicture from './IconProfilePicture';
 import {useContext} from "react";
 import Auth from "../../../contexts/Auth";
+import SignInButton from "./Authentication/SignInButton";
 
 export default function Header() {
     const {isAuthenticated, setIsAuthenticated} = useContext(Auth);
@@ -32,7 +33,12 @@ export default function Header() {
                                 <IconProfilePicture />
                             </Box>
                         </>
-                    ))}
+                    ))
+                        ||
+                        <Box position='absolute' right='0'>
+                            <SignInButton />
+                        </Box>
+                    }
                 </Toolbar>
             </AppBar>
         </Box>
