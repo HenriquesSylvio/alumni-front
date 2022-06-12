@@ -3,11 +3,12 @@ import {Button, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
 import Backdrop from '@mui/material/Backdrop';
 import Typography from "@mui/material/Typography";
+import SignIn from "./Login/Login";
 
 
 const style = {
     position: 'absolute',
-    top: '25%',
+    top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 'auto',
@@ -37,12 +38,9 @@ export default function SignInButton() {
                     timeout: 500,
                 }}
             >
-
                 <Fade in={open}>
                     <Box sx={style}>
-                        <Typography>
-                            Test
-                        </Typography>
+                        <SignIn />
                     </Box>
                 </Fade>
             </Modal>

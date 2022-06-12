@@ -7,7 +7,7 @@ import SearchInput from './SearchInput';
 import IconProfilePicture from './IconProfilePicture';
 import {useContext} from "react";
 import Auth from "../../../contexts/Auth";
-import SignInButton from "./Authentication/SignInButton";
+import SignInButton from "./LoginRegister/SignInButton";
 
 export default function Header() {
     const {isAuthenticated, setIsAuthenticated} = useContext(Auth);
