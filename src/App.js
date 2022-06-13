@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from '@mui/material/Button';
 import ModalDialog from './ModalDialog';
 import Inscription from "./pages/inscription";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
   // declare a new state variable for modal open
@@ -21,14 +21,18 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <div>
       <Button variant="contained" color="primary" onClick={handleOpen}>
         Signup
       </Button>
       <ModalDialog open={open} handleClose={handleClose} />
-    <HashRouter>
-      <Route exact path='/Inscription' component={Inscription}/> 
-    </HashRouter>
+    <BrowserRouter>
+      <Routes>
+
+        <Route exact path='/Inscription' component={Inscription}/>
+
+      </Routes>
+    </BrowserRouter>
     </div>
    
   );
