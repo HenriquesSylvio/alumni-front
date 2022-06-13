@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@mui/material/styles';
+import React, { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useHistory } from 'react-router-dom'
+import {register} from "../../services/RegisterApi";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(({theme}) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -28,12 +30,52 @@ const Form = ({ handleClose }) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(firstName, lastName, email, password);
+    console.log(firstName, lastName, email, password, username);
     handleClose();
   };
+
+  const [values, setValues] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    username: '',
+    password: '',
+    promo: '01/09/2021',
+    birthday: '01/09/2021'
+  });
+
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setValues({
+        ...values,
+        [name]: value
+    });
+  };
+
+  const URLApi = 'http://127.0.0.1:8080/api/'
+
+  useEffect( async () => {
+    if (Object.keys(errors).length === 0 && isSubmitting) {
+        console.log(values);
+        try {
+
+        const response = await register(values);
+        console.log('NOICE')
+        } catch ({response}) {
+                console.log('ERREUR')
+        }
+    }
+},
+[errors]
+);
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
@@ -52,6 +94,14 @@ const Form = ({ handleClose }) => {
         onChange={e => setLastName(e.target.value)}
       />
       <TextField
+        label="Username"
+        variant="filled"
+        type="username"
+        required
+        value={username}
+        onChange={e => setUsername(e.target.value)}
+      />
+      <TextField
         label="Email"
         variant="filled"
         type="email"
@@ -67,6 +117,7 @@ const Form = ({ handleClose }) => {
         value={password}
         onChange={e => setPassword(e.target.value)}
       />
+      
       <div>
         <Button variant="contained" onClick={handleClose}>
           Cancel

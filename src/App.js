@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from '@mui/material/Button';
 import ModalDialog from './ModalDialog';
 import Inscription from "./pages/inscription";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Routes, Switch } from "react-router-dom";
 
 const App = () => {
   // declare a new state variable for modal open
@@ -27,7 +27,7 @@ const App = () => {
       </Button>
       <ModalDialog open={open} handleClose={handleClose} />
     <HashRouter>
-      <Route exact path='/Inscription' component={Inscription}/> 
+      <Routes exact path='/Inscription' component={Inscription}/> 
     </HashRouter>
     </div>
    
