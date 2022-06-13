@@ -3,7 +3,7 @@ import {Button, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
 import Backdrop from '@mui/material/Backdrop';
 import Typography from "@mui/material/Typography";
-import SignIn from "./Login/Login";
+import SignIn from "./Login";
 
 
 const style = {
