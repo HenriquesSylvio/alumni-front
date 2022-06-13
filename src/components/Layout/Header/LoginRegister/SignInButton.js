@@ -4,7 +4,11 @@ import Box from "@mui/material/Box";
 import Backdrop from '@mui/material/Backdrop';
 import Typography from "@mui/material/Typography";
 import SignIn from "./Login";
-
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import SignUp from "../../../Inscription/Form";
 
 const style = {
     position: 'absolute',
@@ -21,6 +25,13 @@ export default function SignInButton() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false)
+
+
+    const [value, setValue] = React.useState('1');
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     return (
         <Box sx={{ p: 1 }}>
@@ -40,7 +51,20 @@ export default function SignInButton() {
             >
                 <Fade in={open}>
                     <Box sx={style}>
-                        <SignIn />
+                        <TabContext value={value}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                    <Tab label="Connexion" value="1" />
+                                    <Tab label="Inscription" value="2" />
+                                </TabList>
+                            </Box>
+                            <TabPanel value="1">
+                                <SignIn />
+                            </TabPanel>
+                            <TabPanel value="2">
+                                <SignUp />
+                            </TabPanel>
+                        </TabContext>
                     </Box>
                 </Fade>
             </Modal>
