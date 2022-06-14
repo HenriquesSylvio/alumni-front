@@ -1,8 +1,8 @@
-import './App.css';
-import React from 'react';
-import { useState } from 'react';
-import Button from '@mui/material/Button';
-import ModalDialog from './ModalDialog';
+import "./App.css";
+import React from "react";
+import { useState } from "react";
+import Button from "@mui/material/Button";
+import ModalDialog from "./ModalDialog";
 import Inscription from "./pages/inscription";
 import { HashRouter, Routes, Switch } from "react-router-dom";
 
@@ -26,14 +26,11 @@ const App = () => {
         Signup
       </Button>
       <ModalDialog open={open} handleClose={handleClose} />
-    <HashRouter>
-      <Routes exact path='/Inscription' component={Inscription}/> 
-    </HashRouter>
+      <HashRouter>
+        <Routes exact path="/Inscription" component={Inscription} />
+      </HashRouter>
     </div>
-   
   );
 };
-
-
 
 export default App;
