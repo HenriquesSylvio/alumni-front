@@ -36,18 +36,19 @@ export default function SignIn() {
             const response = await login(user);
             console.log(response);
             setIsAuthenticated(response);
-            navigate('/inscription')
+            console.log(isAuthenticated);
+            navigate('/feed')
         } catch ({response}) {
             console.log(response)
         }
     };
 
-    // useEffect(() => {
-    //     if(isAuthenticated)
-    //     {
-    //         history.replace('/account')
-    //     }
-    // }, [history, isAuthenticated]);
+    useEffect(() => {
+        if(isAuthenticated)
+        {
+            navigate('/feed')
+        }
+    }, [navigate, isAuthenticated]);
 
     return (
         <ThemeProvider theme={theme}>
