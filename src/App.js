@@ -1,39 +1,31 @@
 import './App.css';
-import React from 'react';
-import { useState } from 'react';
-import Button from '@mui/material/Button';
-import ModalDialog from './ModalDialog';
-import Inscription from "./pages/inscription";
-import { HashRouter, Routes, Switch } from "react-router-dom";
+import React, {useState} from 'react';
+import Home from './pages/home';
+import Inscription from './pages/inscription';
+import Feed from './pages/Feed';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+import Auth from "./contexts/Auth";
+import {hasAuthenticated} from "./services/AuthApi";
+import {ToastContainer} from "react-toastify";
 
 const App = () => {
-  // declare a new state variable for modal open
-  const [open, setOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated());
+    return (
+      <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
+          <BrowserRouter>
+              <Layout>
+                  <Routes>
+                      <Route path='/' element={<Home/>}/>
+                      <Route exact path='/inscription' element={<Inscription/>}/>
+                      <Route exact path='/feed' element={<Feed/>}/>
+                  </Routes>
+                  <ToastContainer />
+              </Layout>
 
-  // function to handle modal open
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  // function to handle modal close
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div className="App">
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Signup
-      </Button>
-      <ModalDialog open={open} handleClose={handleClose} />
-    <HashRouter>
-      <Routes exact path='/Inscription' component={Inscription}/> 
-    </HashRouter>
-    </div>
-   
+          </BrowserRouter>
+      </Auth.Provider>
   );
 };
-
-
 
 export default App;

@@ -1,16 +1,21 @@
-import React from 'react';
-import Dialog from '@mui/material/Dialog';
-import Form from '../components/Inscription/Form';
+import React from "react"
+import ModalDialog from "../components/ModalDialog/ModalDialog";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+const Inscription = () => {
 
-const ModalDialog = ({ open, handleClose }) => {
-  return (
-    // props received from App.js
-    <Dialog open={open} onClose={handleClose}>
-      // form to be created
-      <Form handleClose={handleClose} />
-    </Dialog>
-  );
-};
+      // declare a new state variable for modal open
+  const [open, setOpen] = useState(true);
+  const navigate = useNavigate()
+  // function to handle modal close
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/')
+  };
+    return (
+      <ModalDialog open={open} handleClose={handleClose} />
+    )
+}
 
-export default ModalDialog;
+export default Inscription
