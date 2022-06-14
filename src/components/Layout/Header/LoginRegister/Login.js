@@ -14,6 +14,7 @@ import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import validate from "../../../../validators/LoginValidator";
+import {LoadingButton} from "@mui/lab";
 
 const theme = createTheme();
 
@@ -22,10 +23,14 @@ export default function SignIn() {
     const {isAuthenticated, setIsAuthenticated} = useContext(Auth);
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [loading, setLoading] = React.useState(false);
     // const[user, setUser] = useState({
     //     username: "",
     //     password: ""
     // })
+    function handleClick() {
+        setErrors(validate(values));
+    }
 
     const [values, setValues] = useState({
         username: "",
@@ -39,11 +44,11 @@ export default function SignIn() {
     }
 
     const handleSubmit = async event => {
-        setErrors(validate(values));
-        setIsSubmitting(true)
         event.preventDefault();
 
-         if (Object.keys(errors).length === 0 && isSubmitting) {
+        await setErrors(validate(values));
+         if (Object.keys(errors).length === 0) {
+             setLoading(true);
             try {
                 const response = await login(values);
                 setIsAuthenticated(response);
@@ -51,6 +56,7 @@ export default function SignIn() {
                 toast.success('Bienvenue ! 😄')
             } catch ({response}) {
                 toast.error(response.data.erreur + ' 😃')
+                setLoading(false);
                 console.log(response)
             }
          }
@@ -85,6 +91,7 @@ export default function SignIn() {
                             onChange={handleChange}
                             error={ errors.username }
                             helperText={ errors.username }
+                            disabled={loading}
                         />
 
                         <TextField
@@ -99,15 +106,19 @@ export default function SignIn() {
                             onChange={handleChange}
                             error={ errors.password }
                             helperText={ errors.password }
+                            disabled={loading}
                         />
-                        <Button
+                        <LoadingButton
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            onClick={handleClick}
+                            loading={loading}
+                            loadingPosition="end"
                         >
                             Connexion
-                        </Button>
+                        </LoadingButton>
                     </Box>
                 </Box>
             </Container>
