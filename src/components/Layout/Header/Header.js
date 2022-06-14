@@ -10,7 +10,7 @@ import Auth from "../../../contexts/Auth";
 import SignInButton from "./LoginRegister/SignInButton";
 
 export default function Header() {
-    const {isAuthenticated, setIsAuthenticated} = useContext(Auth);
+    const {isAuthenticated} = useContext(Auth);
 
     return (
         <Box>

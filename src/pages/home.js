@@ -23,6 +23,7 @@ const Home = () => {
                 S'inscrire
             </Button>
             <ModalDialog open={open} handleClose={handleClose} />
+            
         </div>
     )
 }
