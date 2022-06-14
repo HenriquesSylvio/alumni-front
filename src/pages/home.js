@@ -20,7 +20,7 @@ const Home = () => {
     return (
         <div>
             <Button variant="contained" color="primary" onClick={handleOpen}>
-                Signup
+                S'inscrire
             </Button>
             <ModalDialog open={open} handleClose={handleClose} />
         </div>
