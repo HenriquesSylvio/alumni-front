@@ -13,44 +13,72 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import validate from "../../../../validators/LoginValidator";
 
 const theme = createTheme();
 
 export default function SignIn() {
     const navigate = useNavigate();
     const {isAuthenticated, setIsAuthenticated} = useContext(Auth);
-    const[user, setUser] = useState({
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    // const[user, setUser] = useState({
+    //     username: "",
+    //     password: ""
+    // })
+
+    const [values, setValues] = useState({
         username: "",
         password: ""
-    })
+    });
 
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget;
 
-        setUser({...user, [name]: value})
+        setValues({...values, [name]: value})
     }
 
     const handleSubmit = async event => {
+        setErrors(validate(values));
+        console.log(errors.password);
+        setIsSubmitting(true)
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        event.preventDefault();
-        try {
-            const response = await login(user);
-            setIsAuthenticated(response);
-            navigate('/feed')
-            toast.success('Bienvenue ! 😄')
-        } catch ({response}) {
-            toast.error(response.data.erreur + ' 😃')
-            console.log(response)
-        }
+         if (Object.keys(errors).length === 0 && isSubmitting) {
+            try {
+                const response = await login(values);
+                setIsAuthenticated(response);
+                navigate('/feed')
+                toast.success('Bienvenue ! 😄')
+            } catch ({response}) {
+                toast.error(response.data.erreur + ' 😃')
+                console.log(response)
+            }
+         }
     };
 
-    useEffect(() => {
-        if(isAuthenticated)
-        {
-            navigate('/feed')
-        }
-    }, [navigate, isAuthenticated]);
+    // useEffect(async () => {
+    //
+    //         if (Object.keys(errors).length === 0 && isSubmitting) {
+    //             try {
+    //                 const response = await login(user);
+    //                 setIsAuthenticated(response);
+    //                 navigate('/feed')
+    //                 toast.success('Bienvenue ! 😄')
+    //             } catch ({response}) {
+    //                 toast.error(response.data.erreur + ' 😃')
+    //                 console.log(response)
+    //             }
+    //         }
+    //     },
+    //     [errors]
+    // );
+
+    // useEffect(() => {
+    //     if(isAuthenticated)
+    //     {
+    //         navigate('/feed')
+    //     }
+    // }, [navigate, isAuthenticated]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -79,7 +107,10 @@ export default function SignIn() {
                             autoComplete="username"
                             autoFocus
                             onChange={handleChange}
+                            error={errors.username}
+                            helperText={errors.username}
                         />
+
                         <TextField
                             margin="normal"
                             required
@@ -90,6 +121,8 @@ export default function SignIn() {
                             id="password"
                             autoComplete="current-password"
                             onChange={handleChange}
+                            error={errors.password}
+                            helperText={errors.password}
                         />
                         <Button
                             type="submit"
