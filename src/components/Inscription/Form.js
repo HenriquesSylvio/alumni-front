@@ -29,52 +29,6 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
-
-  const [values, setValues] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    username: '',
-    password: '',
-    promo: '01/09/2021',
-    birthday: '01/09/2021'
-  });
-
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setValues({
-        ...values,
-        [name]: value
-    });
-  };
-
-  const URLApi = 'http://127.0.0.1:8080/api/'
-
-  useEffect( async () => {
-    if (Object.keys(errors).length === 0 && isSubmitting) {
-        console.log(values);
-        try {
-
-        const response = await register(values);
-        console.log('NOICE')
-        } catch ({response}) {
-                console.log('ERREUR')
-        }
-    }
-},
-[errors]
-);
 
   return (
     <ThemeProvider theme={theme}>
@@ -94,7 +48,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             S'inscrire
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
