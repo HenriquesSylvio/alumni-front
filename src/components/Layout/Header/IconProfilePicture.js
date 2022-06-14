@@ -9,6 +9,8 @@ import Avatar from '@mui/material/Avatar';
 import {logout} from "../../../services/AuthApi";
 import {useContext} from "react";
 import Auth from "../../../contexts/Auth";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function IconProfilePicture() {
     const {isAuthenticated, setIsAuthenticated} = useContext(Auth);
@@ -25,7 +27,7 @@ export default function IconProfilePicture() {
     const handleLogout = () => {
         logout();
         setIsAuthenticated(false);
-        // toast.info('A bientôt ! 😋');
+        toast.info('A bientôt ! 😋');
     }
     return(
         <Box component="span"  sx={{ flexGrow: 0 }}>

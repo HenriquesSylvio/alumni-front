@@ -11,6 +11,8 @@ import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const theme = createTheme();
 
@@ -34,11 +36,11 @@ export default function SignIn() {
         event.preventDefault();
         try {
             const response = await login(user);
-            console.log(response);
             setIsAuthenticated(response);
-            console.log(isAuthenticated);
             navigate('/feed')
+            toast.success('Bienvenue ! 😄')
         } catch ({response}) {
+            toast.error(response.data.erreur + ' 😃')
             console.log(response)
         }
     };
