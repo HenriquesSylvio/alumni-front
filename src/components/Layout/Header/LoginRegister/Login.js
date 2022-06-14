@@ -10,10 +10,12 @@ import Auth from "../../../../contexts/Auth";
 import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import {useNavigate} from "react-router-dom";
 
 const theme = createTheme();
 
-export default function SignIn({history}) {
+export default function SignIn() {
+    const navigate = useNavigate();
     const {isAuthenticated, setIsAuthenticated} = useContext(Auth);
     const[user, setUser] = useState({
         username: "",
@@ -34,17 +36,18 @@ export default function SignIn({history}) {
             const response = await login(user);
             console.log(response);
             setIsAuthenticated(response);
+            navigate('/inscription')
         } catch ({response}) {
             console.log(response)
         }
     };
 
-    useEffect(() => {
-        if(isAuthenticated)
-        {
-            history.replace('/account')
-        }
-    }, [history, isAuthenticated]);
+    // useEffect(() => {
+    //     if(isAuthenticated)
+    //     {
+    //         history.replace('/account')
+    //     }
+    // }, [history, isAuthenticated]);
 
     return (
         <ThemeProvider theme={theme}>
