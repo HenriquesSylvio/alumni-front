@@ -40,9 +40,9 @@ export default function SignIn() {
 
     const handleSubmit = async event => {
         setErrors(validate(values));
-        console.log(errors.password);
         setIsSubmitting(true)
         event.preventDefault();
+
          if (Object.keys(errors).length === 0 && isSubmitting) {
             try {
                 const response = await login(values);
@@ -55,30 +55,6 @@ export default function SignIn() {
             }
          }
     };
-
-    // useEffect(async () => {
-    //
-    //         if (Object.keys(errors).length === 0 && isSubmitting) {
-    //             try {
-    //                 const response = await login(user);
-    //                 setIsAuthenticated(response);
-    //                 navigate('/feed')
-    //                 toast.success('Bienvenue ! 😄')
-    //             } catch ({response}) {
-    //                 toast.error(response.data.erreur + ' 😃')
-    //                 console.log(response)
-    //             }
-    //         }
-    //     },
-    //     [errors]
-    // );
-
-    // useEffect(() => {
-    //     if(isAuthenticated)
-    //     {
-    //         navigate('/feed')
-    //     }
-    // }, [navigate, isAuthenticated]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -107,8 +83,8 @@ export default function SignIn() {
                             autoComplete="username"
                             autoFocus
                             onChange={handleChange}
-                            error={errors.username}
-                            helperText={errors.username}
+                            error={ errors.username }
+                            helperText={ errors.username }
                         />
 
                         <TextField
@@ -121,8 +97,8 @@ export default function SignIn() {
                             id="password"
                             autoComplete="current-password"
                             onChange={handleChange}
-                            error={errors.password}
-                            helperText={errors.password}
+                            error={ errors.password }
+                            helperText={ errors.password }
                         />
                         <Button
                             type="submit"
