@@ -6,8 +6,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
+import {logout} from "../../../services/AuthApi";
+import {useContext} from "react";
+import Auth from "../../../contexts/Auth";
 
 export default function IconProfilePicture() {
+    const {isAuthenticated, setIsAuthenticated} = useContext(Auth);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenUserMenu = (event) => {
@@ -17,6 +21,12 @@ export default function IconProfilePicture() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const handleLogout = () => {
+        logout();
+        setIsAuthenticated(false);
+        // toast.info('A bientôt ! 😋');
+    }
     return(
         <Box component="span"  sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -43,8 +53,8 @@ export default function IconProfilePicture() {
                 <MenuItem key='Profile' onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
-                <MenuItem key='Logout' onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Logout</Typography>
+                <MenuItem key='Logout' onClick={handleLogout}>
+                    <Typography textAlign="center">Se déconnecter</Typography>
                 </MenuItem>
             </Menu>
         </Box>
