@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TopLoginRegister from "./TopLoginRegister";
 
 function Copyright(props) {
   return (
@@ -29,6 +30,17 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+<<<<<<< HEAD:src/components/Inscription/Form.js
+=======
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
+  };
+>>>>>>> preprod:src/components/Layout/Header/LoginRegister/Register.js
 
   return (
     <ThemeProvider theme={theme}>
@@ -36,12 +48,13 @@ export default function SignUp() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
+<<<<<<< HEAD:src/components/Inscription/Form.js
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -49,6 +62,10 @@ export default function SignUp() {
             S'inscrire
           </Typography>
           <Box component="form" noValidate sx={{ mt: 3 }}>
+=======
+          <TopLoginRegister label = "S'inscrire"/>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+>>>>>>> preprod:src/components/Layout/Header/LoginRegister/Register.js
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -92,12 +109,6 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="J'autorise le site des Alumnis de la NWS à m'envoyer des notifications par e-mail"
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -107,16 +118,8 @@ export default function SignUp() {
             >
               S'inscrire
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Vous avez déjà un compte? S'authentifier
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

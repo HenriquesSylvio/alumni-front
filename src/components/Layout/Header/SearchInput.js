@@ -45,7 +45,7 @@ export default function SearchInput() {
                 <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-                placeholder="Rechecher…"
+                placeholder="Rechercher…"
                 inputProps={{ 'aria-label': 'search' }}
             />
         </Search>
