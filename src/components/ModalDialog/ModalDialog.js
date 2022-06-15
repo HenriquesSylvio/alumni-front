@@ -1,8 +1,7 @@
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
-import Form from './components/Layout/Header/LoginRegister/Register';
+import Form from '../Layout/Header/LoginRegister/Register';
 
-// Composant gérant la pop-up s'activant lors de la sélection du bouton "inscription"
 
 const ModalDialog = ({ open, handleClose }) => {
   return (

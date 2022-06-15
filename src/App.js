@@ -1,43 +1,41 @@
 import './App.css';
-import React from 'react';
-import { useState } from 'react';
-import Button from '@mui/material/Button';
-import ModalDialog from './ModalDialog';
-import Inscription from "./pages/inscription";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, {useState} from 'react';
+import Home from './pages/home';
+import Inscription from './pages/inscription';
+import Feed from './pages/Feed';
+import {BrowserRouter, Routes, Route, Switch} from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+import Auth from "./contexts/Auth";
+import {hasAuthenticated} from "./services/AuthApi";
+import {ToastContainer} from "react-toastify";
+import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
 
 const App = () => {
-  // declare a new state variable for modal open
-  const [open, setOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated());
+    return (
+      <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
+          <BrowserRouter>
+              <Layout>
+                  <Routes>
+                      {/*<Switch>*/}
+                          <Route path='/' element={<Home/>}/>
+                          <Route exact path='/inscription' element={<Inscription/>}/>
+                          {/*<Route exact path='/feed' element={<Feed/>}/>*/}
+                          {/*<Route>*/}
+                          {/*    <AuthenticatedRoute path='/feed' component={<Feed/>}/>*/}
+                          {/*</Route>*/}
+                      <Route element={<AuthenticatedRoute/>}>
+                              <Route exact path='/feed' element={<Feed/>}/>
+                      </Route>
+                          {/*<AuthenticatedRoute path='/feed' component={<Feed/>}/>*!/*/}
+                      {/*</Switch>*/}
+                  </Routes>
+                  <ToastContainer />
+              </Layout>
 
-  // function to handle modal open
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  // function to handle modal close
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Signup
-      </Button>
-      <ModalDialog open={open} handleClose={handleClose} />
-    <BrowserRouter>
-      <Routes>
-
-        <Route exact path='/Inscription' component={Inscription}/>
-
-      </Routes>
-    </BrowserRouter>
-    </div>
-   
+          </BrowserRouter>
+      </Auth.Provider>
   );
 };
-
-
 
 export default App;

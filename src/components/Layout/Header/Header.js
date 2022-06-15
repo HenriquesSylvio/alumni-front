@@ -5,11 +5,16 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SearchInput from './SearchInput';
 import IconProfilePicture from './IconProfilePicture';
+import {useContext} from "react";
+import Auth from "../../../contexts/Auth";
+import SignInButton from "./LoginRegister/SignInButton";
 
 export default function Header() {
+    const {isAuthenticated} = useContext(Auth);
+
     return (
         <Box>
-            <AppBar position="relative">
+            <AppBar position="relative" sx={{ backgroundColor:"#CA4B38"}}>
                 <Toolbar>
                     <Typography
                         variant="h6"
@@ -19,12 +24,21 @@ export default function Header() {
                     >
                         Alumni NWS
                     </Typography>
-                    <Box sx={{ flexGrow: 1 }}>
-                        <SearchInput />
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
-                        <IconProfilePicture />
-                    </Box>
+                    {(isAuthenticated && (
+                        <>
+                            <Box sx={{ flexGrow: 1 }}>
+                                <SearchInput />
+                            </Box>
+                            <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
+                                <IconProfilePicture />
+                            </Box>
+                        </>
+                    ))
+                        ||
+                        <Box position='absolute' right='0'>
+                            <SignInButton />
+                        </Box>
+                    }
                 </Toolbar>
             </AppBar>
         </Box>
