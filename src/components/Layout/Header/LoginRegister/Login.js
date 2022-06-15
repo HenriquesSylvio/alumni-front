@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import LabelLoginRegister from "./LabelLoginRegister";
+import TopLoginRegister from "./TopLoginRegister";
 import {login} from "../../../../services/AuthApi";
 import Auth from "../../../../contexts/Auth";
 import TextField from "@mui/material/TextField";
@@ -15,6 +15,10 @@ import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import validate from "../../../../validators/LoginValidator";
 import {LoadingButton} from "@mui/lab";
+import SearchInput from "../SearchInput";
+import IconProfilePicture from "../IconProfilePicture";
+import SignInButton from "./SignInButton";
+import {CircularProgress} from "@mui/material";
 
 const theme = createTheme();
 
@@ -68,16 +72,13 @@ export default function SignIn() {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        marginTop: 2,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <LabelLoginRegister label = "Connexion"/>
+                    <TopLoginRegister label = "Connexion"/>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
@@ -108,17 +109,29 @@ export default function SignIn() {
                             helperText={ errors.password }
                             disabled={loading}
                         />
-                        <LoadingButton
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            onClick={handleClick}
-                            loading={loading}
-                            loadingPosition="end"
-                        >
-                            Connexion
-                        </LoadingButton>
+                        {(loading && (
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    marginTop: 2
+                                }}>
+                                    <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                                </Box>
+                            ))
+                            ||
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    onClick={handleClick}
+                                    // loading={loading}
+                                    // loadingPosition="end"
+                                >
+                                    Connexion
+                                </Button>
+                        }
                     </Box>
                 </Box>
             </Container>
