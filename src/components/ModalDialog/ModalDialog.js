@@ -1,6 +1,6 @@
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
-import Form from '../Inscription/Form';
+import Form from '../Layout/Header/LoginRegister/Register';
 
 
 const ModalDialog = ({ open, handleClose }) => {
