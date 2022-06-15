@@ -2,7 +2,7 @@
 export default function LoginValidator(values) {
     let errors = {};
 
-    if (!values.username.trim()) {
+    if (!values.username) {
         errors.username = 'Le prénom est obligatoire';
     }
     if (!values.password) {

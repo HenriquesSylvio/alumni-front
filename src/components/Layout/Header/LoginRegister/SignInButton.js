@@ -8,7 +8,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import SignUp from "../../../Inscription/Form";
+import SignUp from "./Register";
 import ModalDialog from "../../../../ModalDialog";
 
 const style = {
@@ -20,6 +20,7 @@ const style = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
+    borderRadius: 2
 };
 
 export default function SignInButton() {
@@ -53,7 +54,7 @@ export default function SignInButton() {
                 <Fade in={open}>
                     <Box sx={style}>
                         <TabContext value={value}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                                     <Tab label="Connexion" value="1" />
                                     <Tab label="Inscription" value="2" />

@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import LabelLoginRegister from "./LabelLoginRegister";
+import TopLoginRegister from "./TopLoginRegister";
 import {login} from "../../../../services/AuthApi";
 import Auth from "../../../../contexts/Auth";
 import TextField from "@mui/material/TextField";
@@ -14,6 +14,11 @@ import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import validate from "../../../../validators/LoginValidator";
+import {LoadingButton} from "@mui/lab";
+import SearchInput from "../SearchInput";
+import IconProfilePicture from "../IconProfilePicture";
+import SignInButton from "./SignInButton";
+import {CircularProgress} from "@mui/material";
 
 const theme = createTheme();
 
@@ -22,10 +27,14 @@ export default function SignIn() {
     const {isAuthenticated, setIsAuthenticated} = useContext(Auth);
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [loading, setLoading] = React.useState(false);
     // const[user, setUser] = useState({
     //     username: "",
     //     password: ""
     // })
+    function handleClick() {
+        setErrors(validate(values));
+    }
 
     const [values, setValues] = useState({
         username: "",
@@ -39,11 +48,11 @@ export default function SignIn() {
     }
 
     const handleSubmit = async event => {
-        setErrors(validate(values));
-        console.log(errors.password);
-        setIsSubmitting(true)
         event.preventDefault();
-         if (Object.keys(errors).length === 0 && isSubmitting) {
+
+        await setErrors(validate(values));
+         if (Object.keys(errors).length === 0) {
+             setLoading(true);
             try {
                 const response = await login(values);
                 setIsAuthenticated(response);
@@ -51,34 +60,11 @@ export default function SignIn() {
                 toast.success('Bienvenue ! 😄')
             } catch ({response}) {
                 toast.error(response.data.erreur + ' 😃')
+                setLoading(false);
                 console.log(response)
             }
          }
     };
-
-    // useEffect(async () => {
-    //
-    //         if (Object.keys(errors).length === 0 && isSubmitting) {
-    //             try {
-    //                 const response = await login(user);
-    //                 setIsAuthenticated(response);
-    //                 navigate('/feed')
-    //                 toast.success('Bienvenue ! 😄')
-    //             } catch ({response}) {
-    //                 toast.error(response.data.erreur + ' 😃')
-    //                 console.log(response)
-    //             }
-    //         }
-    //     },
-    //     [errors]
-    // );
-
-    // useEffect(() => {
-    //     if(isAuthenticated)
-    //     {
-    //         navigate('/feed')
-    //     }
-    // }, [navigate, isAuthenticated]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -86,16 +72,13 @@ export default function SignIn() {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        marginTop: 2,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <LabelLoginRegister label = "Connexion"/>
+                    <TopLoginRegister label = "Connexion"/>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
@@ -107,8 +90,9 @@ export default function SignIn() {
                             autoComplete="username"
                             autoFocus
                             onChange={handleChange}
-                            error={errors.username}
-                            helperText={errors.username}
+                            error={ errors.username }
+                            helperText={ errors.username }
+                            disabled={loading}
                         />
 
                         <TextField
@@ -121,17 +105,33 @@ export default function SignIn() {
                             id="password"
                             autoComplete="current-password"
                             onChange={handleChange}
-                            error={errors.password}
-                            helperText={errors.password}
+                            error={ errors.password }
+                            helperText={ errors.password }
+                            disabled={loading}
                         />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            Connexion
-                        </Button>
+                        {(loading && (
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    marginTop: 2
+                                }}>
+                                    <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                                </Box>
+                            ))
+                            ||
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    onClick={handleClick}
+                                    // loading={loading}
+                                    // loadingPosition="end"
+                                >
+                                    Connexion
+                                </Button>
+                        }
                     </Box>
                 </Box>
             </Container>
