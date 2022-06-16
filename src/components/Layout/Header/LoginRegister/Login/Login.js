@@ -4,34 +4,24 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import TopLoginRegister from "./TopLoginRegister";
-import {login} from "../../../../services/AuthApi";
-import Auth from "../../../../contexts/Auth";
 import TextField from "@mui/material/TextField";
-import Avatar from "@mui/material/Avatar";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import validate from "../../../../validators/LoginValidator";
-import {LoadingButton} from "@mui/lab";
-import SearchInput from "../SearchInput";
-import IconProfilePicture from "../IconProfilePicture";
-import SignInButton from "./SignInButton";
+import validate from "../../../../../validators/LoginValidator";
 import {CircularProgress} from "@mui/material";
+import TopLoginRegister from "../TopLoginRegister";
+import {login} from "../../../../../services/AuthApi";
+import Auth from "../../../../../contexts/Auth";
 
 const theme = createTheme();
 
 export default function SignIn() {
     const navigate = useNavigate();
-    const {isAuthenticated, setIsAuthenticated} = useContext(Auth);
+    const {setIsAuthenticated} = useContext(Auth);
     const [errors, setErrors] = useState({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [loading, setLoading] = React.useState(false);
-    // const[user, setUser] = useState({
-    //     username: "",
-    //     password: ""
-    // })
+
     function handleClick() {
         setErrors(validate(values));
     }

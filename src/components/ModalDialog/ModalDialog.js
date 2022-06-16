@@ -1,13 +1,13 @@
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
-import Form from '../Layout/Header/LoginRegister/Register';
+import SignUp from "../Layout/Header/LoginRegister/Register/Register";
 
 
 const ModalDialog = ({ open, handleClose }) => {
   return (
     // props received from App.js
     <Dialog open={open} onClose={handleClose}>
-      <Form handleClose={handleClose} />
+      <SignUp handleClose={handleClose} />
     </Dialog>
   );
 };

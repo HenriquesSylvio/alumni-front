@@ -2,6 +2,7 @@ import React from "react"
 import Button from '@mui/material/Button';
 import ModalDialog from "../components/ModalDialog/ModalDialog";
 import { useState } from "react";
+import SignUp from "../components/Layout/Header/LoginRegister/Register/Register";
 
 const Home = () => {
 
@@ -19,11 +20,11 @@ const Home = () => {
   };
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={handleOpen}>
-                S'inscrire
-            </Button>
-            <ModalDialog open={open} handleClose={handleClose} />
-            
+            {/*<Button variant="contained" color="primary" onClick={handleOpen}>*/}
+            {/*    S'inscrire*/}
+            {/*</Button>*/}
+            {/*<ModalDialog open={open} handleClose={handleClose} />*/}
+            <SignUp />
         </div>
     )
 }
