@@ -9,7 +9,7 @@ export default function Feed() {
         <div style={{display: "flex"}}>
             <Stack direction="column" alignItems="center" spacing={5} sx={{display:"flex", flex: 1, color:"#CA4B38"}}>
                 <h1>Fil d'actualités</h1>
-                <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration a besoin de vous, recherche tel type d'emploi"></MainFeed>
+                <MainFeed titre="La Normandie Web School recrute !" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ex augue, fringilla nec facilisis eu, gravida in felis. Ut vitae augue nec nunc dignissim accumsan. Phasellus consequat molestie convallis. Curabitur consequat neque eu risus consequat rhoncus. In vulputate vehicula finibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque tincidunt blandit nulla ac accumsan. Class aptent taciti sociosqu ad litora torquent per conubia molestie. "></MainFeed>
                 <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration a besoin de vous, recherche tel type d'emploi"></MainFeed>
                 <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration a besoin de vous, recherche tel type d'emploi"></MainFeed>
             </Stack>
