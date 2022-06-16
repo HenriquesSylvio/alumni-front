@@ -53,7 +53,7 @@ export default function IconProfilePicture() {
                 onClose={handleCloseUserMenu}
             >
                 <MenuItem key='Profile' onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Profile</Typography>
+                    <Typography textAlign="center">Profil</Typography>
                 </MenuItem>
                 <MenuItem key='Logout' onClick={handleLogout}>
                     <Typography textAlign="center">Se déconnecter</Typography>
