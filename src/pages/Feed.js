@@ -1,17 +1,31 @@
 import { Button, Stack } from '@mui/material';
 import { Box, padding } from '@mui/system';
-import * as React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import EventFeed from '../components/EventFeed/EventFeed';
 import MainFeed from '../components/MainFeed/MainFeed';
+import getFeed from "../services/FeedApi";
 
 export default function Feed() {
+    let posts = [];
+    // const [posts, setPosts] = useState([]);
+    useEffect(() => {    // Met à jour l    e titre du document via l’API du navigateur
+        getFeeds().then(r => r);
+    }, []);
+
+    const getFeeds = async () => {
+        const response = await getFeed(1);
+        // setPosts(...posts, response.data.data)
+        posts = response.data.data;
+        console.log(posts.length)
+    };
+
     return (
         <div style={{display: "flex"}}>
             <Stack direction="column" alignItems="center" spacing={5} sx={{display:"flex", flex: 1, color:"#CA4B38"}}>
                 <h1>Fil d'actualités</h1>
                 <MainFeed titre="La Normandie Web School recrute !" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ex augue, fringilla nec facilisis eu, gravida in felis. Ut vitae augue nec nunc dignissim accumsan. Phasellus consequat molestie convallis. Curabitur consequat neque eu risus consequat rhoncus. In vulputate vehicula finibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque tincidunt blandit nulla ac accumsan. Class aptent taciti sociosqu ad litora torquent per conubia molestie. "></MainFeed>
                 <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration a besoin de vous, recherche tel type d'emploi"></MainFeed>
-                <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration a besoin de vous, recherche tel type d'emploi"></MainFeed>
+                <MainFeed titre="La Normandie Web School recrute !" description=""></MainFeed>
             </Stack>
 
             <div style={{width:"25%"}}>
@@ -31,5 +45,5 @@ export default function Feed() {
                 </Stack>
             </div>
         </div>
-    );
+    )
 }
