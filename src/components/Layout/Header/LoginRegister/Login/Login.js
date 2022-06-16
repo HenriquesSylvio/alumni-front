@@ -40,7 +40,8 @@ export default function SignIn() {
     const handleSubmit = async event => {
         event.preventDefault();
 
-        await setErrors(validate(values));
+        setErrors(validate(values));
+        console.log(Object.keys(errors).length);
          if (Object.keys(errors).length === 0) {
              setLoading(true);
             try {

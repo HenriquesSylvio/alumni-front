@@ -10,11 +10,12 @@ import TopLoginRegister from "../TopLoginRegister";
 import {register} from "../../../../../services/RegisterApi"
 import {useState} from "react";
 import {toast} from "react-toastify";
+import validate from "../../../../../validators/RegisterValidator";
 
 const theme = createTheme();
 
 export default function SignUp() {
-
+  const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     first_name: "",
     last_name: "",
@@ -25,6 +26,10 @@ export default function SignUp() {
     username: ""
   });
 
+  function handleClick() {
+     setErrors(validate(values));
+  }
+
   const handleChange = ({currentTarget}) => {
     const {name, value} = currentTarget;
 
@@ -33,13 +38,16 @@ export default function SignUp() {
 
   const handleSubmit = async event => {
     event.preventDefault();
+    // setErrors(validate(values));
+    console.log(Object.keys(errors).length);
+    if (Object.keys(errors).length === 0) {
       try {
         await register(values);
         toast.success('Votre compte a été créé. Il faut désormais que votre compte soit accepté par un administrateur ! 😄');
       } catch ({response}) {
         var error = response.data.erreur
         // var arr = [];
-        Object.keys(error).forEach(function(key) {
+        Object.keys(error).forEach(function (key) {
           console.log(error.email);
           toast.error(error[key] + ' 😃')
         });
@@ -47,6 +55,7 @@ export default function SignUp() {
         // setLoading(false);
         console.log(response)
       }
+    }
   };
   return (
     <ThemeProvider theme={theme}>
@@ -66,24 +75,28 @@ export default function SignUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="first_name"
                   required
                   fullWidth
-                  id="firstName"
+                  id="first_name"
                   label="Prénom"
                   autoFocus
                   onChange={handleChange}
+                  error={ errors.first_name }
+                  helperText={ errors.first_name }
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
+                  id="last_name"
                   label="Nom"
-                  name="lastName"
+                  name="last_name"
                   autoComplete="family-name"
                   onChange={handleChange}
+                  error={ errors.last_name }
+                  helperText={ errors.last_name }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -95,6 +108,8 @@ export default function SignUp() {
                     name="birthday"
                     autoComplete="birthday"
                     onChange={handleChange}
+                    error={ errors.birthday }
+                    helperText={ errors.birthday }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -106,6 +121,8 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   onChange={handleChange}
+                  error={ errors.email }
+                  helperText={ errors.email }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -117,6 +134,8 @@ export default function SignUp() {
                     name="promo"
                     autoComplete="promo"
                     onChange={handleChange}
+                    error={ errors.promo }
+                    helperText={ errors.promo }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -128,6 +147,8 @@ export default function SignUp() {
                     name="username"
                     autoComplete="username"
                     onChange={handleChange}
+                    error={ errors.username }
+                    helperText={ errors.username }
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -139,17 +160,21 @@ export default function SignUp() {
                     name="password"
                     autoComplete="password"
                     onChange={handleChange}
+                    error={ errors.password }
+                    helperText={ errors.password }
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                     required
                     fullWidth
-                    id="password"
+                    id="confirmPassword"
                     label="Confirmation mot de passe"
-                    name="password"
-                    autoComplete="password"
+                    name="confirmPassword"
+                    autoComplete="confirmPassword"
                     onChange={handleChange}
+                    error={ errors.confirmPassword }
+                    helperText={ errors.confirmPassword }
                 />
               </Grid>
             </Grid>
@@ -158,6 +183,7 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleClick}
             >
               Etape suivante
             </Button>
