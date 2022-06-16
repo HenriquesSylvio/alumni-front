@@ -9,6 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TopLoginRegister from "../TopLoginRegister";
 import {register} from "../../../../../services/RegisterApi"
 import {useState} from "react";
+import {toast} from "react-toastify";
 
 const theme = createTheme();
 
@@ -33,8 +34,16 @@ export default function SignUp() {
   const handleSubmit = async event => {
     event.preventDefault();
       try {
-        const response = await register(values);
+        await register(values);
+        toast.success('Votre compte a été créé. Il faut désormais que votre compte soit accepté par un administrateur ! 😄');
       } catch ({response}) {
+        var error = response.data.erreur
+        // var arr = [];
+        Object.keys(error).forEach(function(key) {
+          console.log(error.email);
+          toast.error(error[key] + ' 😃')
+        });
+        // toast.error(response.data.erreur + ' 😃')
         // setLoading(false);
         console.log(response)
       }
