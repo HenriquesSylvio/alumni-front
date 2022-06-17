@@ -2,7 +2,7 @@ import './App.css';
 import React, {useState} from 'react';
 import Home from './pages/home';
 import Inscription from './pages/inscription';
-import Feed from './pages/feed';
+import Feed from './pages/Feed';
 import {BrowserRouter, Routes, Route, Switch} from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Auth from "./contexts/Auth";
