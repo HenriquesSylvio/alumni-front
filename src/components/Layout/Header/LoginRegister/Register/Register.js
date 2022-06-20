@@ -171,6 +171,7 @@ export default function SignUp() {
                     label="Mot de passe"
                     name="password"
                     autoComplete="password"
+                    type="password"
                     onChange={handleChange}
                     error={ errors.password }
                     helperText={ errors.password }
@@ -184,6 +185,7 @@ export default function SignUp() {
                     label="Confirmation mot de passe"
                     name="confirmPassword"
                     autoComplete="confirmPassword"
+                    type="password"
                     onChange={handleChange}
                     error={ errors.confirmPassword }
                     helperText={ errors.confirmPassword }
