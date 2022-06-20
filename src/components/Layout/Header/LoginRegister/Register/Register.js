@@ -21,7 +21,6 @@ export default function SignUp() {
     first_name: "",
     last_name: "",
     password: "",
-    birthday: "",
     email: "",
     promo: "",
     username: ""
@@ -57,7 +56,7 @@ export default function SignUp() {
   const handleSubmit = async event => {
     event.preventDefault();
     // setErrors(validate(values));
-    console.log(Object.keys(errors).length);
+    console.log(errors);
     if (Object.keys(errors).length === 0) {
       try {
         await register(values);
@@ -119,19 +118,6 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                    required
-                    fullWidth
-                    id="birthday"
-                    label="Date de naissance"
-                    name="birthday"
-                    autoComplete="birthday"
-                    onChange={handleChange}
-                    error={ errors.birthday }
-                    helperText={ errors.birthday }
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
                   required
                   fullWidth
                   id="email"
@@ -180,6 +166,7 @@ export default function SignUp() {
                 <TextField
                     required
                     fullWidth
+
                     id="password"
                     label="Mot de passe"
                     name="password"
@@ -210,7 +197,7 @@ export default function SignUp() {
               sx={{ mt: 3, mb: 2 }}
               onClick={handleClick}
             >
-              Etape suivante
+              Inscription
             </Button>
           </Box>
         </Box>
