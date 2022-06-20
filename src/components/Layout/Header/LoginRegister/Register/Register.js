@@ -8,9 +8,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TopLoginRegister from "../TopLoginRegister";
 import {register} from "../../../../../services/RegisterApi"
-import {useState} from "react";
+import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {toast} from "react-toastify";
 import validate from "../../../../../validators/RegisterValidator";
+import {Autocomplete} from "@mui/lab";
 
 const theme = createTheme();
 
@@ -26,6 +27,8 @@ export default function SignUp() {
     username: ""
   });
 
+  const yearPromo = [];
+
   function handleClick() {
      setErrors(validate(values));
   }
@@ -34,7 +37,22 @@ export default function SignUp() {
     const {name, value} = currentTarget;
 
     setValues({...values, [name]: value})
+    console.log(values);
   }
+
+  const loadYearPromo = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const maxYear = currentDate.getFullYear() + 4;
+
+    for (let i = 2017; i < maxYear; i++) {
+      yearPromo.push(i.toString());
+    }
+  }
+
+  useLayoutEffect(() => {
+    loadYearPromo()
+  });
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -126,23 +144,30 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                    required
+                <Autocomplete
                     fullWidth
-                    id="promo"
-                    label="Promo"
-                    name="promo"
+                    options={yearPromo}
+                    onChange={(event, value) => setValues({...values, ["promo"]: value})}
+
                     autoComplete="promo"
-                    onChange={handleChange}
-                    error={ errors.promo }
-                    helperText={ errors.promo }
+                    renderInput={(params) =>
+                        <TextField {...params}
+                                   required
+                                   // onChange={handleChange}
+                                   id="promo"
+                                   name="promo"
+                                   label="Promo"
+                                   error={ errors.promo }
+                                   helperText={ errors.promo }
+                        />
+                }
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                     required
                     fullWidth
-                    id="username"
+                    id="sername"
                     label="Nom d'utilisateur"
                     name="username"
                     autoComplete="username"
@@ -193,3 +218,11 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
+
+// const test = () => {
+//   yearPromo = [2022]
+// };
+
+const test = [
+    "test"
+]
