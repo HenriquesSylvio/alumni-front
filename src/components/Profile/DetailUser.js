@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
 
-export default function DetailUser() {
+export default function DetailUser({first_name, last_name, img}) {
     return (
         <Box marginLeft={5} marginRight={5} marginTop={-5} >
             <Card sx={{minWidth: 450, maxWidth: 450}} >

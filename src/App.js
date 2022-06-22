@@ -13,6 +13,7 @@ import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated());
+    document.body.style = 'background: #F2F2F2;';
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
           <BrowserRouter>
