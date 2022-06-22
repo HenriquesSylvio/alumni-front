@@ -2,14 +2,13 @@ import * as React from 'react';
 import {Button, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
 import Backdrop from '@mui/material/Backdrop';
-import Typography from "@mui/material/Typography";
-import SignIn from "./Login";
+
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import SignUp from "./Register";
-import ModalDialog from "../../../../ModalDialog";
+import SignIn from "./Login/Login";
+import SignUp from "./Register/Register";
 
 const style = {
     position: 'absolute',

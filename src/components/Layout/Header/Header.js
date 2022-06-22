@@ -14,7 +14,7 @@ export default function Header() {
 
     return (
         <Box>
-            <AppBar position="relative" sx={{ backgroundColor:"#CA4B38"}}>
+            <AppBar  sx={{ backgroundColor:"#CA4B38"}}>
                 <Toolbar>
                     <Typography
                         variant="h6"
