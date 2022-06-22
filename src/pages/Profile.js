@@ -210,7 +210,7 @@ export default function Feed() {
                         {/*        </Card>*/}
                         {/*    /!*</Stack>*!/*/}
                         {/*</Box>*/}
-                        <DetailUser/>
+                        <DetailUser first_name='Sylvio' last_name='Henriques' urlProfilePicture='' nbSubscriber='5' nbPosts='5' nbSubscription='5' promo='2022' sector='Développeur'/>
                     </Box>
                 {/*</Paper>*/}
             </Box>

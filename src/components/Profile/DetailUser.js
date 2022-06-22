@@ -16,14 +16,13 @@ import Typography from "@mui/material/Typography";
 import { styled } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
 
-export default function DetailUser({first_name, last_name, img}) {
+export default function DetailUser({first_name, last_name, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo}) {
     return (
         <Box marginLeft={5} marginRight={5} marginTop={-5} >
             <Card sx={{minWidth: 450, maxWidth: 450}} >
                 <Box display="flex" justifyContent="center" alignItems="center">
                     <Avatar
-                        alt="Henriques Sylvio"
-                        src="/static/images/avatar/1.jpg"
+                        src= {urlProfilePicture}
                         sx={{ width: 100, height: 100, position: "absolute"}}
                     />
                 </Box>
@@ -54,7 +53,7 @@ export default function DetailUser({first_name, last_name, img}) {
                 >
                     <Box sx={{ position: "absolute"}} paddingRight={30}>
                         <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                            16
+                            {nbSubscriber}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             Abonnés
@@ -62,7 +61,7 @@ export default function DetailUser({first_name, last_name, img}) {
                     </Box>
                     <Box sx={{ position: "absolute"}}>
                         <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                            16
+                            {nbPosts}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             Postes
@@ -70,7 +69,7 @@ export default function DetailUser({first_name, last_name, img}) {
                     </Box>
                     <Box sx={{ position: "absolute"}} paddingLeft={30}>
                         <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                            5
+                            {nbSubscription}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             Abonnements
@@ -79,12 +78,12 @@ export default function DetailUser({first_name, last_name, img}) {
                 </Grid>
                 <Box paddingTop={6}>
                     <Typography gutterBottom variant="h6" component="div" align={"center"} >
-                        Henriques Sylvio
+                        {first_name} {last_name}
                     </Typography>
                 </Box>
                 <CardContent>
                     <Typography color="text" align={"center"}>
-                        Développeur en promo 2022
+                        {sector} en promo {promo}
                     </Typography>
                 </CardContent>
             </Card>
