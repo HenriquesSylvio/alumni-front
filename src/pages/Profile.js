@@ -6,6 +6,8 @@ import MainFeed from "../components/MainFeed/MainFeed";
 import DetailUser from "../components/Profile/DetailUser";
 import getProfile from "../services/ProfileApi";
 import { Component } from "react";
+import getPostByUser from "../services/PostByUserApi";
+import Grid from "@mui/material/Grid";
 
 class Profile extends Component {
     // let user = "";
@@ -25,6 +27,7 @@ class Profile extends Component {
 
         this.state = {
             user: [],
+            posts: [],
             loadingPage: true
         }
     }
@@ -35,13 +38,22 @@ class Profile extends Component {
         console.log(response.data);
     };
 
+    async getPostByUserId() {
+        console.log(this.user);
+        const response = await getPostByUser(34);
+        this.setState({posts: response.data.posts})
+        console.log(response.data.posts);
+    };
+
+
     async componentDidMount() {
         await this.getProfileUser();
+        await this.getPostByUserId()
         this.setState({loadingPage: false})
     }
 
     render() {
-        const { user, loadingPage} = this.state
+        const { user, posts, loadingPage} = this.state
         return (
             <Box
                 sx={{
@@ -71,20 +83,34 @@ class Profile extends Component {
 
                         </Box>
                         <Box style={{display: 'flex'}}>
-                        <Box width="95%" marginLeft={5} marginRight={5} marginTop={-9}>
-                        <Typography marginLeft={5} variant="h6" component="div">
-                        Postes récents
-                        </Typography>
-                        <Stack direction='column' spacing={5}>
-                        <MainFeed
-                        titre='La Normandie Web School recrute !'
-                        description="Nouvelle école dans le numérique, l'administration à besoin de vous, recherche tel type d'emploi"
-                        nbComment={5}></MainFeed>
-                        </Stack>
-                        </Box>
-                        <Box marginLeft={5} marginRight={5} marginTop={-5}>
-                        <DetailUser first_name={user.first_name} last_name={user.last_name} urlProfilePicture={user.url_profile_picture} nbSubscriber={user.followerNumber} nbPosts='5' nbSubscription={user.followingNumber} promo={user.promo} sector='Développeur'/>
-                        </Box>
+                            <Box width="95%" marginLeft={5} marginRight={5} marginTop={-9}>
+                                {posts.length ?
+                                    <Typography marginLeft={5} variant="h6" component="div">
+                                        Postes récents
+                                    </Typography> :
+
+                                    <Typography marginLeft={5} variant="h6" component="div">
+                                        Aucun postes récents
+                                    </Typography>
+                                }
+
+                                {posts.length ?
+                                    posts.map(
+                                        post =>
+                                            <Box marginBottom={2}>
+                                                <Stack direction='column' spacing={5}>
+                                                    <MainFeed
+                                                        titre={post.title}
+                                                        description={post.content}
+                                                        nbComment={5}></MainFeed>
+                                                </Stack>
+                                            </Box>
+                                    ): null
+                                }
+                            </Box>
+                            <Box marginLeft={5} marginRight={5} marginTop={-5}>
+                                <DetailUser first_name={user.first_name} last_name={user.last_name} urlProfilePicture={user.url_profile_picture} nbSubscriber={user.followerNumber} nbPosts='5' nbSubscription={user.followingNumber} promo={user.promo} sector='Développeur'/>
+                            </Box>
                         </Box>
                     </>
                 )}
