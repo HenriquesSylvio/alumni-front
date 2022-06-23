@@ -51,9 +51,16 @@ export default function DetailUser({first_name, last_name, urlProfilePicture, nb
                     paddingRight={5}
                 >
                     <Box sx={{ position: "absolute"}} paddingRight={30}>
-                        <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                            {nbSubscriber}
-                        </Typography>
+                        {(nbSubscriber = 0 && (
+                                <Typography variant="body2" align={"center"} fontWeight={"bold"}>
+                                    0
+                                </Typography>
+                            ))
+                            ||
+                            <Typography variant="body2" align={"center"} fontWeight={"bold"}>
+                                {nbSubscriber}
+                            </Typography>
+                        }
                         <Typography variant="body2" color="text.secondary">
                             Abonnés
                         </Typography>
@@ -67,9 +74,16 @@ export default function DetailUser({first_name, last_name, urlProfilePicture, nb
                         </Typography>
                     </Box>
                     <Box sx={{ position: "absolute"}} paddingLeft={30}>
-                        <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                            {nbSubscription}
-                        </Typography>
+                        {(nbSubscription = 0 && (
+                                <Typography variant="body2" align={"center"} fontWeight={"bold"}>
+                                    0
+                                </Typography>
+                            ))
+                            ||
+                            <Typography variant="body2" align={"center"} fontWeight={"bold"}>
+                                {nbSubscription}
+                            </Typography>
+                        }
                         <Typography variant="body2" color="text.secondary">
                             Abonnements
                         </Typography>
