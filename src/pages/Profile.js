@@ -1,59 +1,38 @@
-import * as React from 'react';
+
 import {Box} from "@mui/system";
 import {CircularProgress, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import MainFeed from "../components/MainFeed/MainFeed";
 import DetailUser from "../components/Profile/DetailUser";
 import getProfile from "../services/ProfileApi";
-import { Component } from "react";
+import React, { useEffect, useState } from 'react';
 import getPostByUser from "../services/PostByUserApi";
-import Grid from "@mui/material/Grid";
+import { useParams } from "react-router-dom";
 
-class Profile extends Component {
-    // let user = "";
-    // // const [user, setUser] = React.useState();
-    // const loadUserDetail = async () => {
-    //     const response = await getProfile();
-    //     user = response.data
-    //     console.log(user.first_name);
-    // }
-    //
-    // useLayoutEffect(() => {
-    //     loadUserDetail();
-    // });
+export default function Profile() {
 
-    constructor(props) {
-        super(props)
+    const [posts, setPosts] = useState('');
+    const [user, setUser] = useState('');
+    const [loadingPage, setLoading] = useState(true);
+    const params  = useParams();
 
-        this.state = {
-            user: [],
-            posts: [],
-            loadingPage: true
-        }
-    }
+    useEffect(() => {
+        getProfileUser();
+        getPostByUserId();
+        // enabledLoading();
+    }, []);
 
-    async getProfileUser() {
-        const response = await getProfile('me');
-        this.setState({user: response.data})
-        console.log(response.data);
+    const getProfileUser = async () => {
+        const response = await getProfile(params.id.toString())
+        setUser(response.data)
     };
 
-    async getPostByUserId() {
-        console.log(this.user);
-        const response = await getPostByUser(34);
-        this.setState({posts: response.data.posts})
-        console.log(response.data.posts);
+    const getPostByUserId = async () => {
+        const response = await getPostByUser(params.id)
+        setPosts(response.data.posts)
+        setLoading(!loadingPage);
     };
 
-
-    async componentDidMount() {
-        await this.getProfileUser();
-        await this.getPostByUserId()
-        this.setState({loadingPage: false})
-    }
-
-    render() {
-        const { user, posts, loadingPage} = this.state
         return (
             <Box
                 sx={{
@@ -89,7 +68,7 @@ class Profile extends Component {
                                         Postes récents
                                     </Typography> :
 
-                                    <Typography marginLeft={5} variant="h6" component="div">
+                                    <Typography marginLeft={5}  component="div">
                                         Aucun postes récents
                                     </Typography>
                                 }
@@ -117,7 +96,3 @@ class Profile extends Component {
             </Box>
         );
     }
-}
-
-
-export default Profile

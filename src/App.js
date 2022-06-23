@@ -36,6 +36,7 @@ const App = () => {
                           <Route exact path='/inscription' element={<Inscription/>}/>
                           <Route element={<AuthenticatedRoute/>}>
                               <Route exact path='/feed' element={<Feed/>}/>
+                              <Route exact path='/profile/:id' element={<Profile/>}/>
                               <Route exact path='/profile' element={<Profile/>}/>
                           </Route>
                       </Routes>

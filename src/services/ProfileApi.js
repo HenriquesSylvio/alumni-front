@@ -7,6 +7,6 @@ const config = {
     headers: { Authorization: `Bearer ${getItem('Token')}` }
 };
 
-export default function getProfile(id) {
+export default function getProfile(id = 'me') {
     return axios.get(URLPost + id, config)
 }
