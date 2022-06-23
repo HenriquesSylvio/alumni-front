@@ -18,23 +18,22 @@ import Grid from "@mui/material/Grid";
 
 export default function DetailUser({first_name, last_name, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo}) {
     return (
-        <Box marginLeft={5} marginRight={5} marginTop={-5} >
-            <Card sx={{minWidth: 450, maxWidth: 450}} >
-                <Box display="flex" justifyContent="center" alignItems="center">
-                    <Avatar
-                        src= {urlProfilePicture}
-                        sx={{ width: 100, height: 100, position: "absolute"}}
-                    />
-                </Box>
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="flex-start"
-                    paddingLeft={8}
-                    paddingRight={8}
-                    paddingTop={3}
-                >
+        <Card sx={{minWidth: 450, maxWidth: 450}} >
+            <Box display="flex" justifyContent="center" alignItems="center">
+                <Avatar
+                    src= {urlProfilePicture}
+                    sx={{ width: 100, height: 100, position: "absolute"}}
+                />
+            </Box>
+            <Grid
+                container
+                direction="row"
+                justifyContent="space-between"
+                alignItems="flex-start"
+                paddingLeft={8}
+                paddingRight={8}
+                paddingTop={3}
+            >
                     <CardActions >
                         <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" >S'abonner</Button>
                     </CardActions>
@@ -87,6 +86,5 @@ export default function DetailUser({first_name, last_name, urlProfilePicture, nb
                     </Typography>
                 </CardContent>
             </Card>
-        </Box>
     );
 }
