@@ -12,6 +12,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import {register} from "../../services/RegisterApi";
 import {toast} from "react-toastify";
 import {postLikePost} from "../../services/LikePostApi";
+import {deleteLikePost} from "../../services/DeleteLikePost";
 
 export default function MainFeed({titre, description, couleur, nbComment, nbLike, like, idPost, ...rest}) {
 
@@ -20,6 +21,7 @@ export default function MainFeed({titre, description, couleur, nbComment, nbLike
     const LikePost = async () => {
         setLike(!likeByUser);
         if (likeByUser === true){
+            await deleteLikePost(idPost);
             setLikeCounter(likeCounter => likeCounter - 1);
         } else {
             await postLikePost(idPost);

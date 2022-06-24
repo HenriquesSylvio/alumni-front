@@ -7,6 +7,8 @@ const config = {
     headers: { Authorization: `Bearer ${getItem('Token')}` }
 };
 
-export default function getPostByUser(id) {
-    return axios.get(`${URLApi}post/user/${id}`, config)
+
+export function deleteLikePost(idPost) {
+    return axios
+        .delete(`${URLApi}post/like/${idPost}`, config);
 }

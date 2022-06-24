@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {getItem} from "./LocaleStorage";
 
-const URLPost = `http://127.0.0.1:8080/api/post/like`;
+const URLApi = `http://127.0.0.1:8080/api/`;
 
 const config = {
     headers: { Authorization: `Bearer ${getItem('Token')}` }
@@ -10,5 +10,5 @@ const config = {
 
 export function postLikePost(idPost) {
     return axios
-        .post(URLPost, {post: {id: idPost}}, config);
+        .post(`${URLApi}post/like`, {post: {id: idPost}}, config);
 }
