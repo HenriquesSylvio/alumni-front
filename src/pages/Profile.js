@@ -35,6 +35,7 @@ export default function Profile() {
 
         const response = await getPostByUser(userId)
         setPosts(response.data.posts)
+        console.log(response.data.posts[1].numberLike);
         setLoading(!loadingPage);
     };
 
@@ -67,7 +68,7 @@ export default function Profile() {
                                            Postes récents
                                        </Typography>
                                        :
-                                       <Typography marginLeft={5} variant="h1" component="div">
+                                       <Typography marginLeft={5} variant="h5" component="div">
                                            Aucun postes récents
                                        </Typography>
                                }
@@ -78,7 +79,9 @@ export default function Profile() {
                                                <MainFeed
                                                    titre={post.title}
                                                    description={post.content}
-                                                   nbComment={5}
+                                                   nbComment={post.numberComment}
+                                                   nbLike={post.numberLike}
+                                                   like={post.like}
                                                >
                                                </MainFeed>
                                            </Box>
