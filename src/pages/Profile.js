@@ -14,21 +14,26 @@ export default function Profile() {
     const [posts, setPosts] = useState('');
     const [user, setUser] = useState('');
     const [loadingPage, setLoading] = useState(true);
-    const params  = useParams();
+    let params = useParams();
+    let userId = '';
 
-    useEffect(() => {
-        getProfileUser();
-        getPostByUserId();
-        // enabledLoading();
+    useEffect(async () => {
+        await getProfileUser();
+        await getPostByUserId();
     }, []);
 
     const getProfileUser = async () => {
-        const response = await getProfile(params.id.toString())
+        const response = await getProfile(params.id)
+
         setUser(response.data)
+        userId = response.data.id;
+        console.log(response.data);
     };
 
     const getPostByUserId = async () => {
-        const response = await getPostByUser(params.id)
+        // const userId = user.id;
+
+        const response = await getPostByUser(userId)
         setPosts(response.data.posts)
         setLoading(!loadingPage);
     };
@@ -52,44 +57,33 @@ export default function Profile() {
                     </Box>
                 ) : (
                     <>
-                        <Box sx={{m: 1, background: 'rgba(202,75,56,0.25)'}} paddingTop={10} minHeight={225}>
-                            <Typography paddingRight={20} paddingLeft={20} paddingBottom={5} variant="h6" component="div">
-                                {user.last_name} {user.first_name}
-                            </Typography>
-                            <Typography paddingRight={20} paddingLeft={20} variant="subtitle1" component="div" color={"grey"}>
-                                {user.biography}
-                            </Typography>
-
+                        <Box marginLeft={2} marginRight={2} marginTop={15}>
+                            <DetailUser first_name={user.first_name} last_name={user.last_name} urlProfilePicture={user.url_profile_picture} nbSubscriber={user.followerNumber} nbPosts='5' nbSubscription={user.followingNumber} promo={user.promo} sector='Développeur' biography={user.biography}/>
                         </Box>
-                        <Box style={{display: 'flex'}}>
-                            <Box width="95%" marginLeft={5} marginRight={5} marginTop={-9}>
-                                {posts.length ?
-                                    <Typography marginLeft={5} variant="h6" component="div">
-                                        Postes récents
-                                    </Typography> :
-
-                                    <Typography marginLeft={5}  component="div">
-                                        Aucun postes récents
-                                    </Typography>
-                                }
-
-                                {posts.length ?
-                                    posts.map(
-                                        post =>
-                                            <Box marginBottom={2}>
-                                                <Stack direction='column' spacing={5}>
-                                                    <MainFeed
-                                                        titre={post.title}
-                                                        description={post.content}
-                                                        nbComment={5}></MainFeed>
-                                                </Stack>
-                                            </Box>
-                                    ): null
-                                }
-                            </Box>
-                            <Box marginLeft={5} marginRight={5} marginTop={-5}>
-                                <DetailUser first_name={user.first_name} last_name={user.last_name} urlProfilePicture={user.url_profile_picture} nbSubscriber={user.followerNumber} nbPosts='5' nbSubscription={user.followingNumber} promo={user.promo} sector='Développeur'/>
-                            </Box>
+                        <Box display="flex" sx={{ flexDirection: 'column' }} marginLeft={2} marginRight={2} marginTop={2}>
+                               {
+                                   posts.length ?
+                                       <Typography marginLeft={5} variant="h6" component="div">
+                                           Postes récents
+                                       </Typography>
+                                       :
+                                       <Typography marginLeft={5} variant="h1" component="div">
+                                           Aucun postes récents
+                                       </Typography>
+                               }
+                               {posts.length ?
+                                   posts.map(
+                                       post =>
+                                           <Box marginBottom={2} >
+                                               <MainFeed
+                                                   titre={post.title}
+                                                   description={post.content}
+                                                   nbComment={5}
+                                               >
+                                               </MainFeed>
+                                           </Box>
+                                   ): null
+                               }
                         </Box>
                     </>
                 )}

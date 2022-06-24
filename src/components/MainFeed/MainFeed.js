@@ -10,7 +10,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 
 export default function MainFeed({titre, description, couleur, nbComment, ...rest}) {
     return (
-        <Card sx={{ p: 1, color: couleur, ...rest}}>
+        <Card sx={{ p: 1, color: couleur, ...rest}} >
             <h3>{titre}</h3>
             <p>{description}</p>
             {/*<Button>En savoir plus</Button>*/}

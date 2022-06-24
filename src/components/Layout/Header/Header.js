@@ -13,7 +13,7 @@ export default function Header() {
     const {isAuthenticated} = useContext(Auth);
 
     return (
-        <Box>
+        <Box marginBottom={10}>
             <AppBar  sx={{ backgroundColor:"#CA4B38"}}>
                 <Toolbar>
                     <Typography

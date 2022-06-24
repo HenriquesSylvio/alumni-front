@@ -1,24 +1,16 @@
 import * as React from 'react';
 import {Box} from "@mui/system";
-import {
-    Button,
-    Card,
-    CardActionArea,
-    CardActions,
-    CardContent,
-    CardMedia,
-    makeStyles,
-    Paper,
-    Stack
-} from "@mui/material";
+import {Button, Card, CardActions, CardContent} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { styled } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
+import StatUser from "./StatUser";
+import ButtonsInteractionUser from "./ButtonsInteractionUser";
 
-export default function DetailUser({first_name, last_name, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo}) {
+export default function DetailUser({first_name, last_name, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography}) {
     return (
-        <Card sx={{minWidth: 450, maxWidth: 450}} >
+        <Card sx={{ minWidth:325}}>
             <Box display="flex" justifyContent="center" alignItems="center">
                 <Avatar
                     src= {urlProfilePicture}
@@ -28,77 +20,43 @@ export default function DetailUser({first_name, last_name, urlProfilePicture, nb
             <Grid
                 container
                 direction="row"
-                justifyContent="space-between"
+                justifyContent="space-evenly"
                 alignItems="flex-start"
                 paddingLeft={8}
                 paddingRight={8}
-                paddingTop={3}
+                paddingTop={2}
+                sx={{ display: { xs: 'none', md: 'flex' }}}
             >
-                    <CardActions >
-                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" >S'abonner</Button>
-                    </CardActions>
-                    <CardActions>
-                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained">Message</Button>
-                    </CardActions>
-                </Grid>
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="space-around"
-                    alignItems="flex-start"
-                    paddingTop={2}
-                    paddingLeft={5}
-                    paddingRight={5}
-                >
-                    <Box sx={{ position: "absolute"}} paddingRight={30}>
-                        {(nbSubscriber = 0 && (
-                                <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                                    0
-                                </Typography>
-                            ))
-                            ||
-                            <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                                {nbSubscriber}
-                            </Typography>
-                        }
-                        <Typography variant="body2" color="text.secondary">
-                            Abonnés
-                        </Typography>
-                    </Box>
-                    <Box sx={{ position: "absolute"}}>
-                        <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                            {nbPosts}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Postes
-                        </Typography>
-                    </Box>
-                    <Box sx={{ position: "absolute"}} paddingLeft={30}>
-                        {(nbSubscription = 0 && (
-                                <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                                    0
-                                </Typography>
-                            ))
-                            ||
-                            <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                                {nbSubscription}
-                            </Typography>
-                        }
-                        <Typography variant="body2" color="text.secondary">
-                            Abonnements
-                        </Typography>
-                    </Box>
-                </Grid>
-                <Box paddingTop={6}>
-                    <Typography gutterBottom variant="h6" component="div" align={"center"} >
-                        {first_name} {last_name}
-                    </Typography>
-                </Box>
-                <CardContent>
-                    <Typography color="text" align={"center"}>
-                        {sector} en promo {promo}
-                    </Typography>
-                </CardContent>
-            </Card>
+                <ButtonsInteractionUser/>
+            </Grid>
+
+            <StatUser nbSubscriber={nbSubscriber} nbPosts={nbPosts} nbSubscription={nbSubscription}/>
+
+            <Box paddingTop={6}>
+                <Typography gutterBottom variant="h6" component="div" align={"center"} >
+                    {first_name} {last_name}
+                </Typography>
+                <Typography align={"center"}  paddingRight={2} paddingLeft={2} variant="subtitle1" component="div" color={"grey"}>
+                    {biography}
+                </Typography>
+            </Box>
+            <CardContent>
+                <Typography color="text" align={"center"}>
+                    {sector} en promo {promo}
+                </Typography>
+            </CardContent>
+            <Grid
+                container
+                direction="row"
+                justifyContent="space-between"
+                alignItems="flex-start"
+                paddingLeft={2}
+                paddingRight={2}
+                paddingTop={1}
+                sx={{ display: { xs: 'flex', md: 'none' }}}
+            >
+                <ButtonsInteractionUser/>
+            </Grid>
+        </Card>
     );
 }
