@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { Box } from "@mui/system";
-import {Button, Card} from "@mui/material";
+import {Button, Card, CircularProgress} from "@mui/material";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import {grey} from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
@@ -18,8 +18,10 @@ export default function MainFeed({titre, description, couleur, nbComment, nbLike
 
     const [likeCounter, setLikeCounter] = useState(nbLike);
     const [likeByUser, setLike] = useState(like);
+    const [likeLoading, setLikeLoading] = useState(false);
     const LikePost = async () => {
         setLike(!likeByUser);
+        setLikeLoading(true)
         if (likeByUser === true){
             await deleteLikePost(idPost);
             setLikeCounter(likeCounter => likeCounter - 1);
@@ -27,26 +29,8 @@ export default function MainFeed({titre, description, couleur, nbComment, nbLike
             await postLikePost(idPost);
             setLikeCounter(likeCounter => likeCounter + 1);
         }
+        setLikeLoading(false)
     };
-
-    // const handleSubmit = async event => {
-    //     event.preventDefault();
-    //     // setErrors(validate(values));
-    //     console.log(errors);
-    //     if (Object.keys(errors).length === 0) {
-    //         try {
-    //             await register(values);
-    //             toast.success('Votre compte a été créé. Il faut désormais que votre compte soit accepté par un administrateur ! 😄');
-    //         } catch ({response}) {
-    //             var error = response.data.erreur
-    //             Object.keys(error).forEach(function (key) {
-    //                 console.log(error.email);
-    //                 toast.error(error[key] + ' 😃')
-    //             });
-    //             console.log(response)
-    //         }
-    //     }
-    // };
 
 
     return (
@@ -63,23 +47,29 @@ export default function MainFeed({titre, description, couleur, nbComment, nbLike
                     <ChatBubbleOutlineIcon/>
                 </IconButton>
                 {(nbComment = 0 && (
-                        <Typography variant="body2">
+                        <Typography variant="body2" marginRight={5}>
                             0 commentaire(s)
                         </Typography>
                     ))
                     ||
-                    <Typography variant="body2">
+                    <Typography variant="body2" marginRight={5}>
                         {nbComment} commentaire(s)
                     </Typography>
                 }
 
-                {(likeByUser === true && (
-                        <IconButton onClick={LikePost}>
+
+
+                {(likeLoading && (
+                        <CircularProgress size={30} sx={{marginRight: 1}}/>
+                    ))
+                    ||
+                    (likeByUser === true && (
+                        <IconButton onClick={LikePost} sx={{marginRight: 1}}>
                             <ThumbUpIcon/>
                         </IconButton>
                     ))
                     ||
-                    <IconButton onClick={LikePost}>
+                    <IconButton onClick={LikePost} sx={{marginRight: 1}}>
                         <ThumbUpOffAltIcon/>
                     </IconButton>
                 }
