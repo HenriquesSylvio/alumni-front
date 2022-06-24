@@ -63,17 +63,15 @@ export default function SignUp() {
         toast.success('Votre compte a été créé. Il faut désormais que votre compte soit accepté par un administrateur ! 😄');
       } catch ({response}) {
         var error = response.data.erreur
-        // var arr = [];
         Object.keys(error).forEach(function (key) {
           console.log(error.email);
           toast.error(error[key] + ' 😃')
         });
-        // toast.error(response.data.erreur + ' 😃')
-        // setLoading(false);
         console.log(response)
       }
     }
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

@@ -27,7 +27,7 @@ export default function Profile() {
 
         setUser(response.data)
         userId = response.data.id;
-        console.log(response.data);
+
     };
 
     const getPostByUserId = async () => {
@@ -35,7 +35,7 @@ export default function Profile() {
 
         const response = await getPostByUser(userId)
         setPosts(response.data.posts)
-        console.log(response.data.posts[1].numberLike);
+        console.log(response.data);
         setLoading(!loadingPage);
     };
 
@@ -59,7 +59,17 @@ export default function Profile() {
                 ) : (
                     <>
                         <Box marginLeft={2} marginRight={2} marginTop={15}>
-                            <DetailUser first_name={user.first_name} last_name={user.last_name} urlProfilePicture={user.url_profile_picture} nbSubscriber={user.followerNumber} nbPosts='5' nbSubscription={user.followingNumber} promo={user.promo} sector='Développeur' biography={user.biography}/>
+                            <DetailUser
+                                first_name={user.first_name}
+                                last_name={user.last_name}
+                                urlProfilePicture={user.url_profile_picture}
+                                nbSubscriber={user.followerNumber}
+                                nbPosts='5'
+                                nbSubscription={user.followingNumber}
+                                promo={user.promo}
+                                sector='Développeur'
+                                biography={user.biography}
+                            />
                         </Box>
                         <Box display="flex" sx={{ flexDirection: 'column' }} marginLeft={2} marginRight={2} marginTop={2}>
                                {
@@ -82,6 +92,7 @@ export default function Profile() {
                                                    nbComment={post.numberComment}
                                                    nbLike={post.numberLike}
                                                    like={post.like}
+                                                   idPost={post.idPost}
                                                >
                                                </MainFeed>
                                            </Box>

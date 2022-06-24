@@ -9,21 +9,42 @@ import Typography from "@mui/material/Typography";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import getProfile from "../../services/ProfileApi";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import {register} from "../../services/RegisterApi";
+import {toast} from "react-toastify";
+import {postLikePost} from "../../services/LikePostApi";
 
-export default function MainFeed({titre, description, couleur, nbComment, nbLike, like, ...rest}) {
+export default function MainFeed({titre, description, couleur, nbComment, nbLike, like, idPost, ...rest}) {
 
     const [likeCounter, setLikeCounter] = useState(nbLike);
     const [likeByUser, setLike] = useState(like);
-    const LikePost = () => {
+    const LikePost = async () => {
         setLike(!likeByUser);
-
         if (likeByUser === true){
             setLikeCounter(likeCounter => likeCounter - 1);
         } else {
+            await postLikePost(idPost);
             setLikeCounter(likeCounter => likeCounter + 1);
         }
     };
 
+    // const handleSubmit = async event => {
+    //     event.preventDefault();
+    //     // setErrors(validate(values));
+    //     console.log(errors);
+    //     if (Object.keys(errors).length === 0) {
+    //         try {
+    //             await register(values);
+    //             toast.success('Votre compte a été créé. Il faut désormais que votre compte soit accepté par un administrateur ! 😄');
+    //         } catch ({response}) {
+    //             var error = response.data.erreur
+    //             Object.keys(error).forEach(function (key) {
+    //                 console.log(error.email);
+    //                 toast.error(error[key] + ' 😃')
+    //             });
+    //             console.log(response)
+    //         }
+    //     }
+    // };
 
 
     return (
