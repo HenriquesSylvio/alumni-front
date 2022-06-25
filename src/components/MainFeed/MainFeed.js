@@ -13,8 +13,9 @@ import {register} from "../../services/RegisterApi";
 import {toast} from "react-toastify";
 import {postLikePost} from "../../services/LikePostApi";
 import {deleteLikePost} from "../../services/DeleteLikePost";
+import Avatar from "@mui/material/Avatar";
 
-export default function MainFeed({titre, description, couleur, nbComment, nbLike, like, idPost, ...rest}) {
+export default function MainFeed({idPost, titre, description, createAt, firstName, lastName, nbComment, nbLike, like, couleur, ...rest}) {
 
     const [likeCounter, setLikeCounter] = useState(nbLike);
     const [likeByUser, setLike] = useState(like);
@@ -35,30 +36,49 @@ export default function MainFeed({titre, description, couleur, nbComment, nbLike
 
     return (
         <Card sx={{ p: 1, color: couleur, ...rest}} >
-            <h3>{titre}</h3>
-            <p>{description}</p>
             <Grid
                 container
                 direction="row"
                 justifyContent="flex-start"
+            >
+                <Avatar
+                    sx={{ width: 50, height: 50}}
+                    src= '{urlProfilePicture}'
+                />
+                <Grid>
+                    <Typography marginLeft={2} component="div" fontWeight={"bold"}>
+                        {lastName} {firstName}
+                    </Typography>
+                    <Typography marginLeft={2}>
+                        {createAt}
+                    </Typography>
+                </Grid>
+            </Grid>
+            {/*<h3></h3>*/}
+            <Typography gutterBottom variant="h5" component="div" align={"center"} paddingTop={2}>
+                {titre}
+            </Typography>
+            <p>{description}</p>
+            <Grid
+                container
+                direction="row"
+                justifyContent="flex-end"
                 alignItems="center"
+                paddingRight={0}
             >
                 <IconButton>
                     <ChatBubbleOutlineIcon/>
                 </IconButton>
                 {(nbComment = 0 && (
-                        <Typography variant="body2" marginRight={5}>
+                        <Typography variant="body2" marginRight={2}>
                             0 commentaire(s)
                         </Typography>
                     ))
                     ||
-                    <Typography variant="body2" marginRight={5}>
+                    <Typography variant="body2" marginRight={2}>
                         {nbComment} commentaire(s)
                     </Typography>
                 }
-
-
-
                 {(likeLoading && (
                         <CircularProgress size={30} sx={{marginRight: 1}}/>
                     ))
@@ -73,7 +93,6 @@ export default function MainFeed({titre, description, couleur, nbComment, nbLike
                         <ThumbUpOffAltIcon/>
                     </IconButton>
                 }
-
                 <Typography variant="body2">
                     {likeCounter} like(s)
                 </Typography>

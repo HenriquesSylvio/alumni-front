@@ -27,7 +27,6 @@ export default function Profile() {
 
         setUser(response.data)
         userId = response.data.id;
-
     };
 
     const getPostByUserId = async () => {
@@ -87,12 +86,15 @@ export default function Profile() {
                                        post =>
                                            <Box marginBottom={2} >
                                                <MainFeed
+                                                   firstName={post.firstName}
+                                                   lastName={post.lastName}
                                                    titre={post.title}
                                                    description={post.content}
                                                    nbComment={post.numberComment}
                                                    nbLike={post.numberLike}
                                                    like={post.like}
                                                    idPost={post.idPost}
+                                                   createAt={post.createAt}
                                                >
                                                </MainFeed>
                                            </Box>

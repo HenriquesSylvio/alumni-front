@@ -10,7 +10,7 @@ import ButtonsInteractionUser from "./ButtonsInteractionUser";
 
 export default function DetailUser({first_name, last_name, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography}) {
     return (
-        <Card sx={{ minWidth:325}}>
+        <Card sx={{ minWidth:300}}>
             <Box display="flex" justifyContent="center" alignItems="center">
                 <Avatar
                     src= {urlProfilePicture}
