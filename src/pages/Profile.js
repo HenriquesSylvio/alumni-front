@@ -59,8 +59,8 @@ export default function Profile() {
                     <>
                         <Box marginLeft={2} marginRight={2} marginTop={15}>
                             <DetailUser
-                                first_name={user.first_name}
-                                last_name={user.last_name}
+                                firstName={user.first_name}
+                                lastName={user.last_name}
                                 urlProfilePicture={user.url_profile_picture}
                                 nbSubscriber={user.followerNumber}
                                 nbPosts='5'

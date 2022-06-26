@@ -7,8 +7,9 @@ import { styled } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
 import StatUser from "./StatUser";
 import ButtonsInteractionUser from "./ButtonsInteractionUser";
+import EditProfileButton from "./EditProfileButton";
 
-export default function DetailUser({first_name, last_name, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography}) {
+export default function DetailUser({firstName, lastName, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography}) {
     return (
         <Card sx={{ minWidth:300}}>
             <Box display="flex" justifyContent="center" alignItems="center">
@@ -34,7 +35,7 @@ export default function DetailUser({first_name, last_name, urlProfilePicture, nb
 
             <Box paddingTop={6}>
                 <Typography gutterBottom variant="h6" component="div" align={"center"} >
-                    {first_name} {last_name}
+                    {firstName} {lastName}
                 </Typography>
                 <Typography align={"center"}  paddingRight={2} paddingLeft={2} variant="subtitle1" component="div" color={"grey"}>
                     {biography}
@@ -57,6 +58,17 @@ export default function DetailUser({first_name, last_name, urlProfilePicture, nb
             >
                 <ButtonsInteractionUser/>
             </Grid>
+            <Box display="flex" justifyContent="center" alignItems="center" paddingBottom={2}>
+                {/*<Button style={{backgroundColor: "#00A5A5"}} size="small" variant="contained">*/}
+                {/*    Modifier le profil*/}
+                {/*</Button>*/}
+                <EditProfileButton
+                    firstName={firstName}
+                    lastName={lastName}
+                    biography={biography}
+                    urlProfilePicture={urlProfilePicture}
+                />
+            </Box>
         </Card>
     );
 }
