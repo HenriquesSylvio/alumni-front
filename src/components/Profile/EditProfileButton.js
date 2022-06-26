@@ -2,20 +2,16 @@ import * as React from 'react';
 import {Button, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
 import Backdrop from '@mui/material/Backdrop';
-
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import SignIn from "../Layout/Header/LoginRegister/Login/Login";
-import SignUp from "../Layout/Header/LoginRegister/Register";
 import Avatar from "@mui/material/Avatar";
-import {createTheme, ThemeProvider} from "@mui/material/styles";
+import {createTheme, styled, ThemeProvider} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import {Autocomplete} from "@mui/lab";
+import {createRef} from "react";
+import {storage} from "../../config/firebaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import { v4 } from "uuid"
 
 const style = {
     position: 'absolute',
@@ -30,16 +26,40 @@ const style = {
 };
 const theme = createTheme();
 
+const Input = styled('input')({
+    display: 'none',
+});
+
+
 export default function EditProfileButton({firstName, lastName, urlProfilePicture, biography}) {
     const [open, setOpen] = React.useState(false);
+    const [avatar, setAvatar] = React.useState(urlProfilePicture);
+    const [image, setImage] = React.useState();
+    const [urlProfile, setUrlProfile] = React.useState();
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false)
-
+    const inputFileRef = createRef(null);
 
     const [value, setValue] = React.useState('1');
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const uploadImage = () => {
+        // console.log(image)
+        if (image == null) return;
+        const imageRef = ref(storage, `image/${image.name + v4()}`);
+        uploadBytes(imageRef, image).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                setUrlProfile(url)
+            })
+        })
+    }
+
+    const changeAvatar = (event) => {
+        const newImage = event.target?.files?.[0];
+        // console.log(URL.createObjectURL(newImage));
+        if (newImage) {
+            setAvatar(URL.createObjectURL(newImage));
+            setImage(newImage);
+        }
     };
 
     return (
@@ -74,20 +94,23 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                                     >
                                         <Box display="flex" justifyContent="center" alignItems="center" marginBottom={1}>
                                             <Avatar
-                                                src= {urlProfilePicture}
+                                                loca
+                                                src={avatar || ""}
                                                 sx={{ width: 100, height: 100}}
-
                                             />
                                         </Box>
-                                        <Box display="flex" justifyContent="center" alignItems="center" marginBottom={1}>
-                                            <Button variant="contained" >
-                                                Importer image
-                                            </Button>
+                                        <Box marginBottom={1}>
+                                            <label htmlFor="contained-button-file">
+                                                <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={changeAvatar}/>
+                                                <Button variant="contained" component="span" onClick={changeAvatar}>
+                                                    Importer une image
+                                                </Button>
+                                            </label>
                                         </Box>
+
                                         <Box
                                             component="form"
                                             noValidate
-                                            // onSubmit={handleSubmit}
                                             sx={{ mt: 1 }}
                                         >
                                             <Grid container spacing={2}>
@@ -101,9 +124,6 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                                                         label="Prénom"
                                                         autoFocus
                                                         defaultValue={firstName}
-                                                        // onChange={handleChange}
-                                                        // error={ errors.first_name }
-                                                        // helperText={ errors.first_name }
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6}>
@@ -135,10 +155,11 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                                                 </Grid>
                                             </Grid>
                                             <Button
-                                                type="submit"
+                                                // type="submit"
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2 }}
+                                                onClick={uploadImage}
                                             >
                                                 Modifier
                                             </Button>
