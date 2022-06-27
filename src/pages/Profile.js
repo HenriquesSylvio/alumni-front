@@ -24,7 +24,7 @@ export default function Profile() {
 
     const getProfileUser = async () => {
         const response = await getProfile(params.id)
-
+        console.log(response.data);
         setUser(response.data)
         userId = response.data.id;
     };

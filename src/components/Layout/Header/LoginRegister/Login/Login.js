@@ -35,6 +35,7 @@ export default function SignIn() {
         const {name, value} = currentTarget;
 
         setValues({...values, [name]: value})
+        console.log(values);
     }
 
     const handleSubmit = async event => {
@@ -45,6 +46,7 @@ export default function SignIn() {
          if (Object.keys(errors).length === 0) {
              setLoading(true);
             try {
+                console.log(values)
                 const response = await login(values);
                 setIsAuthenticated(response);
                 navigate('/feed')
