@@ -95,6 +95,7 @@ export default function Profile() {
                                                    like={post.like}
                                                    idPost={post.idPost}
                                                    createAt={post.createAt}
+                                                   url_profile_picture={post.urlProfilePicture}
                                                >
                                                </MainFeed>
                                            </Box>

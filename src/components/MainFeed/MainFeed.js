@@ -15,7 +15,7 @@ import {postLikePost} from "../../services/LikePostApi";
 import {deleteLikePost} from "../../services/DeleteLikePost";
 import Avatar from "@mui/material/Avatar";
 
-export default function MainFeed({idPost, titre, description, createAt, firstName, lastName, nbComment, nbLike, like, couleur, ...rest}) {
+export default function MainFeed({idPost, titre, description, createAt, firstName, lastName, nbComment, nbLike, url_profile_picture, like, couleur, ...rest}) {
 
     const [likeCounter, setLikeCounter] = useState(nbLike);
     const [likeByUser, setLike] = useState(like);
@@ -43,7 +43,7 @@ export default function MainFeed({idPost, titre, description, createAt, firstNam
             >
                 <Avatar
                     sx={{ width: 50, height: 50}}
-                    src= '{urlProfilePicture}'
+                    src= {url_profile_picture}
                 />
                 <Grid>
                     <Typography marginLeft={2} component="div" fontWeight={"bold"}>

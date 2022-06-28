@@ -8,14 +8,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import {createRef, useEffect, useState} from "react";
+import {useState} from "react";
 import {storage} from "../../config/firebaseConfig";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, deleteObject  } from "firebase/storage";
 import { v4 } from "uuid";
 import {EditProfile} from "../../services/EditProfile";
-// import { validate } from "../../validators/EditProfileValidator"
 import validate from "../../validators/EditProfileValidator";
-// import EditProfile from "../../services/EditProfile";
+import {toast} from "react-toastify";
 
 const style = {
     position: 'absolute',
@@ -34,7 +33,6 @@ const Input = styled('input')({
      display: 'none',
 });
 
-
 export default function EditProfileButton({firstName, lastName, urlProfilePicture, biography}) {
     const [open, setOpen] = React.useState(false);
     const [avatar, setAvatar] = React.useState(urlProfilePicture);
@@ -44,7 +42,7 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
         first_name: firstName,
         last_name: lastName,
         biography: biography,
-        url_profile_picture: urlProfilePicture
+        url_profile_picture: ""
     });
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false)
@@ -54,15 +52,20 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
     }
 
     const uploadImage = async () => {
-        let test = '';
         if (image == null) return;
-        console.log("noice")
         const imageRef = ref(storage, `image/${image.name + v4()}`);
-            await uploadBytes(imageRef, image).then(async (snapshot) => {
-                await getDownloadURL(snapshot.ref).then(async (url) => {
-                    values.url_profile_picture = url
-                })
+        await uploadBytes(imageRef, image).then(async (snapshot) => {
+            await getDownloadURL(snapshot.ref).then((url) => {
+                values.url_profile_picture = url
             })
+        })
+    }
+    const deleteImage = async () => {
+        if (image == null) return;
+        try{
+            const deleteImage = ref(storage, urlProfilePicture);
+            await deleteObject(deleteImage).then();
+        } catch {}
     }
 
     const changeAvatar = (event) => {
@@ -78,34 +81,23 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
         const {name, value} = currentTarget;
 
         setValues({...values, [name]: value})
-        // console.log(values);
     }
-    // useEffect(handleChange,[])
 
     const handleSubmit = async event => {
         event.preventDefault();
-        // setValues({
-        //     first_name: values.first_name,
-        //     last_name: values.last_name,
-        //     url_profile_picture: values.url_profile_picture,
-        //     biography: values.biography
-        // })
-        // setValues({...values, ["url_profile_picture"]: urlProfile})
         setErrors(validate(values));
         console.log(Object.keys(errors).length);
         if (Object.keys(errors).length === 0) {
-        console.log("test");
-        await uploadImage();
-        await EditProfile(values);
-            //     toast.success('Votre compte a été créé. Il faut désormais que votre compte soit accepté par un administrateur ! 😄');
-            // } catch ({response}) {
-            //     var error = response.data.erreur
-            //     Object.keys(error).forEach(function (key) {
-            //         console.log(error.email);
-            //         toast.error(error[key] + ' 😃')
-            //     });
-            //     console.log(response)
-            // }
+            try {
+                await uploadImage();
+                console.log(values);
+                await EditProfile(values);
+                await deleteImage();
+                window.location.reload()
+            } catch ({response}) {
+                toast.error('Une erreur est survenue. Veuillez réessayer plus tard ! 😃')
+                console.log(response)
+            }
         }
     }
 
