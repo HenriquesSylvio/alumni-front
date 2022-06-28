@@ -20,16 +20,9 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts}) {
                 sx={{ display: { xs: 'none', md: 'flex' }}}
             >
                 <Box sx={{ position: "absolute"}} paddingRight={30}>
-                    {(nbSubscriber = 0 && (
-                            <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                                0
-                            </Typography>
-                        ))
-                        ||
-                        <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                            {nbSubscriber}
-                        </Typography>
-                    }
+                    <Typography variant="body2" align={"center"} fontWeight={"bold"}>
+                        {nbSubscriber}
+                    </Typography>
                     <Typography variant="body2" color="text.secondary">
                         Abonnés
                     </Typography>
@@ -43,16 +36,9 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts}) {
                     </Typography>
                 </Box>
                 <Box sx={{ position: "absolute"}} paddingLeft={30}>
-                    {(nbSubscription = 0 && (
-                            <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                                0
-                            </Typography>
-                        ))
-                        ||
-                        <Typography variant="body2" align={"center"} fontWeight={"bold"}>
-                            {nbSubscription}
-                        </Typography>
-                    }
+                    <Typography variant="body2" align={"center"} fontWeight={"bold"}>
+                        {nbSubscription}
+                    </Typography>
                     <Typography variant="body2" color="text.secondary">
                         Abonnements
                     </Typography>

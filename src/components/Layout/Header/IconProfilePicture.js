@@ -11,8 +11,9 @@ import {useContext} from "react";
 import Auth from "../../../contexts/Auth";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {useNavigate } from "react-router-dom";
+import {useNavigate, withRouter } from "react-router-dom";
 import {Link} from "@mui/material";
+import {Navigate} from "react-router";
 
 export default function IconProfilePicture() {
     let navigate = useNavigate();
@@ -56,7 +57,7 @@ export default function IconProfilePicture() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                <MenuItem key='Profile' onClick={() => {navigate('/profile')}} >
+                <MenuItem key='Profile' onClick={() => {navigate('/profile', { replace: true })}} >
                     <Typography textAlign="center">Profil</Typography>
                 </MenuItem>
                 <MenuItem key='Logout' onClick={handleLogout}>

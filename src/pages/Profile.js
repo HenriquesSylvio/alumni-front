@@ -24,17 +24,14 @@ export default function Profile() {
 
     const getProfileUser = async () => {
         const response = await getProfile(params.id)
-        console.log(response.data);
         setUser(response.data)
+        console.log(response.data.followingNumber);
         userId = response.data.id;
     };
 
     const getPostByUserId = async () => {
-        // const userId = user.id;
-
         const response = await getPostByUser(userId)
         setPosts(response.data.posts)
-        console.log(response.data);
         setLoading(!loadingPage);
     };
 
@@ -59,15 +56,16 @@ export default function Profile() {
                     <>
                         <Box marginLeft={2} marginRight={2} marginTop={15}>
                             <DetailUser
-                                firstName={user.first_name}
-                                lastName={user.last_name}
-                                urlProfilePicture={user.url_profile_picture}
+                                firstName={user.firstName}
+                                lastName={user.lastName}
+                                urlProfilePicture={user.urlProfilePicture}
                                 nbSubscriber={user.followerNumber}
                                 nbPosts='5'
                                 nbSubscription={user.followingNumber}
                                 promo={user.promo}
                                 sector='Développeur'
                                 biography={user.biography}
+                                idUser={user.id}
                             />
                         </Box>
                         <Box display="flex" sx={{ flexDirection: 'column' }} marginLeft={2} marginRight={2} marginTop={2}>
