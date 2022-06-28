@@ -9,7 +9,7 @@ import StatUser from "./StatUser";
 import ButtonsInteractionUser from "./ButtonsInteractionUser";
 import EditProfileButton from "./EditProfileButton";
 
-export default function DetailUser({idUser ,firstName, lastName, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography}) {
+export default function DetailUser({idUser ,firstName, lastName, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography, subscribe}) {
     return (
         <Card sx={{ minWidth:300}}>
             <Box display="flex" justifyContent="center" alignItems="center">
@@ -28,7 +28,7 @@ export default function DetailUser({idUser ,firstName, lastName, urlProfilePictu
                 paddingTop={2}
                 sx={{ display: { xs: 'none', md: 'flex' }}}
             >
-                <ButtonsInteractionUser idUser={idUser}/>
+                <ButtonsInteractionUser idUser={idUser} subscribe={subscribe}/>
             </Grid>
 
             <StatUser nbSubscriber={nbSubscriber} nbPosts={nbPosts} nbSubscription={nbSubscription}/>

@@ -25,7 +25,7 @@ export default function Profile() {
     const getProfileUser = async () => {
         const response = await getProfile(params.id)
         setUser(response.data)
-        console.log(response.data.followingNumber);
+        console.log(response.data);
         userId = response.data.id;
     };
 
@@ -66,6 +66,7 @@ export default function Profile() {
                                 sector='Développeur'
                                 biography={user.biography}
                                 idUser={user.id}
+                                subscribe={user.subcribe}
                             />
                         </Box>
                         <Box display="flex" sx={{ flexDirection: 'column' }} marginLeft={2} marginRight={2} marginTop={2}>
