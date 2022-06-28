@@ -31,7 +31,7 @@ const style = {
 const theme = createTheme();
 
 const Input = styled('input')({
-    // display: 'none',
+     display: 'none',
 });
 
 
@@ -40,15 +40,18 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
     const [avatar, setAvatar] = React.useState(urlProfilePicture);
     const [image, setImage] = React.useState();
     const [errors, setErrors] = useState({});
-    const [urlProfile, setUrlProfile] = React.useState();
     const [values, setValues] = useState({
         first_name: firstName,
         last_name: lastName,
-        biography: "",
-        url_profile_picture: ""
+        biography: biography,
+        url_profile_picture: urlProfilePicture
     });
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false)
+
+    function handleClick() {
+        setErrors(validate(values));
+    }
 
     const uploadImage = async () => {
         let test = '';
@@ -75,8 +78,9 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
         const {name, value} = currentTarget;
 
         setValues({...values, [name]: value})
-        console.log(values);
+        // console.log(values);
     }
+    // useEffect(handleChange,[])
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -88,15 +92,11 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
         // })
         // setValues({...values, ["url_profile_picture"]: urlProfile})
         setErrors(validate(values));
-        console.log(errors);
-        // if (Object.keys(errors).length === 0) {
-        //     try {
-        // console.log("test");
+        console.log(Object.keys(errors).length);
+        if (Object.keys(errors).length === 0) {
+        console.log("test");
         await uploadImage();
-        // uploadImage()
-        console.log(values);
         await EditProfile(values);
-        console.log("test4");
             //     toast.success('Votre compte a été créé. Il faut désormais que votre compte soit accepté par un administrateur ! 😄');
             // } catch ({response}) {
             //     var error = response.data.erreur
@@ -106,8 +106,8 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
             //     });
             //     console.log(response)
             // }
-        // }
-    };
+        }
+    }
 
     return (
             <Box sx={{ p: 1 }}>
@@ -124,7 +124,7 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                     BackdropProps={{
                         timeout: 500,
                     }}
-                    on
+                    onSubmit={handleSubmit}
                 >
                     <Fade in={open}>
                         <Box sx={style}>
@@ -138,6 +138,7 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                                             flexDirection: 'column',
                                             alignItems: 'center',
                                         }}
+
                                     >
                                         <Box display="flex" justifyContent="center" alignItems="center" marginBottom={1}>
                                             <Avatar
@@ -210,11 +211,11 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                                                 </Grid>
                                             </Grid>
                                             <Button
-                                                // type="submit"
+                                                type="submit"
                                                 fullWidth
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2 }}
-                                                onClick={handleSubmit}
+                                                onClick={handleClick}
                                             >
                                                 Modifier
                                             </Button>
