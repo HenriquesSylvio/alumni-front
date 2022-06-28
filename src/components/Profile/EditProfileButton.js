@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, Fade, Modal} from "@mui/material";
+import {Button, CircularProgress, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
 import Backdrop from '@mui/material/Backdrop';
 import Avatar from "@mui/material/Avatar";
@@ -38,11 +38,12 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
     const [avatar, setAvatar] = React.useState(urlProfilePicture);
     const [image, setImage] = React.useState();
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = React.useState(false);
     const [values, setValues] = useState({
         first_name: firstName,
         last_name: lastName,
         biography: biography,
-        url_profile_picture: ""
+        url_profile_picture: urlProfilePicture
     });
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false)
@@ -63,8 +64,8 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
     const deleteImage = async () => {
         if (image == null) return;
         try{
-            const deleteImage = ref(storage, urlProfilePicture);
-            await deleteObject(deleteImage).then();
+            const deletePicture = ref(storage, urlProfilePicture);
+            await deleteObject(deletePicture).then();
         } catch {}
     }
 
@@ -88,6 +89,7 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
         setErrors(validate(values));
         console.log(Object.keys(errors).length);
         if (Object.keys(errors).length === 0) {
+            setLoading(true);
             try {
                 await uploadImage();
                 console.log(values);
@@ -141,8 +143,8 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                                         <Box marginBottom={1}>
                                             <label htmlFor="contained-button-file">
                                                 <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={changeAvatar}
-                                                       name="url_profile_picture"/>
-                                                <Button variant="contained" component="span" onClick={changeAvatar}>
+                                                       name="url_profile_picture" disabled={loading}/>
+                                                <Button variant="contained" component="span" onClick={changeAvatar} disabled={loading}>
                                                     Importer une image
                                                 </Button>
                                             </label>
@@ -168,6 +170,7 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                                                         error={ errors.first_name }
                                                         helperText={ errors.first_name }
                                                         value={values.first_name}
+                                                        disabled={loading}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6}>
@@ -183,6 +186,7 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                                                         error={ errors.last_name }
                                                         helperText={ errors.last_name }
                                                         value={values.last_name}
+                                                        disabled={loading}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12}>
@@ -198,19 +202,32 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                                                         helperText={"255 caractères au maximum"}
                                                         defaultValue={biography}
                                                         onChange={handleChange}
+                                                        disabled={loading}
                                                         // value={values.biography}
                                                     />
                                                 </Grid>
                                             </Grid>
-                                            <Button
-                                                type="submit"
-                                                fullWidth
-                                                variant="contained"
-                                                sx={{ mt: 3, mb: 2 }}
-                                                onClick={handleClick}
-                                            >
-                                                Modifier
-                                            </Button>
+                                            {(loading && (
+                                                    <Box sx={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        marginTop: 2
+                                                    }}>
+                                                        <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                                                    </Box>
+                                                ))
+                                                ||
+                                                <Button
+                                                    type="submit"
+                                                    fullWidth
+                                                    variant="contained"
+                                                    sx={{ mt: 3, mb: 2 }}
+                                                    onClick={handleClick}
+                                                >
+                                                    Modifier
+                                                </Button>
+                                            }
                                         </Box>
                                     </Box>
                                 </Container>
