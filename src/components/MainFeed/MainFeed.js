@@ -1,22 +1,18 @@
 import React, {useState} from "react";
-import { Box } from "@mui/system";
 import {Button, Card, CircularProgress} from "@mui/material";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import {grey} from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import getProfile from "../../services/ProfileApi";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import {register} from "../../services/RegisterApi";
-import {toast} from "react-toastify";
 import {postLikePost} from "../../services/LikePostApi";
 import {deleteLikePost} from "../../services/DeleteLikePost";
 import Avatar from "@mui/material/Avatar";
+import {useNavigate} from "react-router-dom";
 
-export default function MainFeed({idPost, titre, description, createAt, firstName, lastName, nbComment, nbLike, url_profile_picture, like, couleur, ...rest}) {
-
+export default function MainFeed({idPost, titre, description, createAt, firstName, lastName, nbComment, nbLike, url_profile_picture, like, idUser, couleur, ...rest}) {
+    let  navigate = useNavigate();
     const [likeCounter, setLikeCounter] = useState(nbLike);
     const [likeByUser, setLike] = useState(like);
     const [likeLoading, setLikeLoading] = useState(false);
@@ -33,6 +29,10 @@ export default function MainFeed({idPost, titre, description, createAt, firstNam
         setLikeLoading(false)
     };
 
+    const goProfile = () => {
+        navigate(`/profile/${idUser}`);
+    };
+
 
     return (
         <Card sx={{ p: 1, color: couleur, ...rest}} >
@@ -41,11 +41,13 @@ export default function MainFeed({idPost, titre, description, createAt, firstNam
                 direction="row"
                 justifyContent="flex-start"
             >
-                <Avatar
-                    sx={{ width: 50, height: 50}}
-                    src= {url_profile_picture}
-                />
-                <Grid>
+                <IconButton onClick={goProfile}>
+                    <Avatar
+                        sx={{ width: 50, height: 50}}
+                        src= {url_profile_picture}
+                    />
+                </IconButton>
+                <Grid marginTop={1}>
                     <Typography marginLeft={2} component="div" fontWeight={"bold"}>
                         {lastName} {firstName}
                     </Typography>
