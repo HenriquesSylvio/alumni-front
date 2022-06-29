@@ -9,9 +9,12 @@ export default function Feed() {
         <div style={{display: "flex"}}>
             <Stack direction="column" alignItems="center" spacing={5} sx={{display:"flex", flex: 1, border: '1px dashed grey', color:"#CA4B38"}}>
                 <h1>Fil d'actualités</h1>
-                <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration à besoin de vous, recherche tel type d'emploi"></MainFeed>
-                <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration à besoin de vous, recherche tel type d'emploi"></MainFeed>
-                <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration à besoin de vous, recherche tel type d'emploi"></MainFeed>
+                <Box width="95%">
+                    <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration à besoin de vous, recherche tel type d'emploi"></MainFeed>
+                </Box>
+                <Box width="95%">
+                    <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration à besoin de vous, recherche tel type d'emploi"></MainFeed>
+                </Box>
             </Stack>
 
             <div style={{width:"25%"}}>
