@@ -6,27 +6,33 @@ import MainFeed from '../components/MainFeed/MainFeed';
 import getFeed from "../services/FeedApi";
 import SignInButton from "../components/Layout/Header/LoginRegister/SignInButton";
 
-class Feed extends Component {
+export default function Feed() {
+    let page = 1;
+    const [posts, setPosts] = useState([]);
+    let newPosts = [];
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            posts: [],
-        }
+    const loadMorePosts = () => {
+        getPostFromFeed(1);
     }
 
-    async getFeed() {
-        const response = await getFeed(1);
-        this.setState({posts: response.data.data})
+    const getPostFromFeed = async () => {
+        const response = await getFeed(page);
+        newPosts = response.data.data;
+        setPosts((oldPosts) => [...oldPosts, ...newPosts])
+        page += 1
     };
 
-    async componentDidMount() {
-        await this.getFeed();
+    const handleScroll = (e) =>{
+        if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
+            getPostFromFeed(1).then();
+        }
+
     }
 
-    render() {
-        const { posts } = this.state
+    useEffect(async () => {
+        await getPostFromFeed();
+        window.addEventListener('scroll', handleScroll)
+    }, []);
         return (
             <div style={{display: "flex"}}>
                 <Stack direction="column" alignItems="center" spacing={5} sx={{display:"flex", flex: 1, color:"#CA4B38"}}>
@@ -59,8 +65,4 @@ class Feed extends Component {
                     }
             </div>
         )
-    }
 }
-
-
-export default Feed
