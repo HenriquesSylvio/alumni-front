@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Box} from "@mui/system";
-import {Button, Card, CardActions, CardContent} from "@mui/material";
+import {Button, Card, CardActions, CardContent, CircularProgress} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { styled } from '@mui/material/styles';
@@ -16,7 +16,9 @@ import {useState} from "react";
 
 export default function ButtonsInteractionUser({idUser, subscribe}) {
     const [subscribeByUser, setSubscribe] = useState(subscribe);
+    const [subscribeLoading, setSubscribeLoading] = useState(false);
     const handleSubcribe = async () => {
+        setSubscribeLoading(true)
         await postSubscribe(idUser)
         // setLike(!likeByUser);
         // setLikeLoading(true)
@@ -29,10 +31,12 @@ export default function ButtonsInteractionUser({idUser, subscribe}) {
         // }
         // setLikeLoading(false)
         setSubscribe(true)
+        setSubscribeLoading(false)
     };
 
     const handleRemoveSubcribe = async () => {
         console.log(idUser)
+        setSubscribeLoading(true)
         await deleteSubscribe(idUser)
         // setLike(!likeByUser);
         // setLikeLoading(true)
@@ -45,12 +49,16 @@ export default function ButtonsInteractionUser({idUser, subscribe}) {
         // }
         // setLikeLoading(false)
         setSubscribe(false)
+        setSubscribeLoading(false)
     };
 
     return (
         <>
             <CardActions>
-                {
+                {(subscribeLoading && (
+                        <CircularProgress size={30} sx={{marginRight: 1}}/>
+                    ))
+                    ||
                     (subscribeByUser === true && (
                         <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={handleRemoveSubcribe}>Se désabonner</Button>
                     ))

@@ -32,6 +32,7 @@ export default function Profile() {
     const getPostByUserId = async () => {
         const response = await getPostByUser(userId)
         setPosts(response.data.posts)
+        console.log(response.data.posts);
         setLoading(!loadingPage);
     };
 
