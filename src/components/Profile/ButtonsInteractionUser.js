@@ -12,8 +12,10 @@ import IconButton from "@mui/material/IconButton";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import {deleteSubscribe} from "../../services/DeleteSubscribeApi";
+import {useState} from "react";
 
 export default function ButtonsInteractionUser({idUser, subscribe}) {
+    const [subscribeByUser, setSubscribe] = useState(subscribe);
     const handleSubcribe = async () => {
         await postSubscribe(idUser)
         // setLike(!likeByUser);
@@ -26,12 +28,12 @@ export default function ButtonsInteractionUser({idUser, subscribe}) {
         //     setLikeCounter(likeCounter => likeCounter + 1);
         // }
         // setLikeLoading(false)
+        setSubscribe(true)
     };
 
     const handleRemoveSubcribe = async () => {
         console.log(idUser)
         await deleteSubscribe(idUser)
-        console.log('noice');
         // setLike(!likeByUser);
         // setLikeLoading(true)
         // if (likeByUser === true){
@@ -42,13 +44,14 @@ export default function ButtonsInteractionUser({idUser, subscribe}) {
         //     setLikeCounter(likeCounter => likeCounter + 1);
         // }
         // setLikeLoading(false)
+        setSubscribe(false)
     };
 
     return (
         <>
             <CardActions>
                 {
-                    (subscribe === true && (
+                    (subscribeByUser === true && (
                         <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={handleRemoveSubcribe}>Se désabonner</Button>
                     ))
                     ||
