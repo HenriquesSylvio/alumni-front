@@ -85,11 +85,6 @@ export default function ButtonAddPost() {
 
                 </Fade>
             </Modal>
-            {/*<Fade in={open}>*/}
-            {/*    <Box sx={styleBox}>*/}
-            {/*        <AddPostForm />*/}
-            {/*    </Box>*/}
-            {/*</Fade>*/}
         </Box>
     );
 }
