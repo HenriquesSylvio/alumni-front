@@ -9,6 +9,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import AddIcon from "@mui/icons-material/Add";
 import SignIn from "../Layout/Header/LoginRegister/Login";
+import AddPostForm from "./AddPostForm";
 
 const styleBox = {
     position: 'absolute',
@@ -19,7 +20,17 @@ const styleBox = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-    borderRadius: 2
+    borderRadius: 2,
+    display: { xs: 'none', md: 'flex' },
+};
+const styleResponsiveBox = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    display: { xs: 'flex', md: 'none' }
 };
 
 const styleButton = {
@@ -44,10 +55,7 @@ export default function ButtonAddPost() {
     };
 
     return (
-        <Box sx={{ p: 1 }}>
-            {/*<Button onClick={handleOpen} color="inherit" variant="outlined">*/}
-            {/*    Se connecter*/}
-            {/*</Button>*/}
+        <Box>
             <Box style={styleButton}>
                 {/*sx={{display:"flex", flex: 1, color:"#CA4B38"}}*/}
                 <Fab sx={{backgroundColor:"#00A5A5", color: "white", '&:hover': {color: '#00A5A5'}}} saria-label="add" onClick={handleOpen}>
@@ -66,11 +74,22 @@ export default function ButtonAddPost() {
                 }}
             >
                 <Fade in={open}>
-                    <Box sx={styleBox}>
-                        <SignIn />
+                    <Box>
+                        <Box sx={styleBox}>
+                            <AddPostForm />
+                        </Box>
+                        <Box sx={styleResponsiveBox}>
+                            <AddPostForm />
+                        </Box>
                     </Box>
+
                 </Fade>
             </Modal>
+            {/*<Fade in={open}>*/}
+            {/*    <Box sx={styleBox}>*/}
+            {/*        <AddPostForm />*/}
+            {/*    </Box>*/}
+            {/*</Fade>*/}
         </Box>
     );
 }
