@@ -1,9 +1,10 @@
-import {Button, Card, Stack} from '@mui/material';
+import {Button, Card, Fab, Stack} from '@mui/material';
 import { Box, padding } from '@mui/system';
 import React, {Component, useContext, useEffect, useState} from 'react';
 import EventFeed from '../components/EventFeed/EventFeed';
 import MainFeed from '../components/MainFeed/MainFeed';
 import getFeed from "../services/FeedApi";
+import AddIcon from '@mui/icons-material/Add';
 import SignInButton from "../components/Layout/Header/LoginRegister/SignInButton";
 
 export default function Feed() {
@@ -22,11 +23,20 @@ export default function Feed() {
         page += 1
     };
 
+    const style = {
+        margin: 0,
+        top: 'auto',
+        right: 100,
+        bottom: 100,
+        left: 'auto',
+        position: 'fixed',
+    };
+
+
     const handleScroll = (e) =>{
         if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
             getPostFromFeed(1).then();
         }
-
     }
 
     useEffect(async () => {
@@ -63,6 +73,12 @@ export default function Feed() {
                                 </Stack>
                             </div>
                     }
+                <Box style={style}>
+                    {/*sx={{display:"flex", flex: 1, color:"#CA4B38"}}*/}
+                    <Fab sx={{backgroundColor:"#00A5A5", color: "white", '&:hover': {color: '#00A5A5'}}} saria-label="add">
+                        <AddIcon />
+                    </Fab>
+                </Box>
             </div>
         )
 }
