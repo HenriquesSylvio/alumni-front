@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -15,6 +15,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import CreateIcon from '@mui/icons-material/Create';
 import {addPost} from "../../services/AddPostApi";
+import getTag from "../../services/GetTagApi";
 
 const theme = createTheme();
 
@@ -24,6 +25,16 @@ export default function AddPostForm() {
         tag: {
             id: 2
         }
+    });
+    const listTag = [];
+
+    const loadTag = () => {
+        const response = getTag();
+        console.log(response)
+    }
+
+    useLayoutEffect(() => {
+        loadTag()
     });
 
     const handleChange = ({currentTarget}) => {
