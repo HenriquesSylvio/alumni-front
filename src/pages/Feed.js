@@ -6,6 +6,7 @@ import MainFeed from '../components/MainFeed/MainFeed';
 import getFeed from "../services/FeedApi";
 import AddIcon from '@mui/icons-material/Add';
 import SignInButton from "../components/Layout/Header/LoginRegister/SignInButton";
+import ButtonAddPost from "../components/MainFeed/ButtonAddPost";
 
 export default function Feed() {
     let page = 1;
@@ -22,16 +23,6 @@ export default function Feed() {
         setPosts((oldPosts) => [...oldPosts, ...newPosts])
         page += 1
     };
-
-    const style = {
-        margin: 0,
-        top: 'auto',
-        right: 100,
-        bottom: 100,
-        left: 'auto',
-        position: 'fixed',
-    };
-
 
     const handleScroll = (e) =>{
         if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
@@ -72,13 +63,7 @@ export default function Feed() {
                                     <EventFeed titre="Titre 5" description="texte 5"/>
                                 </Stack>
                             </div>
-                    }
-                <Box style={style}>
-                    {/*sx={{display:"flex", flex: 1, color:"#CA4B38"}}*/}
-                    <Fab sx={{backgroundColor:"#00A5A5", color: "white", '&:hover': {color: '#00A5A5'}}} saria-label="add">
-                        <AddIcon />
-                    </Fab>
-                </Box>
+                <ButtonAddPost/>
             </div>
         )
 }
