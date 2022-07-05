@@ -34,6 +34,7 @@ export default function Feed() {
         await getPostFromFeed();
         window.addEventListener('scroll', handleScroll)
     }, []);
+
         return (
             <div style={{display: "flex"}}>
                 <Stack direction="column" alignItems="center" spacing={5} sx={{display:"flex", flex: 1, color:"#CA4B38"}}>

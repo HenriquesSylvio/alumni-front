@@ -16,6 +16,7 @@ import Typography from "@mui/material/Typography";
 import CreateIcon from '@mui/icons-material/Create';
 import {addPost} from "../../services/AddPostApi";
 import getTag from "../../services/GetTagApi";
+import {Autocomplete} from "@mui/lab";
 
 const theme = createTheme();
 
@@ -23,19 +24,25 @@ export default function AddPostForm() {
     const [values, setValues] = useState({
         content: "",
         tag: {
-            id: 2
+            id: ""
         }
     });
+    const [tags, setTags] = useState([]);
     const listTag = [];
 
-    const loadTag = () => {
-        const response = getTag();
-        console.log(response)
+    const loadTag = async () => {
+        const response = await getTag();
+        console.log(response.data.tags);
+        setTags(response.data.tags);
     }
 
     useLayoutEffect(() => {
         loadTag()
-    });
+    }, []);
+
+    // useEffect(async () => {
+    //     await loadTag();
+    // }, []);
 
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget;
@@ -105,6 +112,24 @@ export default function AddPostForm() {
                                     multiline
                                     rows={10}
                                     onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Autocomplete
+                                    fullWidth
+                                    options={tags}
+                                    onChange={(event, value) => setValues({...values, ["tag"]: value})}
+
+                                    autoComplete="tag"
+                                    renderInput={(params) =>
+                                        <TextField {...params}
+                                                   required
+                                            // onChange={handleChange}
+                                                   id="tag"
+                                                   name="tag"
+                                                   label="tag"
+                                        />
+                                    }
                                 />
                             </Grid>
                         </Grid>
