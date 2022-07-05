@@ -23,6 +23,7 @@ const theme = createTheme();
 
 export default function AddPostForm() {
     const [errors, setErrors] = useState({});
+    const [loadingForm, setLoadingForm] = React.useState(false);
     const [values, setValues] = useState({
         title: "",
         content: "",
@@ -60,24 +61,15 @@ export default function AddPostForm() {
     }
 
     const handleSubmit = async event => {
+        setLoadingForm(true);
         event.preventDefault();
 
         await setErrors(validate(values));
         console.log(errors);
         if (Object.keys(errors).length === 0) {
-        //     setLoading(true);
-        //     try {
-        const response = await addPost(values);
-        console.log(response);
-        //         setIsAuthenticated(response);
-        //         navigate('/feed')
-        //         toast.success('Bienvenue ! 😄')
-        //     } catch ({response}) {
-        //         toast.error(response.data.erreur + ' 😃')
-        //         setLoading(false);
-        //         console.log(response)
-        //     }
+            await addPost(values);
         }
+        setLoadingForm(false);
     };
 
 
@@ -112,6 +104,7 @@ export default function AddPostForm() {
                                     onChange={handleChange}
                                     error={ errors.title }
                                     helperText={ errors.title }
+                                    disabled={loadingForm}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -126,6 +119,7 @@ export default function AddPostForm() {
                                     onChange={handleChange}
                                     error={ errors.content }
                                     helperText={ errors.content }
+                                    disabled={loadingForm}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -134,6 +128,7 @@ export default function AddPostForm() {
                                     options={tags}
                                     onChange={(event, value) => setValues({...values, ["tag"]: value})}
                                     autoComplete="tag"
+                                    disabled={loadingForm}
                                     renderInput={(params) =>
                                         <TextField {...params}
                                                    required
@@ -147,17 +142,29 @@ export default function AddPostForm() {
                                 />
                             </Grid>
                         </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            onClick={handleClick}
-                            // loading={loading}
-                            // loadingPosition="end"
-                        >
-                            Créer
-                        </Button>
+
+                        {(loadingForm && (
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    marginTop: 2
+                                }}>
+                                    <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                                </Box>
+                            ))
+                            ||
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                onClick={handleClick}
+                                loading={loadingForm}
+                            >
+                                Créer
+                            </Button>
+                        }
                     </Box>
                 </Grid>
             </Container>
