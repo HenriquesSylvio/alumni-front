@@ -10,6 +10,7 @@ import {postLikePost} from "../../services/LikePostApi";
 import {deleteLikePost} from "../../services/DeleteLikePost";
 import Avatar from "@mui/material/Avatar";
 import {useNavigate} from "react-router-dom";
+import ShowDiscussionButton from "./ShowDiscussionButton";
 
 export default function MainFeed({idPost, titre, description, createAt, firstName, lastName, nbComment, nbLike, url_profile_picture, like, idUser, couleur, ...rest}) {
     let  navigate = useNavigate();
@@ -109,7 +110,7 @@ export default function MainFeed({idPost, titre, description, createAt, firstNam
                     like(s)
                 </Typography>
             </Grid>
-            <Button variant="text">Afficher cette discussion</Button>
+            <ShowDiscussionButton/>
 
         </Card>
     );

@@ -10,31 +10,35 @@ import Auth from "./contexts/Auth";
 import {hasAuthenticated} from "./services/AuthApi";
 import {ToastContainer} from "react-toastify";
 import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
-import CloseModal from "./contexts/CloseModal";
+import OpenModalAddPost from "./contexts/OpenModalAddPost";
+import OpenModalDiscussion from "./contexts/OpenModalDiscussion";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated());
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpenAddPost, setIsOpenAddPost] = useState(false);
+    const [isOpenDiscussion, setIsOpenDiscussion] = useState(false);
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
-          <CloseModal.Provider value={{isOpen, setIsOpen}}>
-          <BrowserRouter>
-              <Layout>
-                      <Routes>
-                          <Route path='/' element={<Home/>}/>
-                          <Route exact path='/inscription' element={<Inscription/>}/>
-                          <Route element={<AuthenticatedRoute/>}>
-                              <Route exact path='/feed' element={<Feed/>}/>
-                              <Route exact path='/profile/:id' element={<Profile/>}/>
-                              <Route exact path='/profile' element={<Profile/>}/>
-                          </Route>
-                      </Routes>
-                  <ToastContainer />
-              </Layout>
-          </BrowserRouter>
-        </CloseModal.Provider>
+          <OpenModalAddPost.Provider value={{isOpenAddPost, setIsOpenAddPost}}>
+              <OpenModalDiscussion.Provider value={{isOpenDiscussion, setIsOpenDiscussion}}>
+                  <BrowserRouter>
+                      <Layout>
+                              <Routes>
+                                  <Route path='/' element={<Home/>}/>
+                                  <Route exact path='/inscription' element={<Inscription/>}/>
+                                  <Route element={<AuthenticatedRoute/>}>
+                                      <Route exact path='/feed' element={<Feed/>}/>
+                                      <Route exact path='/profile/:id' element={<Profile/>}/>
+                                      <Route exact path='/profile' element={<Profile/>}/>
+                                  </Route>
+                              </Routes>
+                          <ToastContainer />
+                      </Layout>
+                  </BrowserRouter>
+              </OpenModalDiscussion.Provider>
+        </OpenModalAddPost.Provider>
       </Auth.Provider>
   );
 };

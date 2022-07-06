@@ -10,7 +10,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import AddIcon from "@mui/icons-material/Add";
 import SignIn from "../Layout/Header/LoginRegister/Login/Login";
 import AddPostForm from "./AddPostForm";
-import OpenModalAddPost from "../../contexts/OpenModalAddPost";
+import OpenModalDiscussion from "../../contexts/OpenModalDiscussion";
 import {useContext} from "react";
 import Auth from "../../contexts/Auth";
 
@@ -45,16 +45,17 @@ const styleButton = {
     position: 'fixed',
 };
 
-export default function ButtonAddPost() {
+export default function ShowDiscussionButton() {
     // const [open, setOpen] = React.useState(false);
     // const contextValue = useContext(CloseChildModal);
-    const {isOpenAddPost, setIsOpenAddPost} = useContext(OpenModalAddPost);
+    const {isOpenDiscussion, setIsOpenDiscussion} = useContext(OpenModalDiscussion);
     const handleOpen = () => {
-        setIsOpenAddPost(true);
+        setIsOpenDiscussion(true);
+        console.log(isOpenDiscussion);
     };
 
     const handleClose = () => {
-        setIsOpenAddPost(false)
+        setIsOpenDiscussion(false)
     }
 
     const [value, setValue] = React.useState('1');
@@ -65,16 +66,17 @@ export default function ButtonAddPost() {
 
     return (
         <Box>
-            <Box style={styleButton}>
-                {/*sx={{display:"flex", flex: 1, color:"#CA4B38"}}*/}
-                <Fab sx={{backgroundColor:"#00A5A5", color: "white", '&:hover': {color: '#00A5A5'}}} saria-label="add" onClick={handleOpen}>
-                    <AddIcon/>
-                </Fab>
-            </Box>
+            {/*<Box style={styleButton}>*/}
+            {/*    /!*sx={{display:"flex", flex: 1, color:"#CA4B38"}}*!/*/}
+            {/*    <Fab sx={{backgroundColor:"#00A5A5", color: "white", '&:hover': {color: '#00A5A5'}}} saria-label="add" onClick={handleOpen}>*/}
+            {/*        <AddIcon/>*/}
+            {/*    </Fab>*/}
+            {/*</Box>*/}
+            <Button variant="text" onClick={handleOpen}>Afficher cette discussion</Button>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={isOpenAddPost}
+                open={isOpenDiscussion}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -82,7 +84,7 @@ export default function ButtonAddPost() {
                     timeout: 500,
                 }}
             >
-                <Fade in={isOpenAddPost}>
+                <Fade in={isOpenDiscussion}>
                     <Box>
                         <Box sx={styleBox}>
                             <AddPostForm />

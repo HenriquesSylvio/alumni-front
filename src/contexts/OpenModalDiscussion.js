@@ -1,6 +1,6 @@
 import React from "react";
 
 export default React.createContext({
-    isOpen: false,
-    setIsOpen: value => {}
+    isOpenDiscussion: false,
+    setIsOpenDiscussion: value => {}
 });

@@ -17,11 +17,11 @@ import {Autocomplete} from "@mui/lab";
 import validate from "../../validators/AddPostValidator";
 import ButtonAddPost from "./ButtonAddPost";
 import {useContext} from "react";
-import CloseModal from "../../contexts/CloseModal";
+import OpenModalAddPost from "../../contexts/OpenModalAddPost";
 
 export default function AddPostForm() {
     const [errors, setErrors] = useState({});
-    const {isOpen, setIsOpen} = useContext(CloseModal);
+    const {isOpenAddPost, setIsOpenAddPost} = useContext(OpenModalAddPost);
     const [loadingForm, setLoadingForm] = React.useState(false);
     const [values, setValues] = useState({
         title: "",
@@ -60,7 +60,7 @@ export default function AddPostForm() {
         if (Object.keys(errors).length === 0) {
             await addPost(values);
             toast.success('Le poste a été créer ! 😄')
-            setIsOpen(false);
+            setIsOpenAddPost(false);
         }
         setLoadingForm(false);
     };
