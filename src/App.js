@@ -10,13 +10,12 @@ import Auth from "./contexts/Auth";
 import {hasAuthenticated} from "./services/AuthApi";
 import {ToastContainer} from "react-toastify";
 import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
-import {CircularProgress} from "@mui/material";
-import Box from "@mui/material/Box";
+import CloseModal from "./contexts/CloseModal";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated());
-    document.body.style = 'background: #F2F2F2;';
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
@@ -43,8 +42,10 @@ const App = () => {
                   {/*</Suspense>*/}
                   <ToastContainer />
               </Layout>
+          <CloseModal.Provider value={{isOpen, setIsOpen}}>
 
-          </BrowserRouter>
+              </BrowserRouter>
+        </CloseModal.Provider>
       </Auth.Provider>
   );
 };
