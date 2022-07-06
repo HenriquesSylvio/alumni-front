@@ -37,14 +37,26 @@ export default function Feed() {
 
         return (
             <div style={{display: "flex"}}>
-                <Stack direction="column" alignItems="center" spacing={5} sx={{display:"flex", flex: 1, color:"#CA4B38"}}>
+                <Stack direction="column" spacing={5} sx={{flex: 1, color:"#CA4B38"}} paddingRight={"10%"} paddingLeft={"10%"}>
                     <h1>Fil d'actualités</h1>
                     {
                         posts.length ?
                             posts.map(post =>
                                 // <MainFeed titre="La Normandie Web School recrute !" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ex augue, fringilla nec facilisis eu, gravida in felis. Ut vitae augue nec nunc dignissim accumsan. Phasellus consequat molestie convallis. Curabitur consequat neque eu risus consequat rhoncus. In vulputate vehicula finibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque tincidunt blandit nulla ac accumsan. Class aptent taciti sociosqu ad litora torquent per conubia molestie. "></MainFeed>
                                 // <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration a besoin de vous, recherche tel type d'emploi"></MainFeed>
-                                <MainFeed titre="La Normandie Web School recrute !" description={post.content}></MainFeed>
+                                <MainFeed
+                                    firstName={post.firstName}
+                                    lastName={post.lastName}
+                                    titre={post.title}
+                                    description={post.content}
+                                    nbComment={post.numberComment}
+                                    nbLike={post.numberLike}
+                                    like={post.like}
+                                    idPost={post.idPost}
+                                    createAt={post.createAt}
+                                    url_profile_picture={post.urlProfilePicture}
+                                    idUser={post.idUser}
+                                />
                             ): null
                     }
                             </Stack>

@@ -20,7 +20,7 @@ export default function Profile() {
     useEffect(async () => {
         await getProfileUser();
         await getPostByUserId();
-    });
+    }, []);
 
     const getProfileUser = async () => {
         const response = await getProfile(params.id)
