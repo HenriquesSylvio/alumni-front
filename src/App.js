@@ -19,17 +19,9 @@ const App = () => {
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
+          <CloseModal.Provider value={{isOpen, setIsOpen}}>
           <BrowserRouter>
               <Layout>
-                  {/*<Suspense fallback={*/}
-                  {/*    <Box sx={{*/}
-                  {/*        display: 'flex',*/}
-                  {/*        flexDirection: 'column',*/}
-                  {/*        alignItems: 'center',*/}
-                  {/*        p:50*/}
-                  {/*    }}>*/}
-                  {/*        <CircularProgress sx={{justifyContent:"center", display:"flex"}}/></Box>*/}
-                  {/*}>*/}
                       <Routes>
                           <Route path='/' element={<Home/>}/>
                           <Route exact path='/inscription' element={<Inscription/>}/>
@@ -39,12 +31,9 @@ const App = () => {
                               <Route exact path='/profile' element={<Profile/>}/>
                           </Route>
                       </Routes>
-                  {/*</Suspense>*/}
                   <ToastContainer />
               </Layout>
-          <CloseModal.Provider value={{isOpen, setIsOpen}}>
-
-              </BrowserRouter>
+          </BrowserRouter>
         </CloseModal.Provider>
       </Auth.Provider>
   );

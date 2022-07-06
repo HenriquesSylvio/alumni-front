@@ -30,8 +30,8 @@ export default function Feed() {
         }
     }
 
-    useEffect(async () => {
-        await getPostFromFeed();
+    useEffect(() => {
+        getPostFromFeed();
         window.addEventListener('scroll', handleScroll)
     }, []);
 

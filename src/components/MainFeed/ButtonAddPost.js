@@ -8,7 +8,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import AddIcon from "@mui/icons-material/Add";
-import SignIn from "../Layout/Header/LoginRegister/Login";
+import SignIn from "../Layout/Header/LoginRegister/Login/Login";
 import AddPostForm from "./AddPostForm";
 import CloseModal from "../../contexts/CloseModal";
 import {useContext} from "react";
