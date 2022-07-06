@@ -19,7 +19,10 @@ export default function Feed() {
 
     const getPostFromFeed = async () => {
         const response = await getFeed(page);
-        newPosts = response.data.data;
+        // newPosts = response.data.data;
+        //
+        newPosts = response.data.posts.items;
+        console.log(newPosts);
         setPosts((oldPosts) => [...oldPosts, ...newPosts])
         page += 1
     };
