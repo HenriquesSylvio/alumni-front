@@ -35,7 +35,7 @@ export default function MainFeed({idPost, titre, description, createAt, firstNam
 
 
     return (
-        <Card sx={{ p: 1, color: couleur, ...rest}} >
+        <Card  sx={{ paddingRight:1, color: couleur, ...rest}} >
             <Grid
                 container
                 direction="row"
@@ -68,19 +68,26 @@ export default function MainFeed({idPost, titre, description, createAt, firstNam
                 alignItems="center"
                 paddingRight={0}
             >
-                <IconButton>
+                <IconButton sx={{marginRight: 1}}>
                     <ChatBubbleOutlineIcon/>
                 </IconButton>
-                {(nbComment = 0 && (
-                        <Typography variant="body2" marginRight={2}>
-                            0 commentaire(s)
-                        </Typography>
-                    ))
-                    ||
-                    <Typography variant="body2" marginRight={2}>
-                        {nbComment} commentaire(s)
-                    </Typography>
-                }
+                {/*{(nbComment = 0 && (*/}
+                {/*        <Typography variant="body2" marginRight={2}>*/}
+                {/*            0 commentaire(s)*/}
+                {/*        </Typography>*/}
+                {/*    ))*/}
+                {/*    ||*/}
+                {/*    <Typography variant="body2" marginRight={2}>*/}
+                {/*        {nbComment} commentaire(s)*/}
+                {/*    </Typography>*/}
+                {/*}*/}
+
+                <Typography variant="body2">
+                    {nbComment}
+                </Typography>
+                <Typography variant="body2" paddingRight={3} paddingLeft={1}>
+                    commentaire(s)
+                </Typography>
                 {(likeLoading && (
                         <CircularProgress size={30} sx={{marginRight: 1}}/>
                     ))
@@ -96,7 +103,10 @@ export default function MainFeed({idPost, titre, description, createAt, firstNam
                     </IconButton>
                 }
                 <Typography variant="body2">
-                    {likeCounter} like(s)
+                    {likeCounter}
+                </Typography>
+                <Typography variant="body2" paddingLeft={1}>
+                    like(s)
                 </Typography>
             </Grid>
             <Button variant="text">Afficher cette discussion</Button>
