@@ -20,34 +20,13 @@ export default function ButtonsInteractionUser({idUser, subscribe}) {
     const handleSubcribe = async () => {
         setSubscribeLoading(true)
         await postSubscribe(idUser)
-        // setLike(!likeByUser);
-        // setLikeLoading(true)
-        // if (likeByUser === true){
-        //     await deleteLikePost(idPost);
-        //     setLikeCounter(likeCounter => likeCounter - 1);
-        // } else {
-        //     await postLikePost(idPost);
-        //     setLikeCounter(likeCounter => likeCounter + 1);
-        // }
-        // setLikeLoading(false)
         setSubscribe(true)
         setSubscribeLoading(false)
     };
 
     const handleRemoveSubcribe = async () => {
-        console.log(idUser)
         setSubscribeLoading(true)
         await deleteSubscribe(idUser)
-        // setLike(!likeByUser);
-        // setLikeLoading(true)
-        // if (likeByUser === true){
-        //     await deleteLikePost(idPost);
-        //     setLikeCounter(likeCounter => likeCounter - 1);
-        // } else {
-        //     await postLikePost(idPost);
-        //     setLikeCounter(likeCounter => likeCounter + 1);
-        // }
-        // setLikeLoading(false)
         setSubscribe(false)
         setSubscribeLoading(false)
     };

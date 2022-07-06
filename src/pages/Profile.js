@@ -54,8 +54,8 @@ export default function Profile() {
                         <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
                     </Box>
                 ) : (
-                    <>
-                        <Box marginLeft={2} marginRight={2} marginTop={15}>
+                    <Box paddingRight={"10%"} paddingLeft={"10%"}>
+                        <Box  marginTop={15}>
                             <DetailUser
                                 firstName={user.firstName}
                                 lastName={user.lastName}
@@ -70,7 +70,7 @@ export default function Profile() {
                                 subscribe={user.subcribe}
                             />
                         </Box>
-                        <Box display="flex" sx={{ flexDirection: 'column' }} marginLeft={2} marginRight={2} marginTop={2}>
+                        <Box display="flex" sx={{ flexDirection: 'column' }} marginTop={2}>
                                {
                                    posts.length ?
                                        <Typography marginLeft={5} variant="h6" component="div">
@@ -103,7 +103,7 @@ export default function Profile() {
                                    ): null
                                }
                         </Box>
-                    </>
+                    </Box>
                 )}
             </Box>
         );

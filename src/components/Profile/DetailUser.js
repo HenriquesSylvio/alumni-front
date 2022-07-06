@@ -11,7 +11,7 @@ import EditProfileButton from "./EditProfileButton";
 
 export default function DetailUser({idUser ,firstName, lastName, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography, subscribe}) {
     return (
-        <Card sx={{ minWidth:300}}>
+        <Card sx={{ minWidth:200}}>
             <Box display="flex" justifyContent="center" alignItems="center">
                 <Avatar
                     src= {urlProfilePicture}
