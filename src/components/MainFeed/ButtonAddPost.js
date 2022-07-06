@@ -10,6 +10,9 @@ import TabPanel from '@mui/lab/TabPanel';
 import AddIcon from "@mui/icons-material/Add";
 import SignIn from "../Layout/Header/LoginRegister/Login";
 import AddPostForm from "./AddPostForm";
+import CloseModal from "../../contexts/CloseModal";
+import {useContext} from "react";
+import Auth from "../../contexts/Auth";
 
 const styleBox = {
     position: 'absolute',
@@ -43,10 +46,16 @@ const styleButton = {
 };
 
 export default function ButtonAddPost() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false)
+    // const [open, setOpen] = React.useState(false);
+    // const contextValue = useContext(CloseChildModal);
+    const {isOpen, setIsOpen} = useContext(CloseModal);
+    const handleOpen = () => {
+        setIsOpen(true);
+    };
 
+    const handleClose = () => {
+        setIsOpen(false)
+    }
 
     const [value, setValue] = React.useState('1');
 
@@ -65,7 +74,7 @@ export default function ButtonAddPost() {
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={open}
+                open={isOpen}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -73,7 +82,7 @@ export default function ButtonAddPost() {
                     timeout: 500,
                 }}
             >
-                <Fade in={open}>
+                <Fade in={isOpen}>
                     <Box>
                         <Box sx={styleBox}>
                             <AddPostForm />

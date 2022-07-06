@@ -1,28 +1,27 @@
-import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from "@mui/material/TextField";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {CircularProgress} from "@mui/material";
-import Auth from "../../contexts/Auth";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import CreateIcon from '@mui/icons-material/Create';
 import {addPost} from "../../services/AddPostApi";
 import getTag from "../../services/GetTagApi";
 import {Autocomplete} from "@mui/lab";
 import validate from "../../validators/AddPostValidator";
-
-const theme = createTheme();
+import ButtonAddPost from "./ButtonAddPost";
+import {useContext} from "react";
+import CloseModal from "../../contexts/CloseModal";
 
 export default function AddPostForm() {
     const [errors, setErrors] = useState({});
+    const {isOpen, setIsOpen} = useContext(CloseModal);
     const [loadingForm, setLoadingForm] = React.useState(false);
     const [values, setValues] = useState({
         title: "",
@@ -33,11 +32,8 @@ export default function AddPostForm() {
     });
     const [tags, setTags] = useState([]);
 
-    const listTag = [];
-
     const loadTag = async () => {
         const response = await getTag();
-        console.log(response.data.tags);
         setTags(response.data.tags);
     }
 
@@ -49,15 +45,10 @@ export default function AddPostForm() {
         setErrors(validate(values));
     }
 
-    // useEffect(async () => {
-    //     await loadTag();
-    // }, []);
-
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget;
 
         setValues({...values, [name]: value})
-        console.log(values);
     }
 
     const handleSubmit = async event => {
@@ -68,6 +59,8 @@ export default function AddPostForm() {
         console.log(errors);
         if (Object.keys(errors).length === 0) {
             await addPost(values);
+            toast.success('Le poste a été créer ! 😄')
+            setIsOpen(false);
         }
         setLoadingForm(false);
     };
