@@ -1,10 +1,12 @@
-import {Button, Card, Stack} from '@mui/material';
+import {Button, Card, Fab, Stack} from '@mui/material';
 import { Box, padding } from '@mui/system';
 import React, {Component, useContext, useEffect, useState} from 'react';
 import EventFeed from '../components/EventFeed/EventFeed';
 import MainFeed from '../components/MainFeed/MainFeed';
 import getFeed from "../services/FeedApi";
+import AddIcon from '@mui/icons-material/Add';
 import SignInButton from "../components/Layout/Header/LoginRegister/SignInButton";
+import ButtonAddPost from "../components/MainFeed/ButtonAddPost";
 
 export default function Feed() {
     let page = 1;
@@ -26,13 +28,13 @@ export default function Feed() {
         if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
             getPostFromFeed(1).then();
         }
-
     }
 
     useEffect(async () => {
         await getPostFromFeed();
         window.addEventListener('scroll', handleScroll)
     }, []);
+
         return (
             <div style={{display: "flex"}}>
                 <Stack direction="column" alignItems="center" spacing={5} sx={{display:"flex", flex: 1, color:"#CA4B38"}}>
@@ -62,7 +64,7 @@ export default function Feed() {
                                     <EventFeed titre="Titre 5" description="texte 5"/>
                                 </Stack>
                             </div>
-                    }
+                <ButtonAddPost/>
             </div>
         )
 }
