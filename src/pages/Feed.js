@@ -20,9 +20,9 @@ export default function Feed() {
         page += 1
     };
 
-    const handleScroll = (e) =>{
+    const handleScroll = async (e) =>{
         if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
-            getPostFromFeed(1).then();
+            await getPostFromFeed(1).then();
         }
     }
 

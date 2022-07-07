@@ -37,8 +37,8 @@ const styleButton = {
     position: 'fixed',
 };
 
-export default function ShowCommentModal() {
-    const {isOpenDiscussion, setIsOpenDiscussion} = useContext(OpenModalDiscussion);
+export default function ShowCommentModal({idPost}) {
+    const {isOpenDiscussion, idActivePost,setIsOpenDiscussion} = useContext(OpenModalDiscussion);
     const handleOpen = () => {
         setIsOpenDiscussion(true);
         console.log(isOpenDiscussion);
@@ -46,6 +46,7 @@ export default function ShowCommentModal() {
 
     const handleClose = () => {
         setIsOpenDiscussion(false)
+        console.log(idActivePost)
     }
 
     const [value, setValue] = React.useState('1');

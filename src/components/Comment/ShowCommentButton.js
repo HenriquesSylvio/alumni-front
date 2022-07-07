@@ -38,13 +38,14 @@ const styleButton = {
     position: 'fixed',
 };
 
-export default function ShowCommentButton() {
+export default function ShowCommentButton({idPost}) {
     // const [open, setOpen] = React.useState(false);
     // const contextValue = useContext(CloseChildModal);
-    const {isOpenDiscussion, setIsOpenDiscussion} = useContext(OpenModalComment);
-    const handleOpen = () => {
-        setIsOpenDiscussion(true);
-        console.log(isOpenDiscussion);
+    let {isOpenDiscussion, idActivePost, setIsOpenDiscussion} = useContext(OpenModalComment);
+    const handleOpen = event => {
+        // console.log(event.target.id)
+        setIsOpenDiscussion(isOpenDiscussion = true, idActivePost = idPost);
+        console.log(idActivePost);
     };
 
     const handleClose = () => {
@@ -65,7 +66,7 @@ export default function ShowCommentButton() {
             {/*        <AddIcon/>*/}
             {/*    </Fab>*/}
             {/*</Box>*/}
-            <Button variant="text" onClick={handleOpen}>Afficher cette discussion</Button>
+            <Button variant="text" id={idPost} onClick={handleOpen}>Afficher cette discussion</Button>
             <ShowCommentModal/>
             {/*<Modal*/}
             {/*    aria-labelledby="transition-modal-title"*/}

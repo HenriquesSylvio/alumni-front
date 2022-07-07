@@ -110,7 +110,7 @@ export default function MainFeed({idPost, titre, description, createAt, firstNam
                     like(s)
                 </Typography>
             </Grid>
-            <ShowCommentButton/>
+            <ShowCommentButton idPost={idPost}/>
 
         </Card>
     );
