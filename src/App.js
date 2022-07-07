@@ -11,7 +11,7 @@ import {hasAuthenticated} from "./services/AuthApi";
 import {ToastContainer} from "react-toastify";
 import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
 import OpenModalAddPost from "./contexts/OpenModalAddPost";
-import OpenModalDiscussion from "./contexts/OpenModalDiscussion";
+import OpenModalDiscussion from "./contexts/OpenModalComment";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {

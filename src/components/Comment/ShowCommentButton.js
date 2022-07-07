@@ -2,17 +2,10 @@ import * as React from 'react';
 import {Button, Fab, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
 import Backdrop from '@mui/material/Backdrop';
-import Typography from "@mui/material/Typography";
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import AddIcon from "@mui/icons-material/Add";
-import SignIn from "../Layout/Header/LoginRegister/Login/Login";
-import AddPostForm from "./AddPostForm";
-import OpenModalDiscussion from "../../contexts/OpenModalDiscussion";
+import AddPostForm from "../Post/AddPostForm";
+import OpenModalComment from "../../contexts/OpenModalComment";
 import {useContext} from "react";
-import Auth from "../../contexts/Auth";
+import ShowCommentModal from "./ShowCommentModal";
 
 const styleBox = {
     position: 'absolute',
@@ -45,10 +38,10 @@ const styleButton = {
     position: 'fixed',
 };
 
-export default function ShowDiscussionButton() {
+export default function ShowCommentButton() {
     // const [open, setOpen] = React.useState(false);
     // const contextValue = useContext(CloseChildModal);
-    const {isOpenDiscussion, setIsOpenDiscussion} = useContext(OpenModalDiscussion);
+    const {isOpenDiscussion, setIsOpenDiscussion} = useContext(OpenModalComment);
     const handleOpen = () => {
         setIsOpenDiscussion(true);
         console.log(isOpenDiscussion);
@@ -73,29 +66,30 @@ export default function ShowDiscussionButton() {
             {/*    </Fab>*/}
             {/*</Box>*/}
             <Button variant="text" onClick={handleOpen}>Afficher cette discussion</Button>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={isOpenDiscussion}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={isOpenDiscussion}>
-                    <Box>
-                        <Box sx={styleBox}>
-                            <AddPostForm />
-                        </Box>
-                        <Box sx={styleResponsiveBox}>
-                            <AddPostForm />
-                        </Box>
-                    </Box>
+            <ShowCommentModal/>
+            {/*<Modal*/}
+            {/*    aria-labelledby="transition-modal-title"*/}
+            {/*    aria-describedby="transition-modal-description"*/}
+            {/*    open={isOpenDiscussion}*/}
+            {/*    onClose={handleClose}*/}
+            {/*    closeAfterTransition*/}
+            {/*    BackdropComponent={Backdrop}*/}
+            {/*    BackdropProps={{*/}
+            {/*        timeout: 500,*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    <Fade in={isOpenDiscussion}>*/}
+            {/*        <Box>*/}
+            {/*            <Box sx={styleBox}>*/}
+            {/*                <AddPostForm />*/}
+            {/*            </Box>*/}
+            {/*            <Box sx={styleResponsiveBox}>*/}
+            {/*                <AddPostForm />*/}
+            {/*            </Box>*/}
+            {/*        </Box>*/}
 
-                </Fade>
-            </Modal>
+            {/*    </Fade>*/}
+            {/*</Modal>*/}
         </Box>
     );
 }

@@ -2,7 +2,7 @@
 import {Box} from "@mui/system";
 import {CircularProgress, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import MainFeed from "../components/MainFeed/MainFeed";
+import MainFeed from "../components/Post/MainFeed";
 import DetailUser from "../components/Profile/DetailUser";
 import getProfile from "../services/ProfileApi";
 import React, { useEffect, useState } from 'react';

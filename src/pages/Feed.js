@@ -1,21 +1,14 @@
-import {Button, Card, Fab, Stack} from '@mui/material';
-import { Box, padding } from '@mui/system';
-import React, {Component, useContext, useEffect, useState} from 'react';
+import {Stack} from '@mui/material';
+import React, {useEffect, useState} from 'react';
 import EventFeed from '../components/EventFeed/EventFeed';
-import MainFeed from '../components/MainFeed/MainFeed';
+import MainFeed from '../components/Post/MainFeed';
 import getFeed from "../services/FeedApi";
-import AddIcon from '@mui/icons-material/Add';
-import SignInButton from "../components/Layout/Header/LoginRegister/SignInButton";
-import ButtonAddPost from "../components/MainFeed/ButtonAddPost";
+import ButtonAddPost from "../components/Post/ButtonAddPost";
 
 export default function Feed() {
     let page = 1;
     const [posts, setPosts] = useState([]);
     let newPosts = [];
-
-    const loadMorePosts = () => {
-        getPostFromFeed(1);
-    }
 
     const getPostFromFeed = async () => {
         const response = await getFeed(page);
@@ -45,8 +38,6 @@ export default function Feed() {
                     {
                         posts.length ?
                             posts.map(post =>
-                                // <MainFeed titre="La Normandie Web School recrute !" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ex augue, fringilla nec facilisis eu, gravida in felis. Ut vitae augue nec nunc dignissim accumsan. Phasellus consequat molestie convallis. Curabitur consequat neque eu risus consequat rhoncus. In vulputate vehicula finibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque tincidunt blandit nulla ac accumsan. Class aptent taciti sociosqu ad litora torquent per conubia molestie. "></MainFeed>
-                                // <MainFeed titre="La Normandie Web School recrute !" description="Nouvelle école dans le numérique, l'administration a besoin de vous, recherche tel type d'emploi"></MainFeed>
                                 <MainFeed
                                     firstName={post.firstName}
                                     lastName={post.lastName}
