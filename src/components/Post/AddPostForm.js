@@ -30,16 +30,6 @@ export default function AddPostForm() {
             id: ""
         }
     });
-    const [tags, setTags] = useState([]);
-
-    const loadTag = async () => {
-        const response = await getTag();
-        setTags(response.data.tags);
-    }
-
-    useLayoutEffect(() => {
-        loadTag()
-    }, []);
 
     function handleClick() {
         setErrors(validate(values));
@@ -113,25 +103,6 @@ export default function AddPostForm() {
                                     error={ errors.content }
                                     helperText={ errors.content }
                                     disabled={loadingForm}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Autocomplete
-                                    fullWidth
-                                    options={tags}
-                                    onChange={(event, value) => setValues({...values, ["tag"]: value})}
-                                    autoComplete="tag"
-                                    disabled={loadingForm}
-                                    renderInput={(params) =>
-                                        <TextField {...params}
-                                                   required
-                                                   id="tag"
-                                                   name="tag"
-                                                   label="Tag"
-                                                   error={ errors.tag }
-                                                   helperText={ errors.tag }
-                                        />
-                                    }
                                 />
                             </Grid>
                         </Grid>

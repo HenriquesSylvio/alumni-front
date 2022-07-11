@@ -39,58 +39,19 @@ const styleButton = {
 };
 
 export default function ShowCommentButton({idPost}) {
-    // const [open, setOpen] = React.useState(false);
-    // const contextValue = useContext(CloseChildModal);
-    let {isOpenDiscussion, idActivePost, setIsOpenDiscussion} = useContext(OpenModalComment);
+    let {setIsOpenDiscussion} = useContext(OpenModalComment);
     const handleOpen = event => {
-        // console.log(event.target.id)
-        setIsOpenDiscussion(isOpenDiscussion = true, idActivePost = idPost);
-        console.log(idActivePost);
+        setIsOpenDiscussion(idPost)
     };
 
     const handleClose = () => {
         setIsOpenDiscussion(false)
     }
 
-    const [value, setValue] = React.useState('1');
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
     return (
         <Box>
-            {/*<Box style={styleButton}>*/}
-            {/*    /!*sx={{display:"flex", flex: 1, color:"#CA4B38"}}*!/*/}
-            {/*    <Fab sx={{backgroundColor:"#00A5A5", color: "white", '&:hover': {color: '#00A5A5'}}} saria-label="add" onClick={handleOpen}>*/}
-            {/*        <AddIcon/>*/}
-            {/*    </Fab>*/}
-            {/*</Box>*/}
             <Button variant="text" id={idPost} onClick={handleOpen}>Afficher cette discussion</Button>
-            <ShowCommentModal/>
-            {/*<Modal*/}
-            {/*    aria-labelledby="transition-modal-title"*/}
-            {/*    aria-describedby="transition-modal-description"*/}
-            {/*    open={isOpenDiscussion}*/}
-            {/*    onClose={handleClose}*/}
-            {/*    closeAfterTransition*/}
-            {/*    BackdropComponent={Backdrop}*/}
-            {/*    BackdropProps={{*/}
-            {/*        timeout: 500,*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    <Fade in={isOpenDiscussion}>*/}
-            {/*        <Box>*/}
-            {/*            <Box sx={styleBox}>*/}
-            {/*                <AddPostForm />*/}
-            {/*            </Box>*/}
-            {/*            <Box sx={styleResponsiveBox}>*/}
-            {/*                <AddPostForm />*/}
-            {/*            </Box>*/}
-            {/*        </Box>*/}
-
-            {/*    </Fade>*/}
-            {/*</Modal>*/}
+            <ShowCommentModal idPost={idPost}/>
         </Box>
     );
 }

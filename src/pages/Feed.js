@@ -22,6 +22,7 @@ export default function Feed() {
 
     const handleScroll = async (e) =>{
         if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
+            console.log('test');
             await getPostFromFeed(1).then();
         }
     }

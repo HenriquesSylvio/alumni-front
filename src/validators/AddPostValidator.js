@@ -7,8 +7,5 @@ export default function AddPostValidator(values) {
     if (!values.content) {
         errors.content = 'Le contenu du poste est obligatoire';
     }
-    if (!values.tag.id) {
-        errors.tag = 'Le tag est obligatoire';
-    }
     return errors;
 }

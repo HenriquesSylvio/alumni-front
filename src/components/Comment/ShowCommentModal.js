@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Backdrop from '@mui/material/Backdrop';
 import AddPostForm from "../Post/AddPostForm";
 import OpenModalDiscussion from "../../contexts/OpenModalComment";
-import {useContext} from "react";
+import {useContext, useLayoutEffect} from "react";
 
 const styleBox = {
     position: 'absolute',
@@ -40,13 +40,15 @@ const styleButton = {
 export default function ShowCommentModal({idPost}) {
     const {isOpenDiscussion, idActivePost,setIsOpenDiscussion} = useContext(OpenModalDiscussion);
     const handleOpen = () => {
-        setIsOpenDiscussion(true);
-        console.log(isOpenDiscussion);
+        setIsOpenDiscussion(isOpenDiscussion[idPost] = true);
+        console.log(isOpenDiscussion[idPost]);
     };
 
     const handleClose = () => {
-        setIsOpenDiscussion(false)
-        console.log(idActivePost)
+        console.log(idPost)
+        setIsOpenDiscussion(0)
+        // console.log({idActivePost})
+
     }
 
     const [value, setValue] = React.useState('1');
@@ -55,12 +57,15 @@ export default function ShowCommentModal({idPost}) {
         setValue(newValue);
     };
 
+    useLayoutEffect(() => {
+        console.log(idActivePost);
+    }, [])
     return (
         <Box>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={isOpenDiscussion}
+                open={isOpenDiscussion === idPost}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
