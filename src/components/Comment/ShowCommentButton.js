@@ -1,11 +1,12 @@
 import * as React from 'react';
-import {Button, Fab, Fade, Modal} from "@mui/material";
+import {Button, CircularProgress, Fab, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
 import Backdrop from '@mui/material/Backdrop';
 import AddPostForm from "../Post/AddPostForm";
 import OpenModalComment from "../../contexts/OpenModalComment";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import ShowCommentModal from "./ShowCommentModal";
+import getCommentByIdApi from "../../services/GetCommentByIdApi";
 
 const styleBox = {
     position: 'absolute',
@@ -40,6 +41,9 @@ const styleButton = {
 
 export default function ShowCommentButton({post}) {
     let {setIsOpenDiscussion} = useContext(OpenModalComment);
+    const [commentLoading, setCommentLoading] = useState(false);
+    const [comments, setComments] = useState();
+
     const handleOpen = event => {
         setIsOpenDiscussion(post.idPost)
     };
@@ -48,8 +52,23 @@ export default function ShowCommentButton({post}) {
         setIsOpenDiscussion(false)
     }
 
+    // const loadComment = async () => {
+    //     setCommentLoading(true);
+    //     const response = await getCommentByIdApi(post.idPost)
+    //     // console.log(response.data.posts.items);
+    //     setComments(response.data.posts.items);
+    //     // const response = await getTag();
+    //     // setTags(response.data.tags);
+    //     handleOpen();
+    //     setCommentLoading(false);
+    // }
+
     return (
         <Box>
+            {/*{(commentLoading && (*/}
+            {/*        <CircularProgress size={30} sx={{marginLeft: 10}}/>*/}
+            {/*    ))*/}
+            {/*    ||*/}
             <Button variant="text" id={post.idPost} onClick={handleOpen}>Afficher les commentaires</Button>
             <ShowCommentModal post={post}/>
         </Box>

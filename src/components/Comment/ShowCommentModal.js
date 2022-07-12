@@ -1,14 +1,18 @@
 import * as React from 'react';
-import {Button, Fab, Fade, Modal} from "@mui/material";
+import {Button, Chip, CircularProgress, Divider, Fab, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
 import Backdrop from '@mui/material/Backdrop';
 import AddPostForm from "../Post/AddPostForm";
 import OpenModalDiscussion from "../../contexts/OpenModalComment";
-import {useContext, useLayoutEffect} from "react";
+import {useContext, useEffect, useLayoutEffect, useState} from "react";
 import MainFeed from "../Post/MainFeed";
 import Container from "@mui/material/Container";
-import ShowCommentForm from "./TopCommentModal";
-import TopCommentModal from "./TopCommentModal";
+import ShowCommentForm from "./DisplayPost";
+import DisplayPost from "./DisplayPost";
+import getCommentByIdApi from "../../services/GetCommentByIdApi";
+import Typography from "@mui/material/Typography";
+import ShowCommentButton from "./ShowCommentButton";
+import Grid from "@mui/material/Grid";
 
 const styleBox = {
     position: 'absolute',
@@ -21,6 +25,8 @@ const styleBox = {
     p: 4,
     borderRadius: 2,
     display: { xs: 'none', md: 'flex' },
+    overflow:'scroll',
+    maxHeight:"75%"
 };
 const styleResponsiveBox = {
     position: 'absolute',
@@ -32,32 +38,34 @@ const styleResponsiveBox = {
     display: { xs: 'flex', md: 'none' }
 };
 
-const styleButton = {
-    margin: 0,
-    top: 'auto',
-    right: 100,
-    bottom: 100,
-    left: 'auto',
-    position: 'fixed',
-};
-
 export default function ShowCommentModal({post}) {
-    const {isOpenDiscussion, idActivePost,setIsOpenDiscussion} = useContext(OpenModalDiscussion);
+    const {isOpenDiscussion,setIsOpenDiscussion} = useContext(OpenModalDiscussion);
+    // const {commentss,setComments} = useState(comments);
+    const [commentLoading, setCommentLoading] = useState(false);
+    const [comments, setComments] = useState([]);
 
     const handleClose = () => {
-        console.log(post.idPost)
+        console.log(comments[0].content)
         setIsOpenDiscussion(0)
     }
+    const loadComment = async () => {
+        // setCommentLoading(true);
+        const response = await getCommentByIdApi(post.idPost)
+        // console.log(response.data.posts.items);
+        setComments(response.data.posts.items);
+        console.log(response.data.posts.items);
+        // const response = await getTag();
+        // setTags(response.data.tags);
+        // handleOpen();
+        // setCommentLoading(false);
+    }
 
-    const [value, setValue] = React.useState('1');
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    useLayoutEffect(() => {
-        console.log(idActivePost);
-    }, [])
+    useEffect(()  => {
+        if(isOpenDiscussion === post.idPost){
+            // console.log("test")
+            loadComment()
+        }
+    }, [isOpenDiscussion]);
     return (
         <Box>
             <Modal
@@ -71,10 +79,10 @@ export default function ShowCommentModal({post}) {
                     timeout: 500,
                 }}
             >
-                <Fade in={isOpenDiscussion}>
-                    <Box>
-                        <Box sx={styleBox}>
-                            <TopCommentModal
+                <Fade in={isOpenDiscussion === post.idPost}>
+                    <Box flexDirection={"column"} sx={styleBox}>
+                        <Box >
+                            <DisplayPost
                                 content={post.content}
                                 firstName={post.firstName}
                                 lastName={post.lastName}
@@ -86,8 +94,36 @@ export default function ShowCommentModal({post}) {
                                 numberLike={post.numberLike}
                                 numberComment={post.numberComment}
                             />
+                            <Divider variant="middle" >
+                                <Chip label="Commentaire" />
+                            </Divider>
                         </Box>
+                        {comments.length ?
+                            comments.map(
+                                comment =>
+                                    <Box marginBottom={2} >
+                                        <DisplayPost
+                                            content={comment.content}
+                                            firstName={comment.firstName}
+                                            lastName={comment.lastName}
+                                            like={comment.like}
+                                            idPost={comment.idPost}
+                                            createAt={comment.createAt}
+                                            url_profile_picture={comment.urlProfilePicture}
+                                            idUser={comment.idUser}
+                                            numberLike={comment.numberLike}
+                                            numberComment={comment.numberComment}
+                                        />
+                                        <Grid item xs>
+                                            <ShowCommentButton post={comment}/>
+                                        </Grid>
+                                        <Divider variant="middle" />
+                                    </Box>
+                            ):
+                            <CircularProgress size={30} sx={{marginRight: 1}}/>
+                        }
                     </Box>
+
                 </Fade>
             </Modal>
         </Box>

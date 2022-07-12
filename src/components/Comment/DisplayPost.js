@@ -50,7 +50,7 @@ const styleButton = {
     position: 'fixed',
 };
 
-export default function TopCommentModal({idPost, content, createAt, firstName, lastName, numberComment, numberLike, url_profile_picture, like, idUser}) {
+export default function DisplayPost({idPost, content, createAt, firstName, lastName, numberComment, numberLike, url_profile_picture, like, idUser}) {
     const {isOpenDiscussion, idActivePost,setIsOpenDiscussion} = useContext(OpenModalDiscussion);
     const [likeCounter, setLikeCounter] = useState(numberLike);
     const [likeByUser, setLike] = useState(like);
@@ -151,7 +151,6 @@ export default function TopCommentModal({idPost, content, createAt, firstName, l
                 </Grid>
             </Grid>
         </Grid>
-        <Divider variant="middle" />
     </Box>
     );
 }
