@@ -38,10 +38,10 @@ const styleButton = {
     position: 'fixed',
 };
 
-export default function ShowCommentButton({idPost}) {
+export default function ShowCommentButton({post}) {
     let {setIsOpenDiscussion} = useContext(OpenModalComment);
     const handleOpen = event => {
-        setIsOpenDiscussion(idPost)
+        setIsOpenDiscussion(post.idPost)
     };
 
     const handleClose = () => {
@@ -50,8 +50,8 @@ export default function ShowCommentButton({idPost}) {
 
     return (
         <Box>
-            <Button variant="text" id={idPost} onClick={handleOpen}>Afficher cette discussion</Button>
-            <ShowCommentModal idPost={idPost}/>
+            <Button variant="text" id={post.idPost} onClick={handleOpen}>Afficher les commentaires</Button>
+            <ShowCommentModal post={post}/>
         </Box>
     );
 }

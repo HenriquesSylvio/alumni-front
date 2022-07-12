@@ -1,73 +1,120 @@
+// import * as React from 'react';
 import React, {useState} from "react";
-import {Button, Card, CircularProgress} from "@mui/material";
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import IconButton from "@mui/material/IconButton";
+import {Button, CircularProgress, Divider, Fab, Fade, Modal} from "@mui/material";
+import Box from "@mui/material/Box";
+import Backdrop from '@mui/material/Backdrop';
+import AddPostForm from "../Post/AddPostForm";
+import OpenModalDiscussion from "../../contexts/OpenModalComment";
+import {useContext, useLayoutEffect} from "react";
+import MainFeed from "../Post/MainFeed";
+import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import {postLikePost} from "../../services/LikePostApi";
-import {deleteLikePost} from "../../services/DeleteLikePost";
+import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
-import {useNavigate} from "react-router-dom";
-import ShowCommentButton from "../Comment/ShowCommentButton";
+import Typography from "@mui/material/Typography";
+import ShowCommentButton from "./ShowCommentButton";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import {deleteLikePost} from "../../services/DeleteLikePost";
+import {postLikePost} from "../../services/LikePostApi";
 
-export default function MainFeed({post, couleur, ...rest}) {
-    let  navigate = useNavigate();
-    const [likeCounter, setLikeCounter] = useState(post.numberLike);
-    const [likeByUser, setLike] = useState(post.like);
+const styleBox = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 'auto',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+    display: { xs: 'none', md: 'flex' },
+};
+const styleResponsiveBox = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    display: { xs: 'flex', md: 'none' }
+};
+
+const styleButton = {
+    margin: 0,
+    top: 'auto',
+    right: 100,
+    bottom: 100,
+    left: 'auto',
+    position: 'fixed',
+};
+
+export default function TopCommentModal({idPost, content, createAt, firstName, lastName, numberComment, numberLike, url_profile_picture, like, idUser}) {
+    const {isOpenDiscussion, idActivePost,setIsOpenDiscussion} = useContext(OpenModalDiscussion);
+    const [likeCounter, setLikeCounter] = useState(numberLike);
+    const [likeByUser, setLike] = useState(like);
     const [likeLoading, setLikeLoading] = useState(false);
+
     const LikePost = async () => {
         setLike(!likeByUser);
         setLikeLoading(true)
         if (likeByUser === true){
-            await deleteLikePost(post.idPost);
+            await deleteLikePost(idPost);
             setLikeCounter(likeCounter => likeCounter - 1);
         } else {
-            await postLikePost(post.idPost);
+            await postLikePost(idPost);
             setLikeCounter(likeCounter => likeCounter + 1);
         }
         setLikeLoading(false)
     };
 
-    const goProfile = () => {
-        console.log(post.idUser);
-        navigate(`/profile/${post.idUser}`);
+    const handleClose = () => {
+        // console.log(post.idPost)
+        setIsOpenDiscussion(0)
+    }
+
+    const [value, setValue] = React.useState('1');
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
     };
 
-
     return (
-        <Card  sx={{ paddingRight:1, color: couleur, ...rest}} >
+    <Box>
+        <Grid
+            container
+            direction="row"
+            justifyContent="flex-start"
+            // maxHeight={500}
+        >
             <Grid
                 container
                 direction="row"
                 justifyContent="flex-start"
             >
-                <IconButton onClick={goProfile}>
+                <IconButton>
                     <Avatar
                         sx={{ width: 50, height: 50}}
-                        src= {post.url_profile_picture}
+                        src= {url_profile_picture}
                     />
                 </IconButton>
                 <Grid marginTop={1}>
                     <Typography marginLeft={2} component="div" fontWeight={"bold"}>
-                        {post.lastName} {post.firstName}
+                        {lastName} {firstName}
                     </Typography>
                     <Typography marginLeft={2}>
-                        {post.createAt}
+                        {createAt}
                     </Typography>
                 </Grid>
             </Grid>
-            <p>{post.content}</p>
-            <Grid container>
-                <Grid item xs>
-                    <ShowCommentButton post={post}/>
-                </Grid>
+            <p>{content}</p>
+            <Grid container justifyContent="flex-end">
                 <Grid item>
                     <Grid
                         container
-                        direction="row"
-                        justifyContent="flex-end"
+                        // direction="row"
+                        // justifyContent="flex-end"
                         alignItems="center"
                         paddingRight={0}
                     >
@@ -75,7 +122,7 @@ export default function MainFeed({post, couleur, ...rest}) {
                             <ChatBubbleOutlineIcon/>
                         </IconButton>
                         <Typography variant="body2">
-                            {post.numberComment}
+                            {numberComment}
                         </Typography>
                         <Typography variant="body2" paddingRight={3} paddingLeft={1}>
                             commentaire(s)
@@ -103,6 +150,8 @@ export default function MainFeed({post, couleur, ...rest}) {
                     </Grid>
                 </Grid>
             </Grid>
-        </Card>
+        </Grid>
+        <Divider variant="middle" />
+    </Box>
     );
 }

@@ -5,6 +5,10 @@ import Backdrop from '@mui/material/Backdrop';
 import AddPostForm from "../Post/AddPostForm";
 import OpenModalDiscussion from "../../contexts/OpenModalComment";
 import {useContext, useLayoutEffect} from "react";
+import MainFeed from "../Post/MainFeed";
+import Container from "@mui/material/Container";
+import ShowCommentForm from "./TopCommentModal";
+import TopCommentModal from "./TopCommentModal";
 
 const styleBox = {
     position: 'absolute',
@@ -37,18 +41,12 @@ const styleButton = {
     position: 'fixed',
 };
 
-export default function ShowCommentModal({idPost}) {
+export default function ShowCommentModal({post}) {
     const {isOpenDiscussion, idActivePost,setIsOpenDiscussion} = useContext(OpenModalDiscussion);
-    const handleOpen = () => {
-        setIsOpenDiscussion(isOpenDiscussion[idPost] = true);
-        console.log(isOpenDiscussion[idPost]);
-    };
 
     const handleClose = () => {
-        console.log(idPost)
+        console.log(post.idPost)
         setIsOpenDiscussion(0)
-        // console.log({idActivePost})
-
     }
 
     const [value, setValue] = React.useState('1');
@@ -65,7 +63,7 @@ export default function ShowCommentModal({idPost}) {
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={isOpenDiscussion === idPost}
+                open={isOpenDiscussion === post.idPost}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -76,10 +74,18 @@ export default function ShowCommentModal({idPost}) {
                 <Fade in={isOpenDiscussion}>
                     <Box>
                         <Box sx={styleBox}>
-                            <AddPostForm />
-                        </Box>
-                        <Box sx={styleResponsiveBox}>
-                            <AddPostForm />
+                            <TopCommentModal
+                                content={post.content}
+                                firstName={post.firstName}
+                                lastName={post.lastName}
+                                like={post.like}
+                                idPost={post.idPost}
+                                createAt={post.createAt}
+                                url_profile_picture={post.urlProfilePicture}
+                                idUser={post.idUser}
+                                numberLike={post.numberLike}
+                                numberComment={post.numberComment}
+                            />
                         </Box>
                     </Box>
                 </Fade>
