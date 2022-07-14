@@ -13,6 +13,7 @@ import AddPostForm from "../components/Post/AddPostForm";
 import OpenModalAddComment from "../contexts/OpenModalAddComment";
 import {useContext} from "react";
 import AddCommentForm from "../components/Post/AddCommentForm";
+import ResponseIdPost from "../contexts/ResponseIdPost";
 // import OpenModalAddPost from "../contexts/OpenModalAddComment";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -51,11 +52,13 @@ export default function Post() {
     const [post, setPost] = useState('');
     const [loadingPage, setLoading] = useState(true);
     const {isOpenAddComment, setIsOpenAddComment} = useContext(OpenModalAddComment);
+    const {idPost, setIdPost} = useContext(ResponseIdPost);
     // const [isOpenAddComment, setIsOpenAddComment] = useContext(OpenModalAddPost);
     let params = useParams();
 
     const handleClose = () => {
         setIsOpenAddComment(false)
+        setIdPost(0)
     }
 
     useEffect( () => {
@@ -123,10 +126,10 @@ export default function Post() {
                     <Fade in={isOpenAddComment}>
                         <Box>
                             <Box sx={styleBox}>
-                                <AddCommentForm />
+                                <AddCommentForm idPost={idPost}/>
                             </Box>
                             <Box sx={styleResponsiveBox}>
-                                <AddCommentForm />
+                                <AddCommentForm idPost={idPost}/>
                             </Box>
                         </Box>
                     </Fade>

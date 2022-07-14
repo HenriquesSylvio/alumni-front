@@ -21,11 +21,7 @@ export default function AddPostForm() {
     const {isOpenAddPost, setIsOpenAddPost} = useContext(OpenModalAddPost);
     const [loadingForm, setLoadingForm] = React.useState(false);
     const [values, setValues] = useState({
-        title: "",
         content: "",
-        tag: {
-            id: ""
-        }
     });
 
     function handleClick() {

@@ -9,8 +9,29 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import CreateIcon from '@mui/icons-material/Create';
+import validate from "../../validators/AddPostValidator";
+import {addPost} from "../../services/AddPostApi";
+import {toast} from "react-toastify";
+import {addComment} from "../../services/AddCommentApi";
 
-export default function AddCommentForm() {
+export default function AddCommentForm({idPost}) {
+
+    const [values, setValues] = useState({
+        content: "",
+    });
+
+    const handleChange = ({currentTarget}) => {
+        const {name, value} = currentTarget;
+
+        setValues({...values, [name]: value})
+    }
+
+    const handleSubmit = async event => {
+        event.preventDefault();
+
+        await addComment(values, idPost);
+    };
+
     return (
         <Container component="main">
             <CssBaseline />
@@ -21,7 +42,7 @@ export default function AddCommentForm() {
                 alignItems="center"
                 justifyContent="center"
                 style={{ minHeight: '100%' }}
-                // onSubmit={handleSubmit}
+                onSubmit={handleSubmit}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                     <CreateIcon />
@@ -40,6 +61,7 @@ export default function AddCommentForm() {
                                 label="Contenu du poste"
                                 multiline
                                 rows={10}
+                                onChange={handleChange}
                             />
                         </Grid>
                     </Grid>

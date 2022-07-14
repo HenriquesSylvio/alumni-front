@@ -12,6 +12,7 @@ import {ToastContainer} from "react-toastify";
 import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
 import OpenModalAddPost from "./contexts/OpenModalAddPost";
 import OpenModalAddComment from "./contexts/OpenModalAddComment";
+import ResponseIdPost from "./contexts/ResponseIdPost";
 import Post from "./pages/Post";
 
 // const Profile = lazy(() => import('./pages/Profile'))
@@ -19,13 +20,15 @@ const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated());
     const [isOpenAddPost, setIsOpenAddPost] = useState(false);
     const [isOpenAddComment, setIsOpenAddComment] = useState(false);
+    const [idPost, setIdPost] = useState(0);
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
           <OpenModalAddPost.Provider value={{isOpenAddPost, setIsOpenAddPost}}>
               <OpenModalAddComment.Provider value={{isOpenAddComment, setIsOpenAddComment}}>
-                  <BrowserRouter>
-                      <Layout>
+                  <ResponseIdPost.Provider value={{idPost, setIdPost}}>
+                      <BrowserRouter>
+                          <Layout>
                               <Routes>
                                   <Route path='/' element={<Home/>}/>
                                   <Route exact path='/inscription' element={<Inscription/>}/>
@@ -36,9 +39,10 @@ const App = () => {
                                       <Route exact path='/profile' element={<Profile/>}/>
                                   </Route>
                               </Routes>
-                          <ToastContainer />
-                      </Layout>
-                  </BrowserRouter>
+                              <ToastContainer />
+                          </Layout>
+                      </BrowserRouter>
+                  </ResponseIdPost.Provider>
               </OpenModalAddComment.Provider>
         </OpenModalAddPost.Provider>
       </Auth.Provider>

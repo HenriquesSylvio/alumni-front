@@ -13,20 +13,21 @@ import ShowCommentButton from "../Comment/ShowCommentButton";
 import OpenModalAddComment from "../../contexts/OpenModalAddComment";
 import {useNavigate} from "react-router-dom";
 import {useContext} from "react";
+import ResponseIdPost from "../../contexts/ResponseIdPost";
 
 export default function MainFeed({post, couleur, ...rest}) {
     let  navigate = useNavigate();
     const [likeCounter, setLikeCounter] = useState(post.numberLike);
     const [likeByUser, setLike] = useState(post.like);
     const [likeLoading, setLikeLoading] = useState(false);
-    const {isOpenAddComment, setIsOpenAddComment} = useContext(OpenModalAddComment);
-    // const [isOpenAddComment, setIsOpenAddComment] = useContext(OpenModalAddComment);
+    const {setIsOpenAddComment} = useContext(OpenModalAddComment);
+    const {setIdPost} = useContext(ResponseIdPost);
 
     const handleOpen = () => {
         setIsOpenAddComment(true)
-        console.log(isOpenAddComment);
+        console.log(post.idPost);
+        setIdPost(post.idPost)
     }
-
     const LikePost = async () => {
         setLike(!likeByUser);
         setLikeLoading(true)
