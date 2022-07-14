@@ -12,6 +12,7 @@ import {ToastContainer} from "react-toastify";
 import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
 import OpenModalAddPost from "./contexts/OpenModalAddPost";
 import OpenModalDiscussion from "./contexts/OpenModalComment";
+import Post from "./pages/Post";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
                                   <Route element={<AuthenticatedRoute/>}>
                                       <Route exact path='/feed' element={<Feed/>}/>
                                       <Route exact path='/profile/:id' element={<Profile/>}/>
+                                      <Route exact path='/post/:id' element={<Post/>}/>
                                       <Route exact path='/profile' element={<Profile/>}/>
                                   </Route>
                               </Routes>

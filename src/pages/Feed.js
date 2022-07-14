@@ -40,17 +40,18 @@ export default function Feed() {
                         posts.length ?
                             posts.map(post =>
                                 <MainFeed
-                                    firstName={post.firstName}
-                                    lastName={post.lastName}
-                                    titre={post.title}
-                                    description={post.content}
-                                    nbComment={post.numberComment}
-                                    nbLike={post.numberLike}
-                                    like={post.like}
-                                    idPost={post.idPost}
-                                    createAt={post.createAt}
-                                    url_profile_picture={post.urlProfilePicture}
-                                    idUser={post.idUser}
+                                    // firstName={post.firstName}
+                                    // lastName={post.lastName}
+                                    // titre={post.title}
+                                    // description={post.content}
+                                    // nbComment={post.numberComment}
+                                    // nbLike={post.numberLike}
+                                    // like={post.like}
+                                    // idPost={post.idPost}
+                                    // createAt={post.createAt}
+                                    // url_profile_picture={post.urlProfilePicture}
+                                    // idUser={post.idUser}
+                                    post={post}
                                 />
                             ): null
                     }
