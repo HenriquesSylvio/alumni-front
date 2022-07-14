@@ -14,10 +14,12 @@ import {addPost} from "../../services/AddPostApi";
 import {toast} from "react-toastify";
 import {addComment} from "../../services/AddCommentApi";
 import OpenModalAddComment from "../../contexts/OpenModalAddComment";
+import {CircularProgress} from "@mui/material";
 
 export default function AddCommentForm({idPost}) {
     const {setIsOpenAddComment} = useContext(OpenModalAddComment);
     const [errors, setErrors] = useState({});
+    const [loadingForm, setLoadingForm] = React.useState(false);
     const [values, setValues] = useState({
         content: "",
     });
@@ -33,8 +35,8 @@ export default function AddCommentForm({idPost}) {
     }
 
     const handleSubmit = async event => {
+        setLoadingForm(true);
         event.preventDefault();
-
         await setErrors(validate(values));
 
         if (Object.keys(errors).length === 0) {
@@ -42,6 +44,7 @@ export default function AddCommentForm({idPost}) {
             toast.success('Le commentaire a été créer ! 😄')
             setIsOpenAddComment(false)
         }
+        setLoadingForm(false);
     };
 
     return (
@@ -76,19 +79,32 @@ export default function AddCommentForm({idPost}) {
                                 onChange={handleChange}
                                 error={ errors.content }
                                 helperText={ errors.content }
+                                disabled={loadingForm}
                             />
                         </Grid>
                     </Grid>
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleClick}
-                    >
-                        Créer
-                    </Button>
+                    {(loadingForm && (
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                marginTop: 2
+                            }}>
+                                <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                            </Box>
+                        ))
+                        ||
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            onClick={handleClick}
+                            loading={loadingForm}
+                        >
+                            Créer
+                        </Button>
+                    }
                 </Box>
             </Grid>
         </Container>
