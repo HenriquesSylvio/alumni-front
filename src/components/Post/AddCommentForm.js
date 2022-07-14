@@ -17,10 +17,14 @@ import OpenModalAddComment from "../../contexts/OpenModalAddComment";
 
 export default function AddCommentForm({idPost}) {
     const {setIsOpenAddComment} = useContext(OpenModalAddComment);
-
+    const [errors, setErrors] = useState({});
     const [values, setValues] = useState({
         content: "",
     });
+
+    function handleClick() {
+        setErrors(validate(values));
+    }
 
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget;
@@ -31,9 +35,13 @@ export default function AddCommentForm({idPost}) {
     const handleSubmit = async event => {
         event.preventDefault();
 
-        await addComment(values, idPost);
-        toast.success('Le commentaire a été créer ! 😄')
-        setIsOpenAddComment(false)
+        await setErrors(validate(values));
+
+        if (Object.keys(errors).length === 0) {
+            await addComment(values, idPost);
+            toast.success('Le commentaire a été créer ! 😄')
+            setIsOpenAddComment(false)
+        }
     };
 
     return (
@@ -62,10 +70,12 @@ export default function AddCommentForm({idPost}) {
                                 fullWidth
                                 id="content"
                                 name="content"
-                                label="Contenu du poste"
+                                label="Contenu du commentaire"
                                 multiline
                                 rows={10}
                                 onChange={handleChange}
+                                error={ errors.content }
+                                helperText={ errors.content }
                             />
                         </Grid>
                     </Grid>
@@ -75,6 +85,7 @@ export default function AddCommentForm({idPost}) {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        onClick={handleClick}
                     >
                         Créer
                     </Button>
