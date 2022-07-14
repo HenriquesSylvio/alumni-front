@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useContext, useLayoutEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -13,8 +13,10 @@ import validate from "../../validators/AddPostValidator";
 import {addPost} from "../../services/AddPostApi";
 import {toast} from "react-toastify";
 import {addComment} from "../../services/AddCommentApi";
+import OpenModalAddComment from "../../contexts/OpenModalAddComment";
 
 export default function AddCommentForm({idPost}) {
+    const {setIsOpenAddComment} = useContext(OpenModalAddComment);
 
     const [values, setValues] = useState({
         content: "",
@@ -30,6 +32,8 @@ export default function AddCommentForm({idPost}) {
         event.preventDefault();
 
         await addComment(values, idPost);
+        toast.success('Le commentaire a été créer ! 😄')
+        setIsOpenAddComment(false)
     };
 
     return (
