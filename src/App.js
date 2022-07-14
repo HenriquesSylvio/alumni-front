@@ -11,19 +11,19 @@ import {hasAuthenticated} from "./services/AuthApi";
 import {ToastContainer} from "react-toastify";
 import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
 import OpenModalAddPost from "./contexts/OpenModalAddPost";
-import OpenModalDiscussion from "./contexts/OpenModalComment";
+import OpenModalAddComment from "./contexts/OpenModalAddComment";
 import Post from "./pages/Post";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated());
     const [isOpenAddPost, setIsOpenAddPost] = useState(false);
-    const [isOpenDiscussion, setIsOpenDiscussion] = useState(false);
+    const [isOpenAddComment, setIsOpenAddComment] = useState(false);
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
           <OpenModalAddPost.Provider value={{isOpenAddPost, setIsOpenAddPost}}>
-              <OpenModalDiscussion.Provider value={{isOpenDiscussion, setIsOpenDiscussion}}>
+              <OpenModalAddComment.Provider value={{isOpenAddComment, setIsOpenAddComment}}>
                   <BrowserRouter>
                       <Layout>
                               <Routes>
@@ -39,7 +39,7 @@ const App = () => {
                           <ToastContainer />
                       </Layout>
                   </BrowserRouter>
-              </OpenModalDiscussion.Provider>
+              </OpenModalAddComment.Provider>
         </OpenModalAddPost.Provider>
       </Auth.Provider>
   );

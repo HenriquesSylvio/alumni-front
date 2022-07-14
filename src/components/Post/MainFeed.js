@@ -9,14 +9,24 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import {postLikePost} from "../../services/LikePostApi";
 import {deleteLikePost} from "../../services/DeleteLikePost";
 import Avatar from "@mui/material/Avatar";
-import {useNavigate} from "react-router-dom";
 import ShowCommentButton from "../Comment/ShowCommentButton";
+import OpenModalAddComment from "../../contexts/OpenModalAddComment";
+import {useNavigate} from "react-router-dom";
+import {useContext} from "react";
 
 export default function MainFeed({post, couleur, ...rest}) {
     let  navigate = useNavigate();
     const [likeCounter, setLikeCounter] = useState(post.numberLike);
     const [likeByUser, setLike] = useState(post.like);
     const [likeLoading, setLikeLoading] = useState(false);
+    const {isOpenAddComment, setIsOpenAddComment} = useContext(OpenModalAddComment);
+    // const [isOpenAddComment, setIsOpenAddComment] = useContext(OpenModalAddComment);
+
+    const handleOpen = () => {
+        setIsOpenAddComment(true)
+        console.log(isOpenAddComment);
+    }
+
     const LikePost = async () => {
         setLike(!likeByUser);
         setLikeLoading(true)
@@ -71,7 +81,7 @@ export default function MainFeed({post, couleur, ...rest}) {
                         alignItems="center"
                         paddingRight={0}
                     >
-                        <IconButton sx={{marginRight: 1}}>
+                        <IconButton sx={{marginRight: 1}} onClick={handleOpen}>
                             <ChatBubbleOutlineIcon/>
                         </IconButton>
                         <Typography variant="body2">

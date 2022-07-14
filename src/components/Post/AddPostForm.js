@@ -12,10 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import CreateIcon from '@mui/icons-material/Create';
 import {addPost} from "../../services/AddPostApi";
-import getTag from "../../services/GetTagApi";
-import {Autocomplete} from "@mui/lab";
 import validate from "../../validators/AddPostValidator";
-import ButtonAddPost from "./ButtonAddPost";
 import {useContext} from "react";
 import OpenModalAddPost from "../../contexts/OpenModalAddPost";
 
@@ -76,20 +73,6 @@ export default function AddPostForm() {
                     </Typography>
                     <Box component="form" noValidate sx={{ mt: 1 }}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name="title"
-                                    required
-                                    fullWidth
-                                    id="title"
-                                    label="Titre"
-                                    autoFocus
-                                    onChange={handleChange}
-                                    error={ errors.title }
-                                    helperText={ errors.title }
-                                    disabled={loadingForm}
-                                />
-                            </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     required
