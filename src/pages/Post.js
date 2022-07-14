@@ -14,6 +14,7 @@ import OpenModalAddComment from "../contexts/OpenModalAddComment";
 import {useContext} from "react";
 import AddCommentForm from "../components/Post/AddCommentForm";
 import ResponseIdPost from "../contexts/ResponseIdPost";
+import getFeed from "../services/FeedApi";
 // import OpenModalAddPost from "../contexts/OpenModalAddComment";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -55,21 +56,24 @@ export default function Post() {
     const {idPost, setIdPost} = useContext(ResponseIdPost);
     // const [isOpenAddComment, setIsOpenAddComment] = useContext(OpenModalAddPost);
     let params = useParams();
+    let newComments = [];
+    let page = 1;
 
     const handleClose = () => {
         setIsOpenAddComment(false)
         setIdPost(0)
     }
 
-    useEffect( () => {
-        getPost();
-        getComment();
-    }, [params.id]);
-
     const getComment = async () => {
-        const response = await getCommentById(params.id)
-        setComments(response.data.posts.items)
+        console.log("test")
+        const response = await getCommentById(params.id, page)
+
+        newComments = response.data.posts.items;
+        // setPosts((oldPosts) => [...oldPosts, ...newPosts])
+
+        setComments((oldComments) => [...oldComments, ...newComments])
         console.log(response.data.posts.items)
+        page += 1
     }
 
     const getPost = async () => {
@@ -78,6 +82,18 @@ export default function Post() {
         console.log(response.data[0])
     };
 
+    const handleScroll = async (e) =>{
+        if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
+            console.log(e.target.documentElement.scrollHeight);
+            await getComment().then();
+        }
+    }
+
+    useEffect( () => {
+        getPost();
+        getComment();
+        window.addEventListener('scroll', handleScroll)
+    }, [params.id]);
 
     return (
         <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
