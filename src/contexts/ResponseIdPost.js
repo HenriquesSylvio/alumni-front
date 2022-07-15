@@ -1,6 +1,6 @@
 import React from "react";
 
 export default React.createContext({
-    isOpenDiscussion: false,
-    setIsOpenDiscussion: value => {}
+    idPost: 0,
+    setIdPost: value => {}
 });

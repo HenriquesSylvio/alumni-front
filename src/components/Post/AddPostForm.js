@@ -12,10 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import CreateIcon from '@mui/icons-material/Create';
 import {addPost} from "../../services/AddPostApi";
-import getTag from "../../services/GetTagApi";
-import {Autocomplete} from "@mui/lab";
 import validate from "../../validators/AddPostValidator";
-import ButtonAddPost from "./ButtonAddPost";
 import {useContext} from "react";
 import OpenModalAddPost from "../../contexts/OpenModalAddPost";
 
@@ -24,22 +21,8 @@ export default function AddPostForm() {
     const {isOpenAddPost, setIsOpenAddPost} = useContext(OpenModalAddPost);
     const [loadingForm, setLoadingForm] = React.useState(false);
     const [values, setValues] = useState({
-        title: "",
         content: "",
-        tag: {
-            id: ""
-        }
     });
-    const [tags, setTags] = useState([]);
-
-    const loadTag = async () => {
-        const response = await getTag();
-        setTags(response.data.tags);
-    }
-
-    useLayoutEffect(() => {
-        loadTag()
-    }, []);
 
     function handleClick() {
         setErrors(validate(values));
@@ -88,20 +71,6 @@ export default function AddPostForm() {
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
-                                    name="title"
-                                    required
-                                    fullWidth
-                                    id="title"
-                                    label="Titre"
-                                    autoFocus
-                                    onChange={handleChange}
-                                    error={ errors.title }
-                                    helperText={ errors.title }
-                                    disabled={loadingForm}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
                                     required
                                     fullWidth
                                     id="content"
@@ -113,25 +82,6 @@ export default function AddPostForm() {
                                     error={ errors.content }
                                     helperText={ errors.content }
                                     disabled={loadingForm}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Autocomplete
-                                    fullWidth
-                                    options={tags}
-                                    onChange={(event, value) => setValues({...values, ["tag"]: value})}
-                                    autoComplete="tag"
-                                    disabled={loadingForm}
-                                    renderInput={(params) =>
-                                        <TextField {...params}
-                                                   required
-                                                   id="tag"
-                                                   name="tag"
-                                                   label="Tag"
-                                                   error={ errors.tag }
-                                                   helperText={ errors.tag }
-                                        />
-                                    }
                                 />
                             </Grid>
                         </Grid>

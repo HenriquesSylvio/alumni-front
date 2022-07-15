@@ -20,9 +20,10 @@ export default function Feed() {
         page += 1
     };
 
-    const handleScroll = (e) =>{
+    const handleScroll = async (e) =>{
         if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
-            getPostFromFeed(1).then();
+            console.log('test');
+            await getPostFromFeed(1).then();
         }
     }
 
@@ -39,17 +40,18 @@ export default function Feed() {
                         posts.length ?
                             posts.map(post =>
                                 <MainFeed
-                                    firstName={post.firstName}
-                                    lastName={post.lastName}
-                                    titre={post.title}
-                                    description={post.content}
-                                    nbComment={post.numberComment}
-                                    nbLike={post.numberLike}
-                                    like={post.like}
-                                    idPost={post.idPost}
-                                    createAt={post.createAt}
-                                    url_profile_picture={post.urlProfilePicture}
-                                    idUser={post.idUser}
+                                    // firstName={post.firstName}
+                                    // lastName={post.lastName}
+                                    // titre={post.title}
+                                    // description={post.content}
+                                    // nbComment={post.numberComment}
+                                    // nbLike={post.numberLike}
+                                    // like={post.like}
+                                    // idPost={post.idPost}
+                                    // createAt={post.createAt}
+                                    // url_profile_picture={post.urlProfilePicture}
+                                    // idUser={post.idUser}
+                                    post={post}
                                 />
                             ): null
                     }

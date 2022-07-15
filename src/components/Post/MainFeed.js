@@ -9,29 +9,41 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import {postLikePost} from "../../services/LikePostApi";
 import {deleteLikePost} from "../../services/DeleteLikePost";
 import Avatar from "@mui/material/Avatar";
-import {useNavigate} from "react-router-dom";
 import ShowCommentButton from "../Comment/ShowCommentButton";
+import OpenModalAddComment from "../../contexts/OpenModalAddComment";
+import {useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import ResponseIdPost from "../../contexts/ResponseIdPost";
 
-export default function MainFeed({idPost, titre, description, createAt, firstName, lastName, nbComment, nbLike, url_profile_picture, like, idUser, couleur, ...rest}) {
+export default function MainFeed({post, couleur, ...rest}) {
     let  navigate = useNavigate();
-    const [likeCounter, setLikeCounter] = useState(nbLike);
-    const [likeByUser, setLike] = useState(like);
+    const [likeCounter, setLikeCounter] = useState(post.numberLike);
+    const [likeByUser, setLike] = useState(post.like);
     const [likeLoading, setLikeLoading] = useState(false);
+    const {setIsOpenAddComment} = useContext(OpenModalAddComment);
+    const {setIdPost} = useContext(ResponseIdPost);
+
+    const handleOpen = () => {
+        setIsOpenAddComment(true)
+        console.log(post.idPost);
+        setIdPost(post.idPost)
+    }
     const LikePost = async () => {
         setLike(!likeByUser);
         setLikeLoading(true)
         if (likeByUser === true){
-            await deleteLikePost(idPost);
+            await deleteLikePost(post.idPost);
             setLikeCounter(likeCounter => likeCounter - 1);
         } else {
-            await postLikePost(idPost);
+            await postLikePost(post.idPost);
             setLikeCounter(likeCounter => likeCounter + 1);
         }
         setLikeLoading(false)
     };
 
     const goProfile = () => {
-        navigate(`/profile/${idUser}`);
+        console.log(post.idUser);
+        navigate(`/profile/${post.idUser}`);
     };
 
 
@@ -45,73 +57,63 @@ export default function MainFeed({idPost, titre, description, createAt, firstNam
                 <IconButton onClick={goProfile}>
                     <Avatar
                         sx={{ width: 50, height: 50}}
-                        src= {url_profile_picture}
+                        src= {post.url_profile_picture}
                     />
                 </IconButton>
                 <Grid marginTop={1}>
                     <Typography marginLeft={2} component="div" fontWeight={"bold"}>
-                        {lastName} {firstName}
+                        {post.lastName} {post.firstName}
                     </Typography>
                     <Typography marginLeft={2}>
-                        {createAt}
+                        {post.createAt}
                     </Typography>
                 </Grid>
             </Grid>
-            {/*<h3></h3>*/}
-            <Typography gutterBottom variant="h5" component="div" align={"center"} paddingTop={2}>
-                {titre}
-            </Typography>
-            <p>{description}</p>
-            <Grid
-                container
-                direction="row"
-                justifyContent="flex-end"
-                alignItems="center"
-                paddingRight={0}
-            >
-                <IconButton sx={{marginRight: 1}}>
-                    <ChatBubbleOutlineIcon/>
-                </IconButton>
-                {/*{(nbComment = 0 && (*/}
-                {/*        <Typography variant="body2" marginRight={2}>*/}
-                {/*            0 commentaire(s)*/}
-                {/*        </Typography>*/}
-                {/*    ))*/}
-                {/*    ||*/}
-                {/*    <Typography variant="body2" marginRight={2}>*/}
-                {/*        {nbComment} commentaire(s)*/}
-                {/*    </Typography>*/}
-                {/*}*/}
-
-                <Typography variant="body2">
-                    {nbComment}
-                </Typography>
-                <Typography variant="body2" paddingRight={3} paddingLeft={1}>
-                    commentaire(s)
-                </Typography>
-                {(likeLoading && (
-                        <CircularProgress size={30} sx={{marginRight: 1}}/>
-                    ))
-                    ||
-                    (likeByUser === true && (
-                        <IconButton onClick={LikePost} sx={{marginRight: 1}}>
-                            <ThumbUpIcon/>
+            <p>{post.content}</p>
+            <Grid container>
+                <Grid item xs>
+                    <ShowCommentButton post={post}/>
+                </Grid>
+                <Grid item>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="flex-end"
+                        alignItems="center"
+                        paddingRight={0}
+                    >
+                        <IconButton sx={{marginRight: 1}} onClick={handleOpen}>
+                            <ChatBubbleOutlineIcon/>
                         </IconButton>
-                    ))
-                    ||
-                    <IconButton onClick={LikePost} sx={{marginRight: 1}}>
-                        <ThumbUpOffAltIcon/>
-                    </IconButton>
-                }
-                <Typography variant="body2">
-                    {likeCounter}
-                </Typography>
-                <Typography variant="body2" paddingLeft={1}>
-                    like(s)
-                </Typography>
+                        <Typography variant="body2">
+                            {post.numberComment}
+                        </Typography>
+                        <Typography variant="body2" paddingRight={3} paddingLeft={1}>
+                            commentaire(s)
+                        </Typography>
+                        {(likeLoading && (
+                                <CircularProgress size={30} sx={{marginRight: 1}}/>
+                            ))
+                            ||
+                            (likeByUser === true && (
+                                <IconButton onClick={LikePost} sx={{marginRight: 1}}>
+                                    <ThumbUpIcon/>
+                                </IconButton>
+                            ))
+                            ||
+                            <IconButton onClick={LikePost} sx={{marginRight: 1}}>
+                                <ThumbUpOffAltIcon/>
+                            </IconButton>
+                        }
+                        <Typography variant="body2">
+                            {likeCounter}
+                        </Typography>
+                        <Typography variant="body2" paddingLeft={1}>
+                            like(s)
+                        </Typography>
+                    </Grid>
+                </Grid>
             </Grid>
-            <ShowCommentButton/>
-
         </Card>
     );
 }
