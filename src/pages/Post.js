@@ -15,6 +15,7 @@ import {useContext} from "react";
 import AddCommentForm from "../components/Post/AddCommentForm";
 import ResponseIdPost from "../contexts/ResponseIdPost";
 import getFeed from "../services/FeedApi";
+import DetailUser from "../components/Profile/DetailUser";
 // import OpenModalAddPost from "../contexts/OpenModalAddComment";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -98,7 +99,7 @@ export default function Post() {
     return (
         <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
             <Grid item xs>
-                <Item>xs</Item>
+                <DetailUser />
             </Grid>
             <Grid item xs={6}>
                 {(post && (
@@ -124,7 +125,7 @@ export default function Post() {
                 }
             </Grid>
             <Grid item xs>
-                <Item>xs</Item>
+                <DetailUser />
             </Grid>
             <Box>
                 <Modal

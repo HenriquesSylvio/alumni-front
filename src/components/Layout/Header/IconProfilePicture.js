@@ -14,11 +14,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import {useNavigate, withRouter } from "react-router-dom";
 import {Link} from "@mui/material";
 import {Navigate} from "react-router";
+import ActiveConnectedUser from "../../../contexts/ActiveConnectedUser";
 
 export default function IconProfilePicture() {
     let navigate = useNavigate();
 
     const { setIsAuthenticated } = useContext(Auth);
+    const { setActiveUser } = useContext(ActiveConnectedUser)
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenUserMenu = (event) => {
@@ -32,6 +34,7 @@ export default function IconProfilePicture() {
     const handleLogout = () => {
         logout();
         setIsAuthenticated(false);
+        setActiveUser([]);
         toast.info('A bientôt ! 😋');
     }
     return(
