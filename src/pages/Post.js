@@ -98,10 +98,10 @@ export default function Post() {
 
     return (
         <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
-            <Grid item xs>
+            <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                 <DetailUser />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs>
                 {(post && (
                         <MainFeed
                             post={post}
@@ -124,7 +124,7 @@ export default function Post() {
                     ): null
                 }
             </Grid>
-            <Grid item xs>
+            <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                 <DetailUser />
             </Grid>
             <Box>
