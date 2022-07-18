@@ -18,8 +18,8 @@ export default function Profile() {
     let userId = '';
 
     useEffect(async () => {
-        await getProfileUser();
-        await getPostByUserId();
+        getProfileUser();
+        getPostByUserId();
     }, []);
 
     const getProfileUser = async () => {

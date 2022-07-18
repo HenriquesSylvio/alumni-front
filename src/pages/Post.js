@@ -16,6 +16,7 @@ import AddCommentForm from "../components/Post/AddCommentForm";
 import ResponseIdPost from "../contexts/ResponseIdPost";
 import getFeed from "../services/FeedApi";
 import DetailUser from "../components/Profile/DetailUser";
+import getProfile from "../services/ProfileApi";
 // import OpenModalAddPost from "../contexts/OpenModalAddComment";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -50,15 +51,17 @@ const styleResponsiveBox = {
 };
 
 export default function Post() {
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState('');
     const [post, setPost] = useState('');
     const [loadingPage, setLoading] = useState(true);
     const {isOpenAddComment, setIsOpenAddComment} = useContext(OpenModalAddComment);
     const {idPost, setIdPost} = useContext(ResponseIdPost);
+    const [author, setAuthor] = useState('');
     // const [isOpenAddComment, setIsOpenAddComment] = useContext(OpenModalAddPost);
     let params = useParams();
     let newComments = [];
     let page = 1;
+    let idAuthor = "";
 
     const handleClose = () => {
         setIsOpenAddComment(false)
@@ -81,6 +84,15 @@ export default function Post() {
         const response = await getPostById(params.id)
         setPost(response.data[0])
         console.log(response.data[0])
+        idAuthor = response.data[0].idUser
+    };
+
+    const getProfileAuthor = async () => {
+        console.log(idAuthor);
+        const response = await getProfile(idAuthor)
+        console.log(response);
+        setAuthor(response.data)
+
     };
 
     const handleScroll = async (e) =>{
@@ -91,8 +103,12 @@ export default function Post() {
     }
 
     useEffect( () => {
-        getPost();
-        getComment();
+        const getData = async () => {
+            await getPost();
+            await getComment();
+            await getProfileAuthor();
+        }
+        getData();
         window.addEventListener('scroll', handleScroll)
     }, [params.id]);
 
@@ -125,7 +141,25 @@ export default function Post() {
                 }
             </Grid>
             <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
-                <DetailUser />
+                {(author && (
+                        <DetailUser
+                            firstName={author.firstName}
+                            lastName={author.lastName}
+                            urlProfilePicture={author.urlProfilePicture}
+                            nbSubscriber={author.followerNumber}
+                            nbPosts='5'
+                            nbSubscription={author.followingNumber}
+                            promo={author.promo}
+                            sector='Développeur'
+                            biography={author.biography}
+                            idUser={author.id}
+                            subscribe={author.subcribe}
+                        />
+                    ))
+                    ||
+                    null
+                }
+
             </Grid>
             <Box>
                 <Modal
