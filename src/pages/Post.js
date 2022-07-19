@@ -18,6 +18,7 @@ import getFeed from "../services/FeedApi";
 import DetailUser from "../components/Profile/DetailUser";
 import getProfile from "../services/ProfileApi";
 // import OpenModalAddPost from "../contexts/OpenModalAddComment";
+import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -57,6 +58,8 @@ export default function Post() {
     const {isOpenAddComment, setIsOpenAddComment} = useContext(OpenModalAddComment);
     const {idPost, setIdPost} = useContext(ResponseIdPost);
     const [author, setAuthor] = useState('');
+    const {activeProfile} = useContext(ActiveConnectedUser);
+
     // const [isOpenAddComment, setIsOpenAddComment] = useContext(OpenModalAddPost);
     let params = useParams();
     let newComments = [];
@@ -115,7 +118,19 @@ export default function Post() {
     return (
         <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
             <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
-                <DetailUser />
+                <DetailUser
+                    firstName={activeProfile.firstName}
+                    lastName={activeProfile.lastName}
+                    urlProfilePicture={activeProfile.urlProfilePicture}
+                    nbSubscriber={activeProfile.followerNumber}
+                    nbPosts='5'
+                    nbSubscription={activeProfile.followingNumber}
+                    promo={activeProfile.promo}
+                    sector='Développeur'
+                    biography={activeProfile.biography}
+                    idUser={activeProfile.id}
+                    subscribe={activeProfile.subcribe}
+                />
             </Grid>
             <Grid item xs>
                 {(post && (
