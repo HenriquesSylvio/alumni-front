@@ -1,4 +1,4 @@
-import {Fade, Modal, Paper, Stack} from '@mui/material';
+import {CircularProgress, Fade, Modal, Paper, Stack} from '@mui/material';
 import {useEffect, useState} from 'react';
 import MainFeed from '../components/Post/MainFeed';
 import {styled} from "@mui/material/styles";
@@ -59,12 +59,13 @@ export default function Post() {
     const {idPost, setIdPost} = useContext(ResponseIdPost);
     const [author, setAuthor] = useState('');
     const {activeProfile} = useContext(ActiveConnectedUser);
+    const [loadingComment, setLoadingComment] = useState(false);
 
-    // const [isOpenAddComment, setIsOpenAddComment] = useContext(OpenModalAddPost);
     let params = useParams();
     let newComments = [];
     let page = 1;
     let idAuthor = "";
+    let loadingDataComment = false;
 
     const handleClose = () => {
         setIsOpenAddComment(false)
@@ -72,36 +73,36 @@ export default function Post() {
     }
 
     const getComment = async () => {
-        console.log("test")
-        const response = await getCommentById(params.id, page)
-
-        newComments = response.data.posts.items;
-        // setPosts((oldPosts) => [...oldPosts, ...newPosts])
-
-        setComments((oldComments) => [...oldComments, ...newComments])
-        console.log(response.data.posts.items)
-        page += 1
+        setLoadingComment(true);
+        try{
+                const response = await getCommentById(params.id, page)
+                newComments = response.data.posts.items;
+                setComments((oldComments) => [...oldComments, ...newComments])
+                page += 1
+        } catch {
+        }
+        setLoadingComment(false);
     }
 
     const getPost = async () => {
         const response = await getPostById(params.id)
         setPost(response.data[0])
-        console.log(response.data[0])
         idAuthor = response.data[0].idUser
     };
 
     const getProfileAuthor = async () => {
-        console.log(idAuthor);
         const response = await getProfile(idAuthor)
-        console.log(response);
         setAuthor(response.data)
 
     };
 
     const handleScroll = async (e) =>{
-        if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
-            console.log(e.target.documentElement.scrollHeight);
-            await getComment().then();
+        if(loadingDataComment === false) {
+            loadingDataComment = true
+            if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
+                await getComment()
+            }
+            loadingDataComment = false
         }
     }
 
@@ -154,6 +155,18 @@ export default function Post() {
                             </Box>
                     ): null
                 }
+                {(loadingComment && (
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        marginTop: 2
+                    }}>
+                        <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                    </Box>
+                ))
+                }
+
             </Grid>
             <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                 {(author && (
