@@ -159,9 +159,15 @@ export default function Post() {
                     ||
                     null
                 }
+                {comments.length ?
                 <Typography paddingTop={5} variant="h4" component="div">
                     Commentaires
                 </Typography>
+                    :
+                    <Typography paddingTop={5} variant="h4" component="div">
+                        Aucun commentaire trouvé !
+                    </Typography>
+                }
                 {comments.length ?
                     comments.map(
                         comment =>
