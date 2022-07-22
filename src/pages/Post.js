@@ -93,7 +93,7 @@ export default function Post() {
     const getProfileAuthor = async () => {
         const response = await getProfile(idAuthor)
         setAuthor(response.data)
-
+        setLoading(!loadingPage);
     };
 
     const handleScroll = async (e) =>{
@@ -113,11 +113,24 @@ export default function Post() {
             await getProfileAuthor();
         }
         getData();
+
         window.addEventListener('scroll', handleScroll)
     }, [params.id]);
 
     return (
-        <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
+        <Box>
+        {loadingPage ? (
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    marginTop: 2
+                }}>
+                    <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                </Box>
+            ) : (
+
+                <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
             <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                 <DetailUser
                     firstName={activeProfile.firstName}
@@ -215,5 +228,8 @@ export default function Post() {
                 </Modal>
             </Box>
         </Grid>
+            )}
+
+        </Box>
     )
 }
