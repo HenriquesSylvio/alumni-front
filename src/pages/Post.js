@@ -93,7 +93,7 @@ export default function Post() {
     const getProfileAuthor = async () => {
         const response = await getProfile(idAuthor)
         setAuthor(response.data)
-        setLoading(!loadingPage);
+        // setLoading(!loadingPage);
     };
 
     const handleScroll = async (e) =>{
@@ -108,10 +108,14 @@ export default function Post() {
 
     useEffect( () => {
         const getData = async () => {
+            setLoading(true);
+            setComments('')
             await getPost();
             await getComment();
             await getProfileAuthor();
+            setLoading(false);
         }
+
         getData();
 
         window.addEventListener('scroll', handleScroll)
