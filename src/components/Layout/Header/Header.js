@@ -12,6 +12,8 @@ import Grid from "@mui/material/Grid";
 import {Chip} from "@mui/material";
 import SideMenu from "./SideMenu";
 import SearchIcon from '@mui/icons-material/Search';
+import nwsLogo from '../../../pictures/nws-logo.png'
+import nwsLabel from '../../../pictures/nws-label.png'
 
 export default function Header() {
     const {isAuthenticated} = useContext(Auth);
@@ -29,24 +31,39 @@ export default function Header() {
                         justifyContent="center"
                         sx={{ paddingLeft: 15 }}
                     >
-                        <img
-                            src="https://storage.googleapis.com/prod-phoenix-bucket//osp/tab/901/nws-photo01-210927044012.jpg"
-                            alt="nws-logo"
-                            width="65"
-                        />
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{
-                                color: 'black',
-                                paddingTop: 2,
-                                display: { xs: 'none', sm: 'block' },
-                            }}
+
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="center"
                         >
-                            NWS Alumni
-                        </Typography>
+                            <img
+                                src={nwsLogo}
+                                alt="nws-logo"
+                                width="65"
+                            />
+                            <img
+                                src={nwsLabel}
+                                alt="nws-logo"
+                                width="140"
+                                height="40"
+                            />
+                            <Typography
+                                variant="h3"
+                                noWrap
+                                component="div"
+                                sx={{
+                                    color: 'black',
+                                    display: { xs: 'none', sm: 'block' },
+                                }}
+                            >
+                                Alumni
+                            </Typography>
+                        </Grid>
                     </Grid>
+
+
                     {(isAuthenticated && (
                         <>
                             <Chip
@@ -70,64 +87,3 @@ export default function Header() {
         </Box>
     );
 }
-
-// {(isAuthenticated && (
-//     <>
-//         <Box sx={{ flexGrow: 1 }}>
-//             <SearchInput />
-//         </Box>
-//         <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
-//             <IconProfilePicture />
-//         </Box>
-//     </>
-// ))
-// ||
-// <Box position='absolute' right='0'>
-//     <SignInButton />
-// </Box>
-// }
-
-// return (
-//     <Box>
-//         <AppBar position="static" sx={{ bgcolor: 'white' }}>
-//             <Toolbar>
-//                 <SideMenu />
-//
-//                 <Grid
-//                     container
-//                     direction="row"
-//                     justifyContent="center"
-//                     sx={{ paddingLeft: 15 }}
-//                 >
-//                     <img
-//                         src="https://storage.googleapis.com/prod-phoenix-bucket//osp/tab/901/nws-photo01-210927044012.jpg"
-//                         alt="nws-logo"
-//                         width="65"
-//                     />
-//                     <Typography
-//                         variant="h6"
-//                         noWrap
-//                         component="div"
-//                         sx={{
-//                             color: 'black',
-//                             paddingTop: 2,
-//                             display: { xs: 'none', sm: 'block' },
-//                         }}
-//                     >
-//                         NWS Alumni
-//                     </Typography>
-//                 </Grid>
-//
-//                 <Chip
-//                     icon={<SearchIcon />}
-//                     label="Rechercher ..."
-//                     variant="outlined"
-//                     sx={{
-//                         display: { xs: 'none', sm: 'flex' },
-//                     }}
-//                 />
-//                 <IconProfilePicture />
-//             </Toolbar>
-//         </AppBar>
-//     </Box>
-// );
