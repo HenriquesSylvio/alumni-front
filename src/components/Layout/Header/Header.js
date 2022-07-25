@@ -12,8 +12,10 @@ import Grid from "@mui/material/Grid";
 import {Chip} from "@mui/material";
 import SideMenu from "./SideMenu";
 import SearchIcon from '@mui/icons-material/Search';
+import nwsLogoAlumni from '../../../pictures/logo-nws-alumni.png'
 import nwsLogo from '../../../pictures/nws-logo.png'
-import nwsLabel from '../../../pictures/nws-label.png'
+import AdbIcon from '@mui/icons-material/Adb';
+import Button from "@mui/material/Button";
 
 export default function Header() {
     const {isAuthenticated} = useContext(Auth);
@@ -23,65 +25,99 @@ export default function Header() {
         <Box>
             <AppBar position="static" sx={{ bgcolor: 'white' }}>
                 <Toolbar>
-                    <SideMenu />
 
-                    <Grid
+                    <Box display="flex" style={{ width: '100%' }} sx={{ flexDirection: 'row' }}>
+
+                    {(isAuthenticated && (
+                            <SideMenu />
+                        ))
+                        ||
+                        null
+                    }
+                    <Box
+                        textAlign='center'
                         container
-                        direction="row"
+                        direction="column"
+                        alignItems="center"
                         justifyContent="center"
-                        sx={{ paddingLeft: 15 }}
+                        width="100%"
+                        sx={{
+                            display: { xs: 'none', sm: 'flex' },
+                            justifyContent: 'center'
+                        }}
                     >
+                            <img
+                                src={nwsLogoAlumni}
+                                alt="nws-logo"
+                                width="300"
+                            />
+                    </Box>
 
-                        <Grid
+                        <Box
+                            textAlign='center'
                             container
-                            direction="row"
-                            justifyContent="center"
+                            direction="column"
                             alignItems="center"
+                            justifyContent="center"
+                            // display="flex"
+                            width="100%"
+
+                            // position={"absolute"}
+                            marginRight={3}
+                            sx={{
+                                display: { xs: 'flex', sm: 'none' },
+                                justifyContent: 'center'
+                            }}
                         >
                             <img
                                 src={nwsLogo}
                                 alt="nws-logo"
                                 width="65"
                             />
-                            <img
-                                src={nwsLabel}
-                                alt="nws-logo"
-                                width="140"
-                                height="40"
-                            />
-                            <Typography
-                                variant="h3"
-                                noWrap
-                                component="div"
-                                sx={{
-                                    color: 'black',
-                                    display: { xs: 'none', sm: 'block' },
-                                }}
-                            >
-                                Alumni
-                            </Typography>
-                        </Grid>
-                    </Grid>
+                        </Box>
 
 
                     {(isAuthenticated && (
-                        <>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                            }}
+                            direction="row"
+                            alignItems="center"
+                            position='absolute'
+                            right='0'
+                        >
+                            <Box
+                                sx={{
+                                    display: { xs: 'none', sm: 'flex' },
+                                }}
+                            >
                             <Chip
                                 icon={<SearchIcon />}
                                 label="Rechercher ..."
                                 variant="outlined"
-                                sx={{
-                                    display: { xs: 'none', sm: 'flex' },
-                                }}
                             />
-                            <IconProfilePicture />
-                        </>
+                            </Box>
+                            <Box
+                                sx={{
+                                    display: { xs: 'flex', sm: 'none' },
+                                }}
+                                paddingRight={2}
+                            >
+                                <SearchIcon sx={{ color:"black"}}/>
+                            </Box>
+                            <Box>
+                                <IconProfilePicture />
+                            </Box>
+                        </Box>
                     ))
                     ||
                     <Box position='absolute' right='0'>
                         <SignInButton />
                     </Box>
                     }
+                    </Box>
                 </Toolbar>
             </AppBar>
         </Box>

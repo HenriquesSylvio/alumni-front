@@ -93,7 +93,6 @@ export default function Post() {
     const getProfileAuthor = async () => {
         const response = await getProfile(idAuthor)
         setAuthor(response.data)
-        // setLoading(!loadingPage);
     };
 
     const handleScroll = async (e) =>{

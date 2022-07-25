@@ -56,18 +56,24 @@ export default function SideMenu() {
     );
 
     return (
-        <div>
+        <>
             <IconButton
-
                 size="large"
                 edge="start"
                 color="inherit"
                 aria-label="open drawer"
-                sx={{ color:"black", mr: 2 }}
+                sx={{ color:"black"}}
                 onClick={toggleDrawer('left', true)}
             >
-                <MenuIcon />
+                <MenuIcon/>
             </IconButton >
+
+            {/*<IconButton*/}
+            {/*    sx={{ color:"black"}}*/}
+            {/*    onClick={toggleDrawer('left', true)}*/}
+            {/*>*/}
+            {/*    <MenuIcon />*/}
+            {/*</IconButton>*/}
             <SwipeableDrawer
                 anchor={'left'}
                 open={state['left']}
@@ -76,6 +82,6 @@ export default function SideMenu() {
             >
                 {list('left')}
             </SwipeableDrawer>
-        </div>
+        </>
     );
 }
