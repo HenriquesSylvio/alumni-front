@@ -12,6 +12,8 @@ import Grid from "@mui/material/Grid";
 import {Chip} from "@mui/material";
 import SideMenu from "./SideMenu";
 import SearchIcon from '@mui/icons-material/Search';
+import nwsLogo from "../../../pictures/nws-logo.png"
+import nwsLogoAlumni from "../../../pictures/logo-nws-alumni.png"
 
 export default function Header() {
     const {isAuthenticated} = useContext(Auth);
