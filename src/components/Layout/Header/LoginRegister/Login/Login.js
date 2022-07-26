@@ -13,12 +13,16 @@ import {CircularProgress} from "@mui/material";
 import TopLoginRegister from "../TopLoginRegister";
 import {login} from "../../../../../services/AuthApi";
 import Auth from "../../../../../contexts/Auth";
+import getProfile from "../../../../../services/ProfileApi";
+import ActiveConnectedUser from "../../../../../contexts/ActiveConnectedUser";
+import {getItem} from "../../../../../services/LocaleStorage";
 
 const theme = createTheme();
 
 export default function SignIn() {
     const navigate = useNavigate();
     const {setIsAuthenticated} = useContext(Auth);
+    const {setActiveProfile} = useContext(ActiveConnectedUser)
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = React.useState(false);
 
@@ -38,6 +42,13 @@ export default function SignIn() {
         console.log(values);
     }
 
+    const getMyProfile = async () => {
+        const response = await getProfile()
+        console.log(response)
+        setActiveProfile(response.data)
+
+    }
+
     const handleSubmit = async event => {
         event.preventDefault();
 
@@ -48,7 +59,9 @@ export default function SignIn() {
             try {
                 console.log(values)
                 const response = await login(values);
-                setIsAuthenticated(response);
+                await setIsAuthenticated(response);
+                getMyProfile()
+
                 navigate('/feed')
                 toast.success('Bienvenue ! 😄')
             } catch ({response}) {

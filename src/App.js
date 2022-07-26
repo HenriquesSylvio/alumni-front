@@ -13,6 +13,7 @@ import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
 import OpenModalAddPost from "./contexts/OpenModalAddPost";
 import OpenModalAddComment from "./contexts/OpenModalAddComment";
 import ResponseIdPost from "./contexts/ResponseIdPost";
+import ActiveConnectedUser from "./contexts/ActiveConnectedUser";
 import Post from "./pages/Post";
 
 // const Profile = lazy(() => import('./pages/Profile'))
@@ -21,30 +22,33 @@ const App = () => {
     const [isOpenAddPost, setIsOpenAddPost] = useState(false);
     const [isOpenAddComment, setIsOpenAddComment] = useState(false);
     const [idPost, setIdPost] = useState(0);
+    const [activeProfile, setActiveProfile] = useState([])
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
-          <OpenModalAddPost.Provider value={{isOpenAddPost, setIsOpenAddPost}}>
-              <OpenModalAddComment.Provider value={{isOpenAddComment, setIsOpenAddComment}}>
-                  <ResponseIdPost.Provider value={{idPost, setIdPost}}>
-                      <BrowserRouter>
-                          <Layout>
-                              <Routes>
-                                  <Route path='/' element={<Home/>}/>
-                                  <Route exact path='/inscription' element={<Inscription/>}/>
-                                  <Route element={<AuthenticatedRoute/>}>
-                                      <Route exact path='/feed' element={<Feed/>}/>
-                                      <Route exact path='/profile/:id' element={<Profile/>}/>
-                                      <Route exact path='/post/:id' element={<Post/>}/>
-                                      <Route exact path='/profile' element={<Profile/>}/>
-                                  </Route>
-                              </Routes>
-                              <ToastContainer />
-                          </Layout>
-                      </BrowserRouter>
-                  </ResponseIdPost.Provider>
-              </OpenModalAddComment.Provider>
-        </OpenModalAddPost.Provider>
+          <ActiveConnectedUser.Provider value={{activeProfile, setActiveProfile}}>
+              <OpenModalAddPost.Provider value={{isOpenAddPost, setIsOpenAddPost}}>
+                  <OpenModalAddComment.Provider value={{isOpenAddComment, setIsOpenAddComment}}>
+                      <ResponseIdPost.Provider value={{idPost, setIdPost}}>
+                          <BrowserRouter>
+                              <Layout>
+                                  <Routes>
+                                      <Route path='/' element={<Home/>}/>
+                                      <Route exact path='/inscription' element={<Inscription/>}/>
+                                      <Route element={<AuthenticatedRoute/>}>
+                                          <Route exact path='/feed' element={<Feed/>}/>
+                                          <Route exact path='/profile/:id' element={<Profile/>}/>
+                                          <Route exact path='/post/:id' element={<Post/>}/>
+                                          <Route exact path='/profile' element={<Profile/>}/>
+                                      </Route>
+                                  </Routes>
+                                  <ToastContainer />
+                              </Layout>
+                          </BrowserRouter>
+                      </ResponseIdPost.Provider>
+                  </OpenModalAddComment.Provider>
+            </OpenModalAddPost.Provider>
+          </ActiveConnectedUser.Provider>
       </Auth.Provider>
   );
 };

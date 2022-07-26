@@ -36,7 +36,7 @@ export default function SignInButton() {
 
     return (
         <Box sx={{ p: 1 }}>
-            <Button onClick={handleOpen} color="inherit" variant="outlined">
+            <Button onClick={handleOpen} color="primary">
                 Se connecter
             </Button>
             <Modal

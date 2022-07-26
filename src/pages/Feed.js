@@ -28,7 +28,11 @@ export default function Feed() {
     }
 
     useEffect(() => {
-        getPostFromFeed();
+        const getData = async () => {
+            await getPostFromFeed();
+        }
+        getData();
+
         window.addEventListener('scroll', handleScroll)
     }, []);
 
