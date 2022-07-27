@@ -17,9 +17,13 @@ export default function Profile() {
     let params = useParams();
     let userId = '';
 
-    useEffect(async () => {
-        await getProfileUser();
-        await getPostByUserId();
+    useEffect( () => {
+        const getData = async () => {
+            await getProfileUser();
+            await getPostByUserId();
+        }
+        getData();
+
     }, []);
 
     const getProfileUser = async () => {
@@ -30,6 +34,7 @@ export default function Profile() {
     };
 
     const getPostByUserId = async () => {
+        console.log(userId);
         const response = await getPostByUser(userId)
         setPosts(response.data.posts)
         console.log(response.data.posts);

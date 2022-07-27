@@ -1,4 +1,4 @@
-import {Fade, Modal, Paper, Stack} from '@mui/material';
+import {CircularProgress, Fade, Modal, Paper, Stack} from '@mui/material';
 import {useEffect, useState} from 'react';
 import MainFeed from '../components/Post/MainFeed';
 import {styled} from "@mui/material/styles";
@@ -15,7 +15,10 @@ import {useContext} from "react";
 import AddCommentForm from "../components/Post/AddCommentForm";
 import ResponseIdPost from "../contexts/ResponseIdPost";
 import getFeed from "../services/FeedApi";
+import DetailUser from "../components/Profile/DetailUser";
+import getProfile from "../services/ProfileApi";
 // import OpenModalAddPost from "../contexts/OpenModalAddComment";
+import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -49,15 +52,20 @@ const styleResponsiveBox = {
 };
 
 export default function Post() {
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState('');
     const [post, setPost] = useState('');
     const [loadingPage, setLoading] = useState(true);
     const {isOpenAddComment, setIsOpenAddComment} = useContext(OpenModalAddComment);
     const {idPost, setIdPost} = useContext(ResponseIdPost);
-    // const [isOpenAddComment, setIsOpenAddComment] = useContext(OpenModalAddPost);
+    const [author, setAuthor] = useState('');
+    const {activeProfile} = useContext(ActiveConnectedUser);
+    const [loadingComment, setLoadingComment] = useState(false);
+
     let params = useParams();
     let newComments = [];
     let page = 1;
+    let idAuthor = "";
+    let loadingDataComment = false;
 
     const handleClose = () => {
         setIsOpenAddComment(false)
@@ -65,42 +73,83 @@ export default function Post() {
     }
 
     const getComment = async () => {
-        console.log("test")
-        const response = await getCommentById(params.id, page)
-
-        newComments = response.data.posts.items;
-        // setPosts((oldPosts) => [...oldPosts, ...newPosts])
-
-        setComments((oldComments) => [...oldComments, ...newComments])
-        console.log(response.data.posts.items)
-        page += 1
+        setLoadingComment(true);
+        try{
+                const response = await getCommentById(params.id, page)
+                newComments = response.data.posts.items;
+                setComments((oldComments) => [...oldComments, ...newComments])
+                page += 1
+        } catch {
+        }
+        setLoadingComment(false);
     }
 
     const getPost = async () => {
         const response = await getPostById(params.id)
         setPost(response.data[0])
-        console.log(response.data[0])
+        idAuthor = response.data[0].idUser
+    };
+
+    const getProfileAuthor = async () => {
+        const response = await getProfile(idAuthor)
+        setAuthor(response.data)
     };
 
     const handleScroll = async (e) =>{
-        if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
-            console.log(e.target.documentElement.scrollHeight);
-            await getComment().then();
+        if(loadingDataComment === false) {
+            loadingDataComment = true
+            if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
+                await getComment()
+            }
+            loadingDataComment = false
         }
     }
 
     useEffect( () => {
-        getPost();
-        getComment();
+        const getData = async () => {
+            setLoading(true);
+            setComments('')
+            await getPost();
+            await getComment();
+            await getProfileAuthor();
+            setLoading(false);
+        }
+
+        getData();
+
         window.addEventListener('scroll', handleScroll)
     }, [params.id]);
 
     return (
-        <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
-            <Grid item xs>
-                <Item>xs</Item>
+        <Box>
+        {loadingPage ? (
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    marginTop: 2
+                }}>
+                    <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                </Box>
+            ) : (
+
+                <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
+            <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
+                <DetailUser
+                    firstName={activeProfile.firstName}
+                    lastName={activeProfile.lastName}
+                    urlProfilePicture={activeProfile.urlProfilePicture}
+                    nbSubscriber={activeProfile.followerNumber}
+                    nbPosts='5'
+                    nbSubscription={activeProfile.followingNumber}
+                    promo={activeProfile.promo}
+                    sector='Développeur'
+                    biography={activeProfile.biography}
+                    idUser={activeProfile.id}
+                    subscribe={activeProfile.subcribe}
+                />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs>
                 {(post && (
                         <MainFeed
                             post={post}
@@ -109,9 +158,15 @@ export default function Post() {
                     ||
                     null
                 }
+                {comments.length ?
                 <Typography paddingTop={5} variant="h4" component="div">
                     Commentaires
                 </Typography>
+                    :
+                    <Typography paddingTop={5} variant="h4" component="div">
+                        Aucun commentaire trouvé !
+                    </Typography>
+                }
                 {comments.length ?
                     comments.map(
                         comment =>
@@ -122,9 +177,39 @@ export default function Post() {
                             </Box>
                     ): null
                 }
+                {(loadingComment && (
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        marginTop: 2
+                    }}>
+                        <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                    </Box>
+                ))
+                }
+
             </Grid>
-            <Grid item xs>
-                <Item>xs</Item>
+            <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
+                {(author && (
+                        <DetailUser
+                            firstName={author.firstName}
+                            lastName={author.lastName}
+                            urlProfilePicture={author.urlProfilePicture}
+                            nbSubscriber={author.followerNumber}
+                            nbPosts='5'
+                            nbSubscription={author.followingNumber}
+                            promo={author.promo}
+                            sector='Développeur'
+                            biography={author.biography}
+                            idUser={author.id}
+                            subscribe={author.subcribe}
+                        />
+                    ))
+                    ||
+                    null
+                }
+
             </Grid>
             <Box>
                 <Modal
@@ -152,5 +237,8 @@ export default function Post() {
                 </Modal>
             </Box>
         </Grid>
+            )}
+
+        </Box>
     )
 }
