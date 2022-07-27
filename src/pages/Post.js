@@ -171,6 +171,9 @@ export default function Post() {
                     comments.map(
                         comment =>
                             <Box marginBottom={2} >
+                                <p>
+                                    {comment.idPost}
+                                </p>
                                 <MainFeed
                                     post={comment}
                                 />

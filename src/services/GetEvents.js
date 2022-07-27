@@ -8,6 +8,6 @@ const config = {
     headers: { Authorization: `Bearer ${getItem('Token')}` }
 };
 
-export default function getEvents() {
-    return axios.get(`${URLApi}event?past=true`, config)
+export default function getEvents(pageNumber = 1) {
+    return axios.get(`${URLApi}event?past=true&current_page=${pageNumber}`, config)
 }

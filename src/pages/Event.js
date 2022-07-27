@@ -11,24 +11,50 @@ import {useContext, useEffect, useState} from "react";
 import EventCard from "../components/Event/EventCard";
 import getEvents from "../services/GetEvents";
 import getFeed from "../services/FeedApi";
+import getCommentById from "../services/GetCommentByIdApi";
 
 export default function Event() {
 
     const {activeProfile} = useContext(ActiveConnectedUser);
-
+    const [loadingEvent, setLoadingEvent] = useState(false);
     const [events, setEvents] = useState([]);
+    let loadingDataEvent = false;
+    let page = 1
+    let newEvents = [];
 
     const getEventsComing = async () => {
-        const response = await getEvents();
-        console.log(response.data.data);
-        setEvents(response.data.data);
+        setLoadingEvent(true);
+        try{
+            const response = await getEvents(page);
+            console.log(page)
+            newEvents = response.data.data;
+            console.log(newEvents)
+            setEvents((oldEvents) => [...oldEvents, ...newEvents])
+            page += 1
+        } catch {
+        }
+        setLoadingEvent(false);
     };
+
+    const handleScroll = async (e) =>{
+        if(loadingDataEvent === false) {
+            loadingDataEvent = true
+            if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
+                console.log("tzesqd")
+                await getEventsComing()
+            }
+            loadingDataEvent = false
+        }
+    }
+
 
     useEffect(() => {
         const getData = async () => {
             await getEventsComing();
         }
         getData();
+
+        window.addEventListener('scroll', handleScroll)
     }, []);
 
     return (
@@ -49,18 +75,33 @@ export default function Event() {
                         subscribe={activeProfile.subcribe}
                     />
                 </Grid>
+
                 <Grid item xs>
+
                     {
                         events.length ?
                             events.map(event =>
-                                    <Box sx={{
-                                        marginTop: 2
-                                    }}>
-                                        <EventCard event={event}/>
-                                    </Box>
-
+                                <Box sx={{
+                                    marginTop: 2
+                                }}>
+                                    <p>{event.idEvent}</p>
+                                    <EventCard event={event}/>
+                                </Box>
                             ): null
                     }
+                    {(loadingEvent && (
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            marginTop: 2
+                        }}>
+                            <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                        </Box>
+                    ))
+                    }
+
+
 
                 </Grid>
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
