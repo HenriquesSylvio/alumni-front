@@ -7,12 +7,29 @@ import Typography from "@mui/material/Typography";
 import Backdrop from "@mui/material/Backdrop";
 import AddCommentForm from "../components/Post/AddCommentForm";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import EventCard from "../components/Event/EventCard";
+import getEvents from "../services/GetEvents";
+import getFeed from "../services/FeedApi";
 
 export default function Event() {
 
     const {activeProfile} = useContext(ActiveConnectedUser);
+
+    const [events, setEvents] = useState([]);
+
+    const getEventsComing = async () => {
+        const response = await getEvents();
+        console.log(response.data.data);
+        setEvents(response.data.data);
+    };
+
+    useEffect(() => {
+        const getData = async () => {
+            await getEventsComing();
+        }
+        getData();
+    }, []);
 
     return (
         <Box>

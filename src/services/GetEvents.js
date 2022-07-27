@@ -9,5 +9,5 @@ const config = {
 };
 
 export default function getEvents() {
-    return axios.get(`${URLApi}event`, config)
+    return axios.get(`${URLApi}event?past=true`, config)
 }
