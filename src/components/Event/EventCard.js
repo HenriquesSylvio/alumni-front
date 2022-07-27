@@ -5,8 +5,8 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-export default function EventCard() {
-
+// export default function EventCard({firstName, lastName, title, idEvent, idUser, description, date}) {
+export default function EventCard({event}) {
     return (
         <Card  sx={{ paddingRight:1 }} >
             <Grid
@@ -22,7 +22,7 @@ export default function EventCard() {
                 </IconButton>
                 <Grid marginTop={2}>
                     <Typography marginLeft={2} component="div" fontWeight={"bold"}>
-                        Henriques Sylvio
+                        {event.lastName} {event.firstName}
                     </Typography>
                 </Grid>
             </Grid>
@@ -33,12 +33,12 @@ export default function EventCard() {
                 alignItems="center"
             >
                 <Typography marginLeft={2} component="div" fontWeight={"bold"}>
-                    Ceci est le titre de l'event
+                    {event.title}
                 </Typography>
                 <Typography marginLeft={2} component="div" fontWeight={"lighter"}>
-                    09 Aout 2022
+                    {event.date}
                 </Typography>
-                <p>Ceci est une description</p>
+                <p>{event.description}</p>
                 <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained">
                     Participer
                 </Button>

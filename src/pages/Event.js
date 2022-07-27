@@ -50,7 +50,18 @@ export default function Event() {
                     />
                 </Grid>
                 <Grid item xs>
-                    <EventCard/>
+                    {
+                        events.length ?
+                            events.map(event =>
+                                    <Box sx={{
+                                        marginTop: 2
+                                    }}>
+                                        <EventCard event={event}/>
+                                    </Box>
+
+                            ): null
+                    }
+
                 </Grid>
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                 </Grid>
