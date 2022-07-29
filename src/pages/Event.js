@@ -18,6 +18,8 @@ export default function Event() {
     const {activeProfile} = useContext(ActiveConnectedUser);
     const [loadingEvent, setLoadingEvent] = useState(false);
     const [events, setEvents] = useState([]);
+    const [loadingPage, setLoading] = useState(true);
+
     let loadingDataEvent = false;
     let page = 1
     let newEvents = [];
@@ -50,7 +52,9 @@ export default function Event() {
 
     useEffect(() => {
         const getData = async () => {
+            setLoading(true);
             await getEventsComing();
+            setLoading(false);
         }
         getData();
 
@@ -58,6 +62,17 @@ export default function Event() {
     }, []);
 
     return (
+        <Box>
+            {loadingPage ? (
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    marginTop: 2
+                }}>
+                    <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                </Box>
+            ) : (
         <Box>
             <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
@@ -108,6 +123,8 @@ export default function Event() {
                 </Grid>
             </Grid>
         </Box>
-    )
+            )}
 
+        </Box>
+    )
 }
