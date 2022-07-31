@@ -11,22 +11,27 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import CreateIcon from '@mui/icons-material/Create';
-import {addPost} from "../../services/AddPostApi";
+import {addEvent} from "../../services/AddEventApi";
 import validate from "../../validators/AddPostValidator";
 import {useContext} from "react";
 import OpenModalAddPost from "../../contexts/OpenModalAddPost";
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import {LocalizationProvider} from "@mui/lab";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function AddEventForm() {
-    const [errors, setErrors] = useState({});
+    // const [errors, setErrors] = useState({});
     const {isOpenAddPost, setIsOpenAddPost} = useContext(OpenModalAddPost);
     const [loadingForm, setLoadingForm] = React.useState(false);
     const [values, setValues] = useState({
         content: "",
     });
+    // const [value, setValue] = React.useState<Date>("");
 
-    function handleClick() {
-        setErrors(validate(values));
-    }
+    // function handleClick() {
+    //     setErrors(validate(values));
+    // }
 
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget;
@@ -38,15 +43,16 @@ export default function AddEventForm() {
         setLoadingForm(true);
         event.preventDefault();
 
-        await setErrors(validate(values));
-        console.log(errors);
-        if (Object.keys(errors).length === 0) {
-            await addPost(values);
-            toast.success('Le poste a été créer ! 😄')
+        // await setErrors(validate(values));
+        // console.log(errors);
+        // if (Object.keys(errors).length === 0) {
+            await addEvent("test", "test");
+            toast.success('L\'événement a été créer ! 😄')
             setIsOpenAddPost(false);
-        }
+        // }
         setLoadingForm(false);
     };
+
 
 
     return (
@@ -78,8 +84,8 @@ export default function AddEventForm() {
                                 name="title"
                                 autoComplete="title"
                                 onChange={handleChange}
-                                error={ errors.email }
-                                helperText={ errors.email }
+                                // error={ errors.email }
+                                // helperText={ errors.email }
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -94,6 +100,20 @@ export default function AddEventForm() {
                                 onChange={handleChange}
                             />
                         </Grid>
+                        {/*<Grid item xs={12}>*/}
+                        {/*    <LocalizationProvider dateAdapter={AdapterDateFns}>*/}
+                        {/*        <DatePicker*/}
+                        {/*            label="Basic example"*/}
+                        {/*            value={value}*/}
+                        {/*            onChange={(newValue) => {*/}
+                        {/*                setValue(newValue);*/}
+                        {/*            }}*/}
+                        {/*            renderInput={(params) => <TextField {...params} />}*/}
+                        {/*        />*/}
+                        {/*    </LocalizationProvider>*/}
+                        {/*</Grid>*/}
+
+
                     </Grid>
 
                     {(loadingForm && (
@@ -112,7 +132,7 @@ export default function AddEventForm() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={handleClick}
+                            // onClick={handleClick}
                             loading={loadingForm}
                         >
                             Créer
