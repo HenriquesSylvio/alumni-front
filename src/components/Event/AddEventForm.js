@@ -12,7 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import CreateIcon from '@mui/icons-material/Create';
 import {addEvent} from "../../services/AddEventApi";
-import validate from "../../validators/AddPostValidator";
+import validate from "../../validators/AddEventValidator";
 import {useContext} from "react";
 import OpenModalAddPost from "../../contexts/OpenModalAddPost";
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -21,35 +21,39 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function AddEventForm() {
-    // const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({});
     const {isOpenAddPost, setIsOpenAddPost} = useContext(OpenModalAddPost);
     const [loadingForm, setLoadingForm] = React.useState(false);
     const [values, setValues] = useState({
-        content: "",
+        title: "",
+        description: "",
+        date: "25/11/2022"
     });
     // const [value, setValue] = React.useState<Date>("");
 
-    // function handleClick() {
-    //     setErrors(validate(values));
-    // }
+    function handleClick() {
+        setErrors(validate(values));
+    }
 
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget;
 
         setValues({...values, [name]: value})
+        // setValues({...values, ["date"]: "25/11/2022"})
+        console.log(values)
     }
 
     const handleSubmit = async event => {
         setLoadingForm(true);
         event.preventDefault();
 
-        // await setErrors(validate(values));
-        // console.log(errors);
-        // if (Object.keys(errors).length === 0) {
-            await addEvent("test", "test");
+        await setErrors(validate(values));
+        console.log(errors);
+        if (Object.keys(errors).length === 0) {
+            await addEvent(values);
             toast.success('L\'événement a été créer ! 😄')
             setIsOpenAddPost(false);
-        // }
+        }
         setLoadingForm(false);
     };
 
@@ -84,8 +88,8 @@ export default function AddEventForm() {
                                 name="title"
                                 autoComplete="title"
                                 onChange={handleChange}
-                                // error={ errors.email }
-                                // helperText={ errors.email }
+                                error={ errors.title }
+                                helperText={ errors.title }
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -98,6 +102,8 @@ export default function AddEventForm() {
                                 multiline
                                 rows={10}
                                 onChange={handleChange}
+                                error={ errors.description }
+                                helperText={ errors.description }
                             />
                         </Grid>
                         {/*<Grid item xs={12}>*/}
@@ -132,7 +138,7 @@ export default function AddEventForm() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            // onClick={handleClick}
+                            onClick={handleClick}
                             loading={loadingForm}
                         >
                             Créer

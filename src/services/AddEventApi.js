@@ -8,11 +8,11 @@ const config = {
     headers: {Authorization: `Bearer ${getItem('Token')}`}
 };
 
-export function addEvent(title, description) {
+export function addEvent(credentials) {
     const current = new Date();
     return axios
         // .post(`${URLApi}event`, `{"title": "${title}", "description": "${description}"}`, config);
-        .post(`${URLApi}event`, {title: title, description: description, date: "25/11/2022"}, config);
+        .post(`${URLApi}event`, credentials, config);
         }
 // {subscriber: {id: idUser}}
 // , "date": "31/07/2022"
