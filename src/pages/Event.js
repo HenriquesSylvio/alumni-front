@@ -12,6 +12,16 @@ import EventCard from "../components/Event/EventCard";
 import getEvents from "../services/GetEvents";
 import getFeed from "../services/FeedApi";
 import getCommentById from "../services/GetCommentByIdApi";
+import ButtonAddPost from "../components/Post/ButtonAddPost";
+import {CalendarPicker, StaticDatePicker} from "@mui/lab";
+// import {LocalizationProvider, StaticDatePicker} from "@mui/lab";
+// import isWeekend from 'date-fns/isWeekend';
+// import TextField from '@mui/material/TextField';
+// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import ButtonAddEvent from "../components/Event/ButtonAddEvent";
 
 export default function Event() {
 
@@ -97,9 +107,8 @@ export default function Event() {
                         events.length ?
                             events.map(event =>
                                 <Box sx={{
-                                    marginTop: 2
+                                    marginBottom: 2
                                 }}>
-                                    <p>{event.idEvent}</p>
                                     <EventCard event={event}/>
                                 </Box>
                             ): null
@@ -115,13 +124,27 @@ export default function Event() {
                         </Box>
                     ))
                     }
-
-
-
                 </Grid>
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
+                    {/*<LocalizationProvider >*/}
+                    {/*    <CalendarPicker />*/}
+                    {/*</LocalizationProvider>*/}
+                    {/*<LocalizationProvider dateAdapter={AdapterDateFns}>*/}
+                    {/*    <StaticDatePicker<Date>*/}
+                    {/*        orientation="landscape"*/}
+                    {/*        openTo="day"*/}
+                    {/*        value={value}*/}
+                    {/*        shouldDisableDate={isWeekend}*/}
+                    {/*        onChange={(newValue) => {*/}
+                    {/*        setValue(newValue);*/}
+                    {/*    }}*/}
+                    {/*        renderInput={(params) => <TextField {...params} />}*/}
+                    {/*        />*/}
+                    {/*</LocalizationProvider>*/}
                 </Grid>
             </Grid>
+
+            <ButtonAddEvent/>
         </Box>
             )}
 
