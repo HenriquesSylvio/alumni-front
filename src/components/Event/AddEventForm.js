@@ -27,7 +27,7 @@ export default function AddEventForm() {
     const [values, setValues] = useState({
         title: "",
         description: "",
-        date: new Date()
+        date: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear()
     });
     const [date, setDate] = React.useState(new Date());
 
@@ -97,6 +97,7 @@ export default function AddEventForm() {
                                 onChange={handleChange}
                                 error={ errors.title }
                                 helperText={ errors.title }
+                                disabled={loadingForm}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -118,7 +119,7 @@ export default function AddEventForm() {
                                     }
 
 
-                                    renderInput={(params) => <TextField {...params} fullWidth required/>}
+                                    renderInput={(params) => <TextField {...params} fullWidth required disabled={loadingForm}/>}
 
 
                                 />
@@ -136,6 +137,7 @@ export default function AddEventForm() {
                                 onChange={handleChange}
                                 error={ errors.description }
                                 helperText={ errors.description }
+                                disabled={loadingForm}
                             />
                         </Grid>
 
