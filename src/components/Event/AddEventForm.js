@@ -16,10 +16,10 @@ import validate from "../../validators/AddEventValidator";
 import {useContext} from "react";
 import OpenModalAddPost from "../../contexts/OpenModalAddPost";
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import {LocalizationProvider} from "@mui/lab";
+// import {LocalizationProvider} from "@mui/lab";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
+import { LocalizationProvider } from '@mui/x-date-pickers'
 export default function AddEventForm() {
     const [errors, setErrors] = useState({});
     const {isOpenAddPost, setIsOpenAddPost} = useContext(OpenModalAddPost);
@@ -27,19 +27,26 @@ export default function AddEventForm() {
     const [values, setValues] = useState({
         title: "",
         description: "",
-        date: "25/11/2022"
+        date: new Date().toLocaleDateString()
     });
-    // const [value, setValue] = React.useState<Date>("");
+    const [date, setDate] = React.useState(new Date().toLocaleDateString());
+
+    // const handleChangeDate = (newDate: Date | null) => {
+    //     setDate(newDate);
+    // };
 
     function handleClick() {
         setErrors(validate(values));
     }
 
     const handleChange = ({currentTarget}) => {
+
         const {name, value} = currentTarget;
 
+        console.log(value);
+
         setValues({...values, [name]: value})
-        // setValues({...values, ["date"]: "25/11/2022"})
+        // setValues({...values, ["date"]: date})
         console.log(values)
     }
 
@@ -79,7 +86,7 @@ export default function AddEventForm() {
                 </Typography>
                 <Box component="form" noValidate sx={{ mt: 1 }}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 required
                                 fullWidth
@@ -91,6 +98,31 @@ export default function AddEventForm() {
                                 error={ errors.title }
                                 helperText={ errors.title }
                             />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DatePicker
+
+                                    label="Date de l'événement"
+                                    value={date}
+                                    onChange={(newDate) => {
+                                        // const dateFormat = new Date(newDate)
+                                        const dd = new Date(newDate).getDate();
+                                        const mm = new Date(newDate).getMonth() + 1;
+                                        const yyyy = new Date(newDate).getFullYear();
+                                        // console.log(dateFormat.getMonth())
+                                        // console.log(dd + '/' + mm + '/' + yyyy);
+                                        setDate(newDate)
+                                        setValues({...values, ["date"]: dd + '/' + mm + '/' + yyyy})
+                                    }
+                                    }
+
+
+                                    renderInput={(params) => <TextField {...params} fullWidth required/>}
+
+
+                                />
+                            </LocalizationProvider>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -106,18 +138,6 @@ export default function AddEventForm() {
                                 helperText={ errors.description }
                             />
                         </Grid>
-                        {/*<Grid item xs={12}>*/}
-                        {/*    <LocalizationProvider dateAdapter={AdapterDateFns}>*/}
-                        {/*        <DatePicker*/}
-                        {/*            label="Basic example"*/}
-                        {/*            value={value}*/}
-                        {/*            onChange={(newValue) => {*/}
-                        {/*                setValue(newValue);*/}
-                        {/*            }}*/}
-                        {/*            renderInput={(params) => <TextField {...params} />}*/}
-                        {/*        />*/}
-                        {/*    </LocalizationProvider>*/}
-                        {/*</Grid>*/}
 
 
                     </Grid>
