@@ -27,9 +27,9 @@ export default function AddEventForm() {
     const [values, setValues] = useState({
         title: "",
         description: "",
-        date: new Date().toLocaleDateString()
+        date: new Date()
     });
-    const [date, setDate] = React.useState(new Date().toLocaleDateString());
+    const [date, setDate] = React.useState(new Date());
 
     // const handleChangeDate = (newDate: Date | null) => {
     //     setDate(newDate);
@@ -102,7 +102,7 @@ export default function AddEventForm() {
                         <Grid item xs={12} sm={6}>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
-
+                                    minDate={new Date()}
                                     label="Date de l'événement"
                                     value={date}
                                     onChange={(newDate) => {
