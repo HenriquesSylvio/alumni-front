@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import {Button, Card, CircularProgress} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import {postParticipateEvent} from "../../services/ParticipateEventApi";
+import {deleteSubscribe} from "../../services/DeleteSubscribeApi";
 
 // export default function EventCard({firstName, lastName, title, idEvent, idUser, description, date}) {
 export default function EventCard({event}) {
+
+    const [participateByUser, setParticipate] = useState(event.participate);
+    const handleParticipate = async () => {
+        await postParticipateEvent(event.idEvent)
+        setParticipate(true)
+    };
+
     return (
         <Card  sx={{ paddingRight:1 }} >
             <Grid
@@ -40,13 +49,13 @@ export default function EventCard({event}) {
                 </Typography>
                 <p>{event.description}</p>
 
-                {(event.participate === true && (
+                {(participateByUser === true && (
                         <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained">
                             Ne plus participer
                         </Button>
                     ))
                     ||
-                    <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained">
+                    <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleParticipate}>
                         Participer
                     </Button>
                 }
