@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import {postParticipateEvent} from "../../services/ParticipateEventApi";
-import {deleteSubscribe} from "../../services/DeleteSubscribeApi";
+import {deleteParticipateEvent} from "../../services/DeleteParticipateEvent";
 
 // export default function EventCard({firstName, lastName, title, idEvent, idUser, description, date}) {
 export default function EventCard({event}) {
@@ -14,6 +14,11 @@ export default function EventCard({event}) {
     const handleParticipate = async () => {
         await postParticipateEvent(event.idEvent)
         setParticipate(true)
+    };
+
+    const handleUnparticipate = async () => {
+        await deleteParticipateEvent(event.idEvent)
+        setParticipate(false)
     };
 
     return (
@@ -50,7 +55,7 @@ export default function EventCard({event}) {
                 <p>{event.description}</p>
 
                 {(participateByUser === true && (
-                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained">
+                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleUnparticipate}>
                             Ne plus participer
                         </Button>
                     ))
