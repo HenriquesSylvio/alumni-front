@@ -11,14 +11,20 @@ import {deleteParticipateEvent} from "../../services/DeleteParticipateEvent";
 export default function EventCard({event}) {
 
     const [participateByUser, setParticipate] = useState(event.participate);
+    const [participateLoading, setParticipateLoading] = useState(false);
+
     const handleParticipate = async () => {
+        setParticipateLoading(true)
         await postParticipateEvent(event.idEvent)
         setParticipate(true)
+        setParticipateLoading(false)
     };
 
     const handleUnparticipate = async () => {
+        setParticipateLoading(true)
         await deleteParticipateEvent(event.idEvent)
         setParticipate(false)
+        setParticipateLoading(false)
     };
 
     return (
@@ -54,7 +60,11 @@ export default function EventCard({event}) {
                 </Typography>
                 <p>{event.description}</p>
 
-                {(participateByUser === true && (
+                {(participateLoading && (
+                        <CircularProgress size={30} sx={{marginBottom: 2}}/>
+                    ))
+                    ||
+                    (participateByUser === true && (
                         <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleUnparticipate}>
                             Ne plus participer
                         </Button>
