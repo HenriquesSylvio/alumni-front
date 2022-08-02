@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Card} from "@mui/material";
+import {Button, Card, CircularProgress} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
@@ -39,9 +39,17 @@ export default function EventCard({event}) {
                     {event.date}
                 </Typography>
                 <p>{event.description}</p>
-                <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained">
-                    Participer
-                </Button>
+
+                {(event.participate === true && (
+                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained">
+                            Ne plus participer
+                        </Button>
+                    ))
+                    ||
+                    <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained">
+                        Participer
+                    </Button>
+                }
             </Grid>
         </Card>
     );
