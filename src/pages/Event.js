@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import {CircularProgress, Fade, Modal} from "@mui/material";
+import {Button, Card, CircularProgress, Fade, Modal} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import DetailUser from "../components/Profile/DetailUser";
 import MainFeed from "../components/Post/MainFeed";
@@ -7,21 +7,20 @@ import Typography from "@mui/material/Typography";
 import Backdrop from "@mui/material/Backdrop";
 import AddCommentForm from "../components/Post/AddCommentForm";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
-import {useContext, useEffect, useState} from "react";
+import React,{useContext, useEffect, useState} from "react";
 import EventCard from "../components/Event/EventCard";
 import getEvents from "../services/GetEvents";
 import getFeed from "../services/FeedApi";
 import getCommentById from "../services/GetCommentByIdApi";
 import ButtonAddPost from "../components/Post/ButtonAddPost";
-import {CalendarPicker, StaticDatePicker} from "@mui/lab";
+// import {CalendarPicker, StaticDatePicker} from "@mui/lab";
 // import {LocalizationProvider, StaticDatePicker} from "@mui/lab";
-// import isWeekend from 'date-fns/isWeekend';
-// import TextField from '@mui/material/TextField';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import ButtonAddEvent from "../components/Event/ButtonAddEvent";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { CalendarPicker } from '@mui/x-date-pickers'
+import { PickersDay, PickersDayProps } from "@mui/x-date-pickers/PickersDay";
+import Moment from 'moment';
 
 export default function Event() {
 
@@ -29,10 +28,26 @@ export default function Event() {
     const [loadingEvent, setLoadingEvent] = useState(false);
     const [events, setEvents] = useState([]);
     const [loadingPage, setLoading] = useState(true);
+    const [date, setDate] = React.useState(new Date());
+    const dates = ["05/05/2022", "06/05/2019"];
 
     let loadingDataEvent = false;
     let page = 1
     let newEvents = [];
+
+    const customDayRenderer = (
+        date: Date,
+        selectedDates: Array<Date | null>,
+        pickersDayProps: PickersDayProps<Date>
+    ) => {
+
+        const stringifiedDate = date.toISOString().slice(0, 10);
+        if (dates.includes(Moment(stringifiedDate).format('DD/MM/YYYY'))) {
+            date.setDate(date.getDate() - 1)
+            return <PickersDay {...pickersDayProps} />;
+        }
+        return <PickersDay {...pickersDayProps} disabled/>;
+    };
 
     const getEventsComing = async () => {
         setLoadingEvent(true);
@@ -141,6 +156,19 @@ export default function Event() {
                     {/*        renderInput={(params) => <TextField {...params} />}*/}
                     {/*        />*/}
                     {/*</LocalizationProvider>*/}
+                    <Card>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            {/*<Grid container spacing={3}>*/}
+                            {/*    <Grid item xs={12} md={6}>*/}
+                            <CalendarPicker date={date} renderDay={customDayRenderer} onChange={(newDate) => setDate(newDate)} />
+                            {/*    </Grid>*/}
+                            {/*</Grid>*/}
+                        </LocalizationProvider>
+                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" >
+                            Participer
+                        </Button>
+                    </Card>
+
                 </Grid>
             </Grid>
 

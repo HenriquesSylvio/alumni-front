@@ -117,11 +117,7 @@ export default function AddEventForm() {
                                         setValues({...values, ["date"]: dd + '/' + mm + '/' + yyyy})
                                     }
                                     }
-
-
                                     renderInput={(params) => <TextField {...params} fullWidth required disabled={loadingForm}/>}
-
-
                                 />
                             </LocalizationProvider>
                         </Grid>
