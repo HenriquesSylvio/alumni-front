@@ -21,6 +21,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { CalendarPicker } from '@mui/x-date-pickers'
 import { PickersDay, PickersDayProps } from "@mui/x-date-pickers/PickersDay";
 import Moment from 'moment';
+import getAllDateEvent from "../services/GetAllDateEventApi";
 
 export default function Event() {
 
@@ -29,8 +30,9 @@ export default function Event() {
     const [events, setEvents] = useState([]);
     const [loadingPage, setLoading] = useState(true);
     const [date, setDate] = React.useState(new Date());
-    const dates = ["05/05/2022", "06/05/2019"];
+    const [datesEvent, setDatesEvent] = useState([]);
 
+    // let datesEvent = []
     let loadingDataEvent = false;
     let page = 1
     let newEvents = [];
@@ -42,8 +44,12 @@ export default function Event() {
     ) => {
 
         const stringifiedDate = date.toISOString().slice(0, 10);
-        if (dates.includes(Moment(stringifiedDate).format('DD/MM/YYYY'))) {
-            date.setDate(date.getDate() - 1)
+        // console.log(datesEvent)
+        // Moment().add()
+        if (datesEvent.includes(Moment(stringifiedDate).add(+1, "days").format('DD/MM/YYYY'))) {
+
+            // date.setDate(date.getDate() - 1)
+            console.log(date);
             return <PickersDay {...pickersDayProps} />;
         }
         return <PickersDay {...pickersDayProps} disabled/>;
@@ -53,9 +59,9 @@ export default function Event() {
         setLoadingEvent(true);
         try{
             const response = await getEvents(page);
-            console.log(page)
+            // console.log(page)
             newEvents = response.data.data;
-            console.log(newEvents)
+            // console.log(newEvents)
             setEvents((oldEvents) => [...oldEvents, ...newEvents])
             page += 1
         } catch {
@@ -63,11 +69,31 @@ export default function Event() {
         setLoadingEvent(false);
     };
 
+    const getDateEvent = async () => {
+        const response = await getAllDateEvent();
+        // console.log(response.data.dates)
+        // for (var i = 0; i < response.data.length; i++){
+        //     setDatesEvent((dates) => [...dates, response.data.dates[i].date])
+        // }
+        Object.keys(response.data.dates).forEach(function(key) {
+            // arr.push(response.data.dates[key]);
+            console.log(response.data.dates[key].date)
+            setDatesEvent(currentDate => [...currentDate, response.data.dates[key].date])
+            // datesEvent.push(response.data.dates[key].date)
+        });
+        console.log(datesEvent)
+        // console.log(newEvents)
+       //  setDatesEvent(response.dates)
+       //  datesEvent = response.data.dates
+       //  console.log(datesEvent)
+       //  console.log(datesEvent.includes("{ 05 "))
+    };
+
     const handleScroll = async (e) =>{
         if(loadingDataEvent === false) {
             loadingDataEvent = true
             if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
-                console.log("tzesqd")
+                // console.log("tzesqd")
                 await getEventsComing()
             }
             loadingDataEvent = false
@@ -79,10 +105,12 @@ export default function Event() {
         const getData = async () => {
             setLoading(true);
             await getEventsComing();
+            await getDateEvent();
+            console.log("dsddssqdqsdqdsqsd")
             setLoading(false);
         }
         getData();
-
+        console.log("test2")
         window.addEventListener('scroll', handleScroll)
     }, []);
 
