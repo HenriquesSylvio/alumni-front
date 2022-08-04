@@ -27,12 +27,14 @@ export default function Event() {
 
     const {activeProfile} = useContext(ActiveConnectedUser);
     const [loadingEvent, setLoadingEvent] = useState(false);
+    const [loadingByDate, setLoadingByDate] = useState(false);
     const [events, setEvents] = useState([]);
     const [loadingPage, setLoading] = useState(true);
-    const [date, setDate] = React.useState(new Date());
+    const [dateCalendar, setDateCalendar] = React.useState(new Date());
     const [datesEvent, setDatesEvent] = useState([]);
 
     // let datesEvent = []
+    let date = new Date();
     let loadingDataEvent = false;
     let page = 1
     let newEvents = [];
@@ -47,9 +49,6 @@ export default function Event() {
         // console.log(datesEvent)
         // Moment().add()
         if (datesEvent.includes(Moment(stringifiedDate).add(+1, "days").format('DD/MM/YYYY'))) {
-
-            // date.setDate(date.getDate() - 1)
-            console.log(date);
             return <PickersDay {...pickersDayProps} />;
         }
         return <PickersDay {...pickersDayProps} disabled/>;
@@ -58,7 +57,8 @@ export default function Event() {
     const getEventsComing = async () => {
         setLoadingEvent(true);
         try{
-            const response = await getEvents(page);
+            console.log(Moment(date).format('YYYY-MM-DD'));
+            const response = await getEvents(page, Moment(date).format('YYYY-MM-DD'));
             // console.log(page)
             newEvents = response.data.data;
             // console.log(newEvents)
@@ -67,6 +67,15 @@ export default function Event() {
         } catch {
         }
         setLoadingEvent(false);
+    };
+
+    const ChangeDate = async (newDate) => {
+        setDateCalendar(newDate)
+        setLoadingByDate(true);
+        date = newDate
+        setEvents('')
+        await getEventsComing();
+        setLoadingByDate(false);
     };
 
     const getDateEvent = async () => {
@@ -145,18 +154,7 @@ export default function Event() {
                 </Grid>
 
                 <Grid item xs>
-
-                    {
-                        events.length ?
-                            events.map(event =>
-                                <Box sx={{
-                                    marginBottom: 2
-                                }}>
-                                    <EventCard event={event}/>
-                                </Box>
-                            ): null
-                    }
-                    {(loadingEvent && (
+                    {(loadingByDate && (
                         <Box sx={{
                             display: 'flex',
                             flexDirection: 'column',
@@ -165,8 +163,48 @@ export default function Event() {
                         }}>
                             <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
                         </Box>
-                    ))
+                        ))
+                        ||
+                        ( events.length ?
+                            events.map(event =>
+                                <Box sx={{
+                                    marginBottom: 2
+                                }}>
+                                    <EventCard event={event}/>
+                                </Box>
+                            ): null)
+                        ||
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            marginTop: 2
+                        }}>
+                            <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                        </Box>
                     }
+
+                    {/*{*/}
+                    {/*    events.length ?*/}
+                    {/*        events.map(event =>*/}
+                    {/*            <Box sx={{*/}
+                    {/*                marginBottom: 2*/}
+                    {/*            }}>*/}
+                    {/*                <EventCard event={event}/>*/}
+                    {/*            </Box>*/}
+                    {/*        ): null*/}
+                    {/*}*/}
+                    {/*{(loadingEvent && (*/}
+                    {/*    <Box sx={{*/}
+                    {/*        display: 'flex',*/}
+                    {/*        flexDirection: 'column',*/}
+                    {/*        alignItems: 'center',*/}
+                    {/*        marginTop: 2*/}
+                    {/*    }}>*/}
+                    {/*        <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>*/}
+                    {/*    </Box>*/}
+                    {/*))*/}
+                    {/*}*/}
                 </Grid>
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                     {/*<LocalizationProvider >*/}
@@ -188,11 +226,12 @@ export default function Event() {
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             {/*<Grid container spacing={3}>*/}
                             {/*    <Grid item xs={12} md={6}>*/}
-                            <CalendarPicker date={date} renderDay={customDayRenderer} onChange={(newDate) => setDate(newDate)} />
+                            {/*<CalendarPicker date={date} renderDay={customDayRenderer} onChange={(newDate) => setDate(newDate)} />*/}
+                            <CalendarPicker date={dateCalendar} renderDay={customDayRenderer} onChange={(newDate) => ChangeDate(newDate)} />
                             {/*    </Grid>*/}
                             {/*</Grid>*/}
                         </LocalizationProvider>
-                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" >
+                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} onClick={() => console.log(Moment(date).format('YYYY-MM-DD'))} size="small" variant="contained" >
                             Participer
                         </Button>
                     </Card>
