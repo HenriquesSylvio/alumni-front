@@ -73,6 +73,7 @@ export default function Profile() {
                                 biography={user.biography}
                                 idUser={user.id}
                                 subscribe={user.subcribe}
+                                canModify={user.canModify}
                             />
                         </Box>
                         <Box display="flex" sx={{ flexDirection: 'column' }} marginTop={2}>

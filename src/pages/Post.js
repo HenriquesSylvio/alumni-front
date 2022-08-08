@@ -147,6 +147,7 @@ export default function Post() {
                     biography={activeProfile.biography}
                     idUser={activeProfile.id}
                     subscribe={activeProfile.subcribe}
+                    canModify={false}
                 />
             </Grid>
             <Grid item xs>
@@ -207,6 +208,7 @@ export default function Post() {
                             biography={author.biography}
                             idUser={author.id}
                             subscribe={author.subcribe}
+                            canModify={false}
                         />
                     ))
                     ||

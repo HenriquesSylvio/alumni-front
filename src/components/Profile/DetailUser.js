@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Box} from "@mui/system";
-import {Button, Card, CardActions, CardContent} from "@mui/material";
+import {Button, Card, CardActions, CardContent, CircularProgress} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { styled } from '@mui/material/styles';
@@ -9,7 +9,7 @@ import StatUser from "./StatUser";
 import ButtonsInteractionUser from "./ButtonsInteractionUser";
 import EditProfileButton from "./EditProfileButton";
 
-export default function DetailUser({idUser ,firstName, lastName, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography, subscribe}) {
+export default function DetailUser({idUser ,firstName, lastName, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography, subscribe, canModify}) {
     return (
         <Card sx={{ minWidth:200}}>
             <Box display="flex" justifyContent="center" alignItems="center">
@@ -62,12 +62,14 @@ export default function DetailUser({idUser ,firstName, lastName, urlProfilePictu
                 {/*<Button style={{backgroundColor: "#00A5A5"}} size="small" variant="contained">*/}
                 {/*    Modifier le profil*/}
                 {/*</Button>*/}
-                <EditProfileButton
-                    firstName={firstName}
-                    lastName={lastName}
-                    biography={biography}
-                    urlProfilePicture={urlProfilePicture}
-                />
+                {(canModify && (
+                    <EditProfileButton
+                        firstName={firstName}
+                        lastName={lastName}
+                        biography={biography}
+                        urlProfilePicture={urlProfilePicture}
+                    />
+                    ))}
             </Box>
         </Card>
     );
