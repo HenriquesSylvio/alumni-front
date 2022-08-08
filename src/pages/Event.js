@@ -26,6 +26,7 @@ import getAllDateEvent from "../services/GetAllDateEventApi";
 export default function Event() {
 
     const {activeProfile} = useContext(ActiveConnectedUser);
+    const [canInterateEvent, setCanInterateEvent] = useState(false);
     const [loadingEvent, setLoadingEvent] = useState(false);
     const [loadingByDate, setLoadingByDate] = useState(false);
     const [events, setEvents] = useState([]);
@@ -35,6 +36,7 @@ export default function Event() {
 
     // let datesEvent = []
     let date = new Date();
+    let today = new Date();
     let loadingDataEvent = false;
     let page = 1
     let newEvents = [];
@@ -69,12 +71,25 @@ export default function Event() {
         setLoadingEvent(false);
     };
 
+    // const load
+
     const ChangeDate = async (newDate) => {
         setDateCalendar(newDate)
         setLoadingByDate(true);
         date = newDate
         setEvents('')
         await getEventsComing();
+        // Moment(stringifiedDate).add(+1, "days").format('DD/MM/YYYY'))
+        // console.log(Moment(date).format('DD/MM/YYYY') > Moment(newDate).format('DD/MM/YYYY'))
+        // console.log(date. > newDate)
+        // console.log(date.getTime())
+        // console.log(today.getTime())
+        if (date.getTime() > today.getTime()) {
+            setCanInterateEvent(false)
+        } else {
+            setCanInterateEvent(true)
+        }
+        // setCanInterateEvent()
         setLoadingByDate(false);
     };
 
@@ -170,9 +185,13 @@ export default function Event() {
                                 <Box sx={{
                                     marginBottom: 2
                                 }}>
-                                    <EventCard event={event}/>
+                                    <EventCard event={event} canInterate={canInterateEvent}  />
                                 </Box>
-                            ): null)
+                            ):
+                                <Typography paddingTop={5} variant="h4" component="div">
+                                    Aucun événement trouvé !
+                                </Typography>
+                        )
                         ||
                         <Box sx={{
                             display: 'flex',
@@ -207,21 +226,6 @@ export default function Event() {
                     {/*}*/}
                 </Grid>
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
-                    {/*<LocalizationProvider >*/}
-                    {/*    <CalendarPicker />*/}
-                    {/*</LocalizationProvider>*/}
-                    {/*<LocalizationProvider dateAdapter={AdapterDateFns}>*/}
-                    {/*    <StaticDatePicker<Date>*/}
-                    {/*        orientation="landscape"*/}
-                    {/*        openTo="day"*/}
-                    {/*        value={value}*/}
-                    {/*        shouldDisableDate={isWeekend}*/}
-                    {/*        onChange={(newValue) => {*/}
-                    {/*        setValue(newValue);*/}
-                    {/*    }}*/}
-                    {/*        renderInput={(params) => <TextField {...params} />}*/}
-                    {/*        />*/}
-                    {/*</LocalizationProvider>*/}
                     <Card>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             {/*<Grid container spacing={3}>*/}
@@ -231,9 +235,6 @@ export default function Event() {
                             {/*    </Grid>*/}
                             {/*</Grid>*/}
                         </LocalizationProvider>
-                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} onClick={() => console.log(Moment(date).format('YYYY-MM-DD'))} size="small" variant="contained" >
-                            Participer
-                        </Button>
                     </Card>
 
                 </Grid>

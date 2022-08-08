@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Card, CircularProgress} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
@@ -8,10 +8,12 @@ import {postParticipateEvent} from "../../services/ParticipateEventApi";
 import {deleteParticipateEvent} from "../../services/DeleteParticipateEvent";
 
 // export default function EventCard({firstName, lastName, title, idEvent, idUser, description, date}) {
-export default function EventCard({event}) {
+export default function EventCard({event, canInterate}) {
 
     const [participateByUser, setParticipate] = useState(event.participate);
     const [participateLoading, setParticipateLoading] = useState(false);
+    // const [canInterate, setCanInterate] = useState(false);
+    let date = new Date();
 
     const handleParticipate = async () => {
         setParticipateLoading(true)
@@ -26,6 +28,16 @@ export default function EventCard({event}) {
         setParticipate(false)
         setParticipateLoading(false)
     };
+
+    // useEffect(() => {
+    //     console.log(event.date)
+    //     console.log(date)
+    //     if (event.date > date) {
+    //         setCanInterate(false)
+    //     } else {
+    //         setCanInterate(true)
+    //     }
+    // }, []);
 
     return (
         <Card  sx={{ paddingRight:1 }} >
@@ -65,12 +77,12 @@ export default function EventCard({event}) {
                     ))
                     ||
                     (participateByUser === true && (
-                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleUnparticipate}>
+                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleUnparticipate} disabled={canInterate}>
                             Ne plus participer
                         </Button>
                     ))
                     ||
-                    <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleParticipate}>
+                    <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleParticipate} disabled={canInterate}>
                         Participer
                     </Button>
                 }
