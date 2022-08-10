@@ -136,6 +136,7 @@ export default function Event() {
                         idUser={activeProfile.id}
                         subscribe={activeProfile.subcribe}
                         canModify={false}
+                        myProfile={true}
                     />
                 </Grid>
 

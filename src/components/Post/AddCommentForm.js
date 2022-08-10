@@ -66,8 +66,8 @@ export default function AddCommentForm({idPost}) {
                     Création d'un commentaire
                 </Typography>
                 <Box component="form" noValidate sx={{ mt: 1 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
+                    <Grid container>
+                        <Grid item>
                             <TextField
                                 required
                                 fullWidth

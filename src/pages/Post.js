@@ -1,4 +1,4 @@
-import {CircularProgress, Fade, Modal, Paper, Stack} from '@mui/material';
+import {Button, CircularProgress, Fade, Modal, Paper, Stack} from '@mui/material';
 import {useEffect, useState} from 'react';
 import MainFeed from '../components/Post/MainFeed';
 import {styled} from "@mui/material/styles";
@@ -19,6 +19,7 @@ import DetailUser from "../components/Profile/DetailUser";
 import getProfile from "../services/ProfileApi";
 // import OpenModalAddPost from "../contexts/OpenModalAddComment";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
+// import { useParams } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -61,7 +62,9 @@ export default function Post() {
     const {activeProfile} = useContext(ActiveConnectedUser);
     const [loadingComment, setLoadingComment] = useState(false);
 
-    let params = useParams();
+
+    let idActivePost = "";
+    const params = useParams();
     let newComments = [];
     let page = 1;
     let idAuthor = "";
@@ -69,12 +72,17 @@ export default function Post() {
 
     const handleClose = () => {
         setIsOpenAddComment(false)
-        setIdPost(0)
+        // setIdPost(0)
     }
 
     const getComment = async () => {
         setLoadingComment(true);
         try{
+            // console.log("teeest")
+            console.log(idActivePost)
+            // console.log(params.id)
+            // console.log("teeest")
+            // console.log(idPost)
                 const response = await getCommentById(params.id, page)
                 newComments = response.data.posts.items;
                 setComments((oldComments) => [...oldComments, ...newComments])
@@ -97,11 +105,14 @@ export default function Post() {
 
     const handleScroll = async (e) =>{
         if(loadingDataComment === false) {
+            console.log(params.id);
             loadingDataComment = true
             if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
                 await getComment()
+
             }
             loadingDataComment = false
+
         }
     }
 
@@ -112,12 +123,25 @@ export default function Post() {
             await getPost();
             await getComment();
             await getProfileAuthor();
+            // console.log(idPost)
             setLoading(false);
         }
+        // console.log(params.id.)
+        // testd = useParams()
+        // console.log("testd")
+        // console.log(idActivePost);
+        // console.log("testd")
+        // window.removeEventListener('scroll', handleScroll)
 
+        // idActivePost = params.id
+        // setIdPost(params.id)
+        idActivePost = params.id
         getData();
 
         window.addEventListener('scroll', handleScroll)
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, [params.id]);
 
     return (
@@ -148,6 +172,7 @@ export default function Post() {
                     idUser={activeProfile.id}
                     subscribe={activeProfile.subcribe}
                     canModify={false}
+                    myProfile={true}
                 />
             </Grid>
             <Grid item xs>
@@ -159,6 +184,9 @@ export default function Post() {
                     ||
                     null
                 }
+                {/*<Button onClick={() =>  removeEventListener('scroll', handleScroll)}>*/}
+                {/*    test*/}
+                {/*</Button>*/}
                 {comments.length ?
                 <Typography paddingTop={5} variant="h4" component="div">
                     Commentaires
@@ -172,9 +200,6 @@ export default function Post() {
                     comments.map(
                         comment =>
                             <Box marginBottom={2} >
-                                <p>
-                                    {comment.idPost}
-                                </p>
                                 <MainFeed
                                     post={comment}
                                 />
@@ -209,6 +234,7 @@ export default function Post() {
                             idUser={author.id}
                             subscribe={author.subcribe}
                             canModify={false}
+                            myProfile={false}
                         />
                     ))
                     ||
