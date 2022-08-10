@@ -87,7 +87,6 @@ export default function Event() {
         if(loadingDataEvent === false) {
             loadingDataEvent = true
             if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
-                // console.log("tzesqd")
                 await getEventsComing()
             }
             loadingDataEvent = false
@@ -164,7 +163,8 @@ export default function Event() {
                                     Aucun événement trouvé !
                                 </Typography>
                         )
-                        ||
+                    }
+                    {(loadingEvent && (
                         <Box sx={{
                             display: 'flex',
                             flexDirection: 'column',
@@ -173,7 +173,9 @@ export default function Event() {
                         }}>
                             <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
                         </Box>
+                    ))
                     }
+
                 </Grid>
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                     <Card>

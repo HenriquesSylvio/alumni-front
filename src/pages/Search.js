@@ -11,6 +11,8 @@ import AddCommentForm from "../components/Post/AddCommentForm";
 // import {useContext} from "@types/react";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
 import getPosts from "../services/GetPostsApi";
+import getEvents from "../services/GetEvents";
+import EventCard from "../components/Event/EventCard";
 
 export default function Search() {
 
@@ -18,6 +20,7 @@ export default function Search() {
     const [typeSearch, setTypeSearch] = useState("");
     const {activeProfile} = useContext(ActiveConnectedUser);
     const [posts, setPost] = useState('');
+    const [events, setEvents] = useState('');
 
     useEffect( () => {
         const searchPosts = async () => {
@@ -25,12 +28,18 @@ export default function Search() {
             setPost(response.data.data)
         }
 
+        const searchEvents = async () => {
+            const response = await getEvents(1, "", "test");
+            setEvents(response.data.data)
+            console.log(response)
+        }
+
         setTypeSearch(params.typeSearch)
 
         if (params.typeSearch === "post") {
             searchPosts()
         } else if (params.typeSearch === "event"){
-
+            searchEvents()
         }
     }, [params.typeSearch]);
 
@@ -67,7 +76,16 @@ export default function Search() {
                                 </Box>
                             ): null
                     )) || typeSearch === "event" && (
-                        <p>tessst</p>
+                        events.length ?
+                            events.map(event =>
+                                <Box sx={{
+                                    marginBottom: 2
+                                }}>
+                                    <EventCard
+                                        event={event}
+                                    />
+                                </Box>
+                            ): null
                     )}
                 </Grid>
             </Grid>
