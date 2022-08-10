@@ -16,6 +16,7 @@ import ResponseIdPost from "./contexts/ResponseIdPost";
 import ActiveConnectedUser from "./contexts/ActiveConnectedUser";
 import Post from "./pages/Post";
 import Event from "./pages/Event";
+import Search from "./pages/Search";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
@@ -42,6 +43,7 @@ const App = () => {
                                           <Route exact path='/post/:id' element={<Post/>}/>
                                           <Route exact path='/profile' element={<Profile/>}/>
                                           <Route exact path='/events' element={<Event/>}/>
+                                          <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
                                       </Route>
                                   </Routes>
                                   <ToastContainer />

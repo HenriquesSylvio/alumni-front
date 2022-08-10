@@ -21,15 +21,6 @@ import getProfile from "../services/ProfileApi";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
 // import { useParams } from "react-router-dom";
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
-
-
 const styleBox = {
     position: 'absolute',
     top: '50%',
@@ -126,15 +117,6 @@ export default function Post() {
             // console.log(idPost)
             setLoading(false);
         }
-        // console.log(params.id.)
-        // testd = useParams()
-        // console.log("testd")
-        // console.log(idActivePost);
-        // console.log("testd")
-        // window.removeEventListener('scroll', handleScroll)
-
-        // idActivePost = params.id
-        // setIdPost(params.id)
         idActivePost = params.id
         getData();
 
@@ -184,9 +166,6 @@ export default function Post() {
                     ||
                     null
                 }
-                {/*<Button onClick={() =>  removeEventListener('scroll', handleScroll)}>*/}
-                {/*    test*/}
-                {/*</Button>*/}
                 {comments.length ?
                 <Typography paddingTop={5} variant="h4" component="div">
                     Commentaires
