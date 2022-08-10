@@ -14,6 +14,7 @@ import SideMenu from "./SideMenu";
 import SearchIcon from '@mui/icons-material/Search';
 import nwsLogo from "../../../pictures/nws-logo.png"
 import nwsLogoAlumni from "../../../pictures/logo-nws-alumni.png"
+import ButtonSearch from "./Search/ButtonSearch";
 
 export default function Header() {
     const {isAuthenticated} = useContext(Auth);
@@ -86,25 +87,7 @@ export default function Header() {
                             position='absolute'
                             right='0'
                         >
-                            <Box
-                                sx={{
-                                    display: { xs: 'none', sm: 'flex' },
-                                }}
-                            >
-                            <Chip
-                                icon={<SearchIcon />}
-                                label="Rechercher ..."
-                                variant="outlined"
-                            />
-                            </Box>
-                            <Box
-                                sx={{
-                                    display: { xs: 'flex', sm: 'none' },
-                                }}
-                                paddingRight={2}
-                            >
-                                <SearchIcon sx={{ color:"black"}}/>
-                            </Box>
+                            <ButtonSearch/>
                             <Box>
                                 <IconProfilePicture />
                             </Box>

@@ -60,8 +60,8 @@ export default function SignIn() {
                 console.log(values)
                 const response = await login(values);
                 await setIsAuthenticated(response);
+                console.log(`Bearer ${getItem('Token')}`);
                 getMyProfile()
-
                 navigate('/feed')
                 toast.success('Bienvenue ! 😄')
             } catch ({response}) {

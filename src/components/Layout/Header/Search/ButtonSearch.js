@@ -1,18 +1,12 @@
 import * as React from 'react';
-import {Button, Fab, Fade, Modal} from "@mui/material";
+import SearchIcon from '@mui/icons-material/Search';
 import Box from "@mui/material/Box";
-import Backdrop from '@mui/material/Backdrop';
-import Typography from "@mui/material/Typography";
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import AddIcon from "@mui/icons-material/Add";
-import SignIn from "../Layout/Header/LoginRegister/Login/Login";
-import OpenModalAddPost from "../../contexts/OpenModalAddPost";
+import {Chip, Fade, Modal} from "@mui/material";
+import Backdrop from "@mui/material/Backdrop";
+import AddEventForm from "../../../Event/AddEventForm";
+import OpenModalAddPost from "../../../../contexts/OpenModalAddPost";
 import {useContext} from "react";
-import Auth from "../../contexts/Auth";
-import AddEventForm from "./AddEventForm";
+import SearchForm from "./SearchForm";
 
 const styleBox = {
     position: 'absolute',
@@ -46,10 +40,9 @@ const styleButton = {
 };
 
 
-export default function ButtonAddEvent() {
-    // const [open, setOpen] = React.useState(false);
-    // const contextValue = useContext(CloseChildModal);
+export default function ButtonSearch() {
     const {isOpenAddPost, setIsOpenAddPost} = useContext(OpenModalAddPost);
+
     const handleOpen = () => {
         setIsOpenAddPost(true);
     };
@@ -57,20 +50,27 @@ export default function ButtonAddEvent() {
     const handleClose = () => {
         setIsOpenAddPost(false)
     }
-
-    const [value, setValue] = React.useState('1');
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
     return (
         <Box>
-            <Box style={styleButton}>
-                {/*sx={{display:"flex", flex: 1, color:"#CA4B38"}}*/}
-                <Fab sx={{backgroundColor:"#00A5A5", color: "white", '&:hover': {color: '#00A5A5'}}} saria-label="add" onClick={handleOpen}>
-                    <AddIcon/>
-                </Fab>
+            <Box
+                sx={{
+                    display: { xs: 'none', sm: 'flex' },
+                }}
+            >
+                <Chip
+                    onClick={handleOpen}
+                    icon={<SearchIcon />}
+                    label="Rechercher ..."
+                    variant="outlined"
+                />
+            </Box>
+            <Box
+                sx={{
+                    display: { xs: 'flex', sm: 'none' },
+                }}
+                paddingRight={2}
+            >
+                <SearchIcon onClick={handleOpen} sx={{ color:"black"}}/>
             </Box>
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -86,10 +86,10 @@ export default function ButtonAddEvent() {
                 <Fade in={isOpenAddPost}>
                     <Box>
                         <Box sx={styleBox}>
-                            <AddEventForm />
+                            <SearchForm />
                         </Box>
                         <Box sx={styleResponsiveBox}>
-                            <AddEventForm />
+                            <SearchForm />
                         </Box>
                     </Box>
 
