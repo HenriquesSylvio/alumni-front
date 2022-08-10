@@ -26,10 +26,12 @@ export default function Search() {
         }
 
         setTypeSearch(params.typeSearch)
-        if (params.typeSearch === "user" ) {
+
+        if (params.typeSearch === "post") {
             searchPosts()
+        } else if (params.typeSearch === "event"){
+
         }
-        console.log(typeSearch)
     }, [params.typeSearch]);
 
     return (
@@ -53,7 +55,7 @@ export default function Search() {
                     />
                 </Grid>
                 <Grid item xs>
-                    {(typeSearch === "user" && (
+                    {(typeSearch === "post" && (
                         posts.length ?
                             posts.map(post =>
                                 <Box sx={{
@@ -64,7 +66,9 @@ export default function Search() {
                                     />
                                 </Box>
                             ): null
-                    )) || null}
+                    )) || typeSearch === "event" && (
+                        <p>tessst</p>
+                    )}
                 </Grid>
             </Grid>
         </Box>
