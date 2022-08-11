@@ -13,6 +13,7 @@ import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
 import getPosts from "../services/GetPostsApi";
 import getEvents from "../services/GetEvents";
 import EventCard from "../components/Event/EventCard";
+import MinimUser from "../components/Profile/MinimUser";
 
 export default function Search() {
 
@@ -81,9 +82,10 @@ export default function Search() {
                                 <Box sx={{
                                     marginBottom: 2
                                 }}>
-                                    <EventCard
-                                        event={event}
-                                    />
+                                    {/*<EventCard*/}
+                                    {/*    event={event}*/}
+                                    {/*/>*/}
+                                    <MinimUser/>
                                 </Box>
                             ): null
                     )}
