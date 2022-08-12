@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 export default function MinimUser({idUser ,firstName, lastName, urlProfilePicture}) {
     return (
         <Card sx={{ minWidth:"20%"}}>
-            <Grid p={2}>
+            <Grid p={1}>
                 <Grid
                     container
                     direction="row"
@@ -39,7 +39,7 @@ export default function MinimUser({idUser ,firstName, lastName, urlProfilePictur
                     </Box>
 
                     <Box>
-                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained">
+                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, display: { xs: 'none', sm: 'block' }}} size="small" variant="contained">
                             Voir le profil
                         </Button>
                     </Box>
