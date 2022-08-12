@@ -26,7 +26,7 @@ export default function MinimUser({idUser ,firstName, lastName, urlProfilePictur
                             </IconButton>
                             <Grid marginTop={1}>
                                 <Typography marginLeft={2} component="div" fontWeight={"bold"}>
-                                    {lastName} {firstName}
+                                    Henriques Sylvio
                                 </Typography>
                                 <Typography marginLeft={2}>
                                     Promo : 2022

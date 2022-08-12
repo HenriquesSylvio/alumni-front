@@ -82,10 +82,10 @@ export default function Search() {
                                 <Box sx={{
                                     marginBottom: 2
                                 }}>
-                                    {/*<EventCard*/}
-                                    {/*    event={event}*/}
-                                    {/*/>*/}
-                                    <MinimUser/>
+                                    <EventCard
+                                        event={event}
+                                    />
+                                    {/*<MinimUser/>*/}
                                 </Box>
                             ): null
                     )}
