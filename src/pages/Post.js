@@ -1,4 +1,4 @@
-import {CircularProgress, Fade, Modal, Paper, Stack} from '@mui/material';
+import {Button, CircularProgress, Fade, Modal, Paper, Stack} from '@mui/material';
 import {useEffect, useState} from 'react';
 import MainFeed from '../components/Post/MainFeed';
 import {styled} from "@mui/material/styles";
@@ -19,15 +19,7 @@ import DetailUser from "../components/Profile/DetailUser";
 import getProfile from "../services/ProfileApi";
 // import OpenModalAddPost from "../contexts/OpenModalAddComment";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
-
+// import { useParams } from "react-router-dom";
 
 const styleBox = {
     position: 'absolute',
@@ -61,7 +53,9 @@ export default function Post() {
     const {activeProfile} = useContext(ActiveConnectedUser);
     const [loadingComment, setLoadingComment] = useState(false);
 
-    let params = useParams();
+
+    let idActivePost = "";
+    const params = useParams();
     let newComments = [];
     let page = 1;
     let idAuthor = "";
@@ -69,12 +63,17 @@ export default function Post() {
 
     const handleClose = () => {
         setIsOpenAddComment(false)
-        setIdPost(0)
+        // setIdPost(0)
     }
 
     const getComment = async () => {
         setLoadingComment(true);
         try{
+            // console.log("teeest")
+            console.log(idActivePost)
+            // console.log(params.id)
+            // console.log("teeest")
+            // console.log(idPost)
                 const response = await getCommentById(params.id, page)
                 newComments = response.data.posts.items;
                 setComments((oldComments) => [...oldComments, ...newComments])
@@ -97,11 +96,14 @@ export default function Post() {
 
     const handleScroll = async (e) =>{
         if(loadingDataComment === false) {
+            console.log(params.id);
             loadingDataComment = true
             if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
                 await getComment()
+
             }
             loadingDataComment = false
+
         }
     }
 
@@ -112,12 +114,16 @@ export default function Post() {
             await getPost();
             await getComment();
             await getProfileAuthor();
+            // console.log(idPost)
             setLoading(false);
         }
-
+        idActivePost = params.id
         getData();
 
         window.addEventListener('scroll', handleScroll)
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, [params.id]);
 
     return (
@@ -147,6 +153,8 @@ export default function Post() {
                     biography={activeProfile.biography}
                     idUser={activeProfile.id}
                     subscribe={activeProfile.subcribe}
+                    canModify={false}
+                    myProfile={true}
                 />
             </Grid>
             <Grid item xs>
@@ -204,6 +212,8 @@ export default function Post() {
                             biography={author.biography}
                             idUser={author.id}
                             subscribe={author.subcribe}
+                            canModify={false}
+                            myProfile={false}
                         />
                     ))
                     ||

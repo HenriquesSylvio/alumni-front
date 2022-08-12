@@ -55,8 +55,11 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
     const uploadImage = async () => {
         if (image == null) return;
         const imageRef = ref(storage, `image/${image.name + v4()}`);
+        console.log('test1')
         await uploadBytes(imageRef, image).then(async (snapshot) => {
+            console.log('test2')
             await getDownloadURL(snapshot.ref).then((url) => {
+                console.log('test13')
                 values.url_profile_picture = url
             })
         })

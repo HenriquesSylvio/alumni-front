@@ -10,6 +10,6 @@ const config = {
 };
 
 export default function getFeed(pageNumber = 1) {
-    console.log(getItem('Token'));
+    // console.log(getItem('Token'));
     return axios.get(URLApi + pageNumber, config)
 }
