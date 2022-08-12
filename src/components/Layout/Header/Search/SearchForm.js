@@ -19,14 +19,15 @@ import {login} from "../../../../services/AuthApi";
 import {getItem} from "../../../../services/LocaleStorage";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import OpenModalSearch from "../../../../contexts/OpenModalSearch";
 
 
 
 export default function SearchForm() {
     const navigate = useNavigate();
     const [alignment, setAlignment] = React.useState('user');
-    const [keyword, setKeyword] = React.useState('');
+    const {isOpenSearch, setIsOpenSearch} = useContext(OpenModalSearch);
     let typeSearch = "user"
     const [values, setValues] = useState({
         search: "",
@@ -54,7 +55,7 @@ export default function SearchForm() {
     const handleSubmit = event => {
         event.preventDefault();
         navigate('/search/' + alignment + '/' + values.search, { replace: true })
-        console.log(alignment);
+        setIsOpenSearch(false)
     };
 
     const handleChange = ({currentTarget}) => {
@@ -85,6 +86,7 @@ export default function SearchForm() {
                     {/*    <Grid item xs={12}>*/}
                     <TextField
                         required
+                        autoFocus
                         fullWidth
                         id="search"
                         label="Recherche"

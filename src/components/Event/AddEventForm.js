@@ -15,11 +15,10 @@ import {addEvent} from "../../services/AddEventApi";
 import validate from "../../validators/AddEventValidator";
 import {useContext} from "react";
 import OpenModalAddPost from "../../contexts/OpenModalAddPost";
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-// import {LocalizationProvider} from "@mui/lab";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers'
+
 export default function AddEventForm() {
     const [errors, setErrors] = useState({});
     const {isOpenAddPost, setIsOpenAddPost} = useContext(OpenModalAddPost);
