@@ -5,7 +5,7 @@ import {Chip, Fade, Modal} from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import AddEventForm from "../../../Event/AddEventForm";
 import OpenModalAddPost from "../../../../contexts/OpenModalAddPost";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import SearchForm from "./SearchForm";
 
 const styleBox = {
@@ -41,14 +41,14 @@ const styleButton = {
 
 
 export default function ButtonSearch() {
-    const {isOpenAddPost, setIsOpenAddPost} = useContext(OpenModalAddPost);
+    const [isOpenForm, setIsOpenSearch] = useState(false);
 
     const handleOpen = () => {
-        setIsOpenAddPost(true);
+        setIsOpenSearch(true);
     };
 
     const handleClose = () => {
-        setIsOpenAddPost(false)
+        setIsOpenSearch(false)
     }
     return (
         <Box>
@@ -75,7 +75,7 @@ export default function ButtonSearch() {
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={isOpenAddPost}
+                open={isOpenForm}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -83,7 +83,7 @@ export default function ButtonSearch() {
                     timeout: 500,
                 }}
             >
-                <Fade in={isOpenAddPost}>
+                <Fade in={isOpenForm}>
                     <Box>
                         <Box sx={styleBox}>
                             <SearchForm />

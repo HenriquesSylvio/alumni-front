@@ -14,20 +14,54 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import SearchIcon from "@mui/icons-material/Search";
 import {ToggleButton, ToggleButtonGroup} from "@mui/lab";
+import validate from "../../../../validators/LoginValidator";
+import {login} from "../../../../services/AuthApi";
+import {getItem} from "../../../../services/LocaleStorage";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 
 
 export default function SearchForm() {
+    const navigate = useNavigate();
+    const [alignment, setAlignment] = React.useState('user');
+    const [keyword, setKeyword] = React.useState('');
+    let typeSearch = "user"
+    const [values, setValues] = useState({
+        search: "",
+    });
 
-    const [alignment, setAlignment] = React.useState('web');
-
-    const handleChange = (
+    const handleChangeTypeSearch = (
         event: React.MouseEvent<HTMLElement>,
         newAlignment: string,
     ) => {
-        setAlignment(newAlignment);
+        if (newAlignment == null) {
+            setAlignment(typeSearch)
+        } else {
+            setAlignment(newAlignment);
+            typeSearch = newAlignment
+        }
+        console.log(typeSearch)
     };
 
+    // const clickButtonSearch = event => {
+    //     // event.preventDefault();
+    //     navigate('/search/' + alignment + '/' + values.search, { replace: true })
+    //     // console.log(alignment);
+    // };
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        navigate('/search/' + alignment + '/' + values.search, { replace: true })
+        console.log(alignment);
+    };
+
+    const handleChange = ({currentTarget}) => {
+        const {name, value} = currentTarget;
+
+        setValues({...values, [name]: value})
+    }
     return (
         <Container component="main">
             <CssBaseline />
@@ -38,7 +72,7 @@ export default function SearchForm() {
                 alignItems="center"
                 justifyContent="center"
                 style={{ minHeight: '100%' }}
-                // onSubmit={handleSubmit}
+                onSubmit={handleSubmit}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                     <SearchIcon />
@@ -56,13 +90,14 @@ export default function SearchForm() {
                         label="Recherche"
                         name="search"
                         autoComplete="search"
+                        onChange={handleChange}
                     />
                         <ToggleButtonGroup
                             sx = {{marginTop: 3, display: { xs: 'none', sm: 'flex' }}}
                             color="primary"
                             value={alignment}
                             exclusive
-                            onChange={handleChange}
+                            onChange={handleChangeTypeSearch}
                             fullWidth
                         >
                         <ToggleButton value="user">Utilisateur</ToggleButton>
@@ -75,7 +110,7 @@ export default function SearchForm() {
                         orientation="vertical"
                         value={alignment}
                         exclusive
-                        onChange={handleChange}
+                        onChange={handleChangeTypeSearch}
                         color="primary"
                     >
                         <ToggleButton value="user">Utilisateur</ToggleButton>
@@ -83,10 +118,11 @@ export default function SearchForm() {
                         <ToggleButton value="event">Evenement</ToggleButton>
                     </ToggleButtonGroup>
                     <Button
-                        type="submit"
+                        // type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        onClick={handleSubmit}
                     >
                         Rechercher
                     </Button>
