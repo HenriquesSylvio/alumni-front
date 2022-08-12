@@ -76,9 +76,7 @@ export default function Search() {
                                 <Box sx={{
                                     marginBottom: 2
                                 }}>
-                                    <MainFeed
-                                        post={post}
-                                    />
+                                    <MainFeed post={post}/>
                                 </Box>
                             ): null
                     )) || typeSearch === "event" && (
@@ -87,9 +85,7 @@ export default function Search() {
                                 <Box sx={{
                                     marginBottom: 2
                                 }}>
-                                    <EventCard
-                                        event={event}
-                                    />
+                                    <EventCard event={event}/>
                                 </Box>
                             ): null
                     ) || typeSearch === "user" && (

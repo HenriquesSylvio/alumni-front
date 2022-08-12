@@ -5,11 +5,18 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
+import {useNavigate} from "react-router-dom";
 
 export default function MinimUser({user}) {
+    let  navigate = useNavigate();
+    const goProfile = () => {
+        console.log(user.id);
+        navigate(`/profile/${user.id}`);
+    };
+
     return (
         <Card sx={{ minWidth:"20%"}}>
-            <Grid>
+            <Grid sx={{display: { xs: 'none', sm: 'block' }}}>
                 <Grid
                     container
                     direction="row"
@@ -39,12 +46,38 @@ export default function MinimUser({user}) {
                     </Box>
 
                     <Box marginRight={2}>
-                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, display: { xs: 'none', sm: 'block' }}} size="small" variant="contained">
+                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={goProfile}>
                             Voir le profil
                         </Button>
                     </Box>
                 </Grid>
             </Grid>
+
+            <Grid sx={{display: { xs: 'block', sm: 'none' }}} onClick={goProfile}>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <IconButton>
+                        <Avatar
+                            sx={{ width: 50, height: 50}}
+                            src= {user.urlProfilePicture}
+                        />
+                    </IconButton>
+                    <Typography marginLeft={2} component="div" fontWeight={"bold"}>
+                        {user.lastName} {user.firstName}
+                    </Typography>
+                    <Typography marginLeft={2}>
+                        Promo : {user.promo}
+                    </Typography>
+                    <Typography marginLeft={2}>
+                        Filière : {user.faculty_label}
+                    </Typography>
+                </Grid>
+            </Grid>
+
         </Card>
     );
 }
