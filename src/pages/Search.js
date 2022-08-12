@@ -22,18 +22,18 @@ export default function Search() {
 
     useEffect( () => {
         const searchPosts = async () => {
-            const response = await getPosts(1, "test");
+            const response = await getPosts(1, params.word);
             setPost(response.data.data)
         }
 
         const searchEvents = async () => {
-            const response = await getEvents(1, "", "test");
+            const response = await getEvents(1, "", params.word);
             setEvents(response.data.data)
             console.log(response)
         }
 
         const searchUsers = async () => {
-            const response = await getUsers(1, "henriques");
+            const response = await getUsers(1, params.word);
             setUsers(response.data.data)
             console.log(response.data.data)
         }
@@ -47,7 +47,7 @@ export default function Search() {
         } else if (params.typeSearch === "user") {
             searchUsers()
         }
-    }, [params.typeSearch]);
+    }, [params.typeSearch, params.word]);
 
     return (
         <Box>
