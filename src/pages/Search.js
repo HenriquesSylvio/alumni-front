@@ -10,6 +10,7 @@ import getEvents from "../services/GetEvents";
 import EventCard from "../components/Event/EventCard";
 import MinimUser from "../components/Profile/MinimUser";
 import getUsers from "../services/GetUsersApi";
+import {CircularProgress} from "@mui/material";
 
 export default function Search() {
 
@@ -19,23 +20,29 @@ export default function Search() {
     const [posts, setPost] = useState('');
     const [events, setEvents] = useState('');
     const [users, setUsers] = useState('');
+    const [loadingPage, setLoading] = useState(true);
 
     useEffect( () => {
         const searchPosts = async () => {
+            setLoading(true);
             const response = await getPosts(1, params.word);
             setPost(response.data.data)
+            setLoading(false);
         }
 
         const searchEvents = async () => {
+            setLoading(true);
             const response = await getEvents(1, "", params.word);
             setEvents(response.data.data)
-            console.log(response)
+            setLoading(false);
         }
 
         const searchUsers = async () => {
+            setLoading(true);
             const response = await getUsers(1, params.word);
             setUsers(response.data.data)
             console.log(response.data.data)
+            setLoading(false);
         }
 
         setTypeSearch(params.typeSearch)
@@ -51,6 +58,16 @@ export default function Search() {
 
     return (
         <Box>
+            {loadingPage ? (
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    marginTop: 2
+                }}>
+                    <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                </Box>
+            ) : (
             <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
                 <Grid item xs={4} sx={{ display: { xs: 'none', md: 'block' }}}>
                     <DetailUser
@@ -100,6 +117,7 @@ export default function Search() {
                     )}
                 </Grid>
             </Grid>
+            )}
         </Box>
     );
 }
