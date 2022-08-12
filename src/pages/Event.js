@@ -120,6 +120,14 @@ export default function Event() {
                 </Box>
             ) : (
         <Box>
+            <Grid item sx={{ display: { xs: 'block', md: 'none' }}}>
+                <Card>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <CalendarPicker date={dateCalendar} renderDay={customDayRenderer} onChange={(newDate) => ChangeDate(newDate)} />
+                    </LocalizationProvider>
+                </Card>
+
+            </Grid>
             <Grid container spacing={3} paddingTop={8} paddingLeft="10%" paddingRight="10%">
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                     <DetailUser
@@ -138,7 +146,6 @@ export default function Event() {
                         myProfile={true}
                     />
                 </Grid>
-
                 <Grid item xs>
                     {(loadingByDate && (
                         <Box sx={{

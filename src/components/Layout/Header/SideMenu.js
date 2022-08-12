@@ -9,11 +9,18 @@ import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import FeedIcon from "@mui/icons-material/Feed";
+import CelebrationIcon from "@mui/icons-material/Celebration";
+import WorkIcon from "@mui/icons-material/Work";
+import MessageIcon from "@mui/icons-material/Message";
+import {useNavigate} from "react-router-dom";
 
 export default function SideMenu() {
     const [state, setState] = React.useState({
         left: false,
     });
+    let  navigate = useNavigate();
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (
@@ -36,19 +43,35 @@ export default function SideMenu() {
         >
             <List>
                 <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton onClick={() => navigate(`/feed`)}>
                         <ListItemIcon>
-                            <MailIcon />
+                            <FeedIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Fil d'actualité" />
+                        <ListItemText primary="Actualité" />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton onClick={() => navigate(`/events`)}>
+                        <ListItemIcon>
+                            <CelebrationIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Evenements" />
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>
-                            <MailIcon />
+                            <WorkIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Offre d'emploi" />
+                        <ListItemText primary="Emplois" />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <MessageIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Messages" />
                     </ListItemButton>
                 </ListItem>
             </List>
