@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 export default function MinimUser({user}) {
     return (
         <Card sx={{ minWidth:"20%"}}>
-            <Grid p={1}>
+            <Grid>
                 <Grid
                     container
                     direction="row"
@@ -20,25 +20,25 @@ export default function MinimUser({user}) {
                         <Grid container>
                             <IconButton>
                                 <Avatar
-                                    sx={{ width: 60, height: 60}}
+                                    sx={{ width: 50, height: 50}}
                                     src= {user.urlProfilePicture}
                                 />
                             </IconButton>
                             <Grid marginTop={1}>
                                 <Typography marginLeft={2} component="div" fontWeight={"bold"}>
-                                    Henriques Sylvio
+                                    {user.lastName} {user.firstName}
                                 </Typography>
                                 <Typography marginLeft={2}>
-                                    Promo : 2022
+                                    Promo : {user.promo}
                                 </Typography>
                                 <Typography marginLeft={2}>
-                                    Filière : Developpeur
+                                    Filière : {user.faculty_label}
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Box>
 
-                    <Box>
+                    <Box marginRight={2}>
                         <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, display: { xs: 'none', sm: 'block' }}} size="small" variant="contained">
                             Voir le profil
                         </Button>

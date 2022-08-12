@@ -57,21 +57,31 @@ export default function SearchForm() {
                         name="search"
                         autoComplete="search"
                     />
+                        <ToggleButtonGroup
+                            sx = {{marginTop: 3, display: { xs: 'none', sm: 'flex' }}}
+                            color="primary"
+                            value={alignment}
+                            exclusive
+                            onChange={handleChange}
+                            fullWidth
+                        >
+                        <ToggleButton value="user">Utilisateur</ToggleButton>
+                        <ToggleButton value="post">Publication</ToggleButton>
+                        <ToggleButton value="event">Evenement</ToggleButton>
+                    </ToggleButtonGroup>
 
                     <ToggleButtonGroup
-                        sx = {{marginTop: 2}}
-                        color="primary"
+                        sx = {{marginTop: 2, display: { xs: 'flex', sm: 'none' }}}
+                        orientation="vertical"
                         value={alignment}
                         exclusive
                         onChange={handleChange}
-                        fullWidth
+                        color="primary"
                     >
                         <ToggleButton value="user">Utilisateur</ToggleButton>
                         <ToggleButton value="post">Publication</ToggleButton>
                         <ToggleButton value="event">Evenement</ToggleButton>
                     </ToggleButtonGroup>
-                        {/*</Grid>*/}
-                    {/*</Grid>*/}
                     <Button
                         type="submit"
                         fullWidth

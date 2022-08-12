@@ -90,7 +90,6 @@ export default function Search() {
                                     <EventCard
                                         event={event}
                                     />
-                                    {/*<MinimUser/>*/}
                                 </Box>
                             ): null
                     ) || typeSearch === "user" && (
