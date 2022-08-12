@@ -11,6 +11,7 @@ import EventCard from "../components/Event/EventCard";
 import MinimUser from "../components/Profile/MinimUser";
 import getUsers from "../services/GetUsersApi";
 import {CircularProgress} from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 export default function Search() {
 
@@ -95,7 +96,10 @@ export default function Search() {
                                 }}>
                                     <MainFeed post={post}/>
                                 </Box>
-                            ): null
+                            ):
+                            <Typography paddingTop={5} variant="h4" component="div">
+                                Aucune publication trouvée !
+                            </Typography>
                     )) || typeSearch === "event" && (
                         events.length ?
                             events.map(event =>
@@ -104,7 +108,10 @@ export default function Search() {
                                 }}>
                                     <EventCard event={event}/>
                                 </Box>
-                            ): null
+                            ):
+                            <Typography paddingTop={5} variant="h4" component="div">
+                                Aucun événement trouvé !
+                            </Typography>
                     ) || typeSearch === "user" && (
                         users.length ?
                             users.map(user =>
@@ -113,7 +120,10 @@ export default function Search() {
                                 }}>
                                     <MinimUser user={user}/>
                                 </Box>
-                            ): null
+                            ):
+                            <Typography paddingTop={5} variant="h4" component="div">
+                                Aucun utilisateur trouvé !
+                            </Typography>
                     )}
                 </Grid>
             </Grid>
