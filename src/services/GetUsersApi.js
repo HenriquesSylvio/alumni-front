@@ -9,6 +9,6 @@ const config = {
     headers: { Authorization: `Bearer ${getItem('Token')}` }
 };
 
-export default function getPosts(pageNumber = 1, keyword) {
+export default function getUsers(pageNumber = 1, keyword) {
     return axios.get(URLApi + `user?current_page=${pageNumber}&keyword=${keyword}`, config)
 }

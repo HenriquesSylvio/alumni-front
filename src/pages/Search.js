@@ -4,16 +4,12 @@ import Box from '@mui/material/Box';
 import MainFeed from "../components/Post/MainFeed";
 import Grid from "@mui/material/Grid";
 import DetailUser from "../components/Profile/DetailUser";
-import Typography from "@mui/material/Typography";
-import {CircularProgress, Fade, Modal} from "@mui/material";
-import Backdrop from "@mui/material/Backdrop";
-import AddCommentForm from "../components/Post/AddCommentForm";
-// import {useContext} from "@types/react";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
 import getPosts from "../services/GetPostsApi";
 import getEvents from "../services/GetEvents";
 import EventCard from "../components/Event/EventCard";
 import MinimUser from "../components/Profile/MinimUser";
+import getUsers from "../services/GetUsersApi";
 
 export default function Search() {
 
@@ -22,6 +18,7 @@ export default function Search() {
     const {activeProfile} = useContext(ActiveConnectedUser);
     const [posts, setPost] = useState('');
     const [events, setEvents] = useState('');
+    const [users, setUsers] = useState('');
 
     useEffect( () => {
         const searchPosts = async () => {
@@ -35,12 +32,20 @@ export default function Search() {
             console.log(response)
         }
 
+        const searchUsers = async () => {
+            const response = await getUsers(1, "henriques");
+            setUsers(response.data.data)
+            console.log(response.data.data)
+        }
+
         setTypeSearch(params.typeSearch)
 
         if (params.typeSearch === "post") {
             searchPosts()
         } else if (params.typeSearch === "event"){
             searchEvents()
+        } else if (params.typeSearch === "user") {
+            searchUsers()
         }
     }, [params.typeSearch]);
 
@@ -86,6 +91,15 @@ export default function Search() {
                                         event={event}
                                     />
                                     {/*<MinimUser/>*/}
+                                </Box>
+                            ): null
+                    ) || typeSearch === "user" && (
+                        users.length ?
+                            users.map(user =>
+                                <Box sx={{
+                                    marginBottom: 2
+                                }}>
+                                    <MinimUser user={user}/>
                                 </Box>
                             ): null
                     )}

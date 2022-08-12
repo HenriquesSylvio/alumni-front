@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 
-export default function MinimUser({idUser ,firstName, lastName, urlProfilePicture}) {
+export default function MinimUser({user}) {
     return (
         <Card sx={{ minWidth:"20%"}}>
             <Grid p={1}>
@@ -21,7 +21,7 @@ export default function MinimUser({idUser ,firstName, lastName, urlProfilePictur
                             <IconButton>
                                 <Avatar
                                     sx={{ width: 60, height: 60}}
-                                    src= {urlProfilePicture}
+                                    src= {user.urlProfilePicture}
                                 />
                             </IconButton>
                             <Grid marginTop={1}>
