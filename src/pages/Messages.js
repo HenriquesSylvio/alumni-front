@@ -19,7 +19,7 @@ export default function Messages() {
 
     return (
         <Box paddingTop={1}>
-            <Paper style={{width:"25%", height:'100vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
+            <Paper style={{width:"375x", height:'100vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
                 <List style={{height: '100%', overflow: 'auto'}}>
                     <ListItemButton
                         selected={selectedIndex === 0}
