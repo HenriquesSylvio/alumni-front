@@ -12,7 +12,7 @@ class Layout extends React.Component {
                 <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
                     <ResponsiveAppBar />
                 </Box>
-                <Footer />
+                {/*<Footer />*/}
             </>
         );
     }

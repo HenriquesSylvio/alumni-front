@@ -18,6 +18,7 @@ import Post from "./pages/Post";
 import Event from "./pages/Event";
 import Search from "./pages/Search";
 import OpenModalSearch from "./contexts/OpenModalSearch";
+import Messages from "./pages/Messages";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
                                               <Route exact path='/post/:id' element={<Post/>}/>
                                               <Route exact path='/profile' element={<Profile/>}/>
                                               <Route exact path='/events' element={<Event/>}/>
+                                              <Route exact path='/messages' element={<Messages/>}/>
                                               <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
                                           </Route>
                                       </Routes>
