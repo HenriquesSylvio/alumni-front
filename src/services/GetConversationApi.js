@@ -8,6 +8,6 @@ const config = {
     headers: { Authorization: `Bearer ${getItem('Token')}` }
 };
 
-export default function getCommentByIdApi() {
-    return axios.get(`message/conversation`, config)
+export default function getConversation() {
+    return axios.get(`${URLApi}message/conversation`, config)
 }

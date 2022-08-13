@@ -16,16 +16,16 @@ import {useState} from "react";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 
-export default function ConversationListItem({lastName, firstName, urlProfilePicture, createAt, lastMessage}) {
+export default function ConversationListItem({conversation}) {
 
     return (
         <ListItemButton
         >
             <ListItemAvatar>
-                <Avatar src={urlProfilePicture} />
+                <Avatar src={conversation.urlProfilePicture} />
             </ListItemAvatar>
             <ListItemText
-                primary= {lastName + ' ' + firstName}
+                primary= {conversation.lastName + ' ' + conversation.firstName}
                 secondary={
                     <React.Fragment>
                         <Typography
@@ -34,9 +34,9 @@ export default function ConversationListItem({lastName, firstName, urlProfilePic
                             variant="body2"
                             color="text.primary"
                         >
-                            {createAt}
+                            {conversation.createAt}
                         </Typography>
-                        {" — " + lastMessage}
+                        {" — " + conversation.lastMessage}
                     </React.Fragment>
                 }
             />
