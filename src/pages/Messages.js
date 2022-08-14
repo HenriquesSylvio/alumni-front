@@ -14,7 +14,8 @@ import getConversation from "../services/GetConversationApi";
 import getProfile from "../services/ProfileApi";
 import MainFeed from "../components/Post/MainFeed";
 import Grid from "@mui/material/Grid";
-import {MessageLeft, MessageRight} from "../components/Message/MessageRight";
+import MessageLeft from "../components/Message/MessageLeft";
+import MessageRight from "../components/Message/MessageRight";
 
 export default function Messages() {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -58,6 +59,9 @@ export default function Messages() {
                 <Grid item xs>
                     <Paper style={{height:'100vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
                         <MessageLeft
+                            message="Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!!"
+                        />
+                        <MessageRight
                             message="Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!!"
                         />
                     </Paper>
