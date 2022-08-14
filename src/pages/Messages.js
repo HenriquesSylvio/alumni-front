@@ -13,6 +13,8 @@ import {useEffect, useState} from "react";
 import getConversation from "../services/GetConversationApi";
 import getProfile from "../services/ProfileApi";
 import MainFeed from "../components/Post/MainFeed";
+import Grid from "@mui/material/Grid";
+import {MessageLeft, MessageRight} from "../components/Message/MessageRight";
 
 export default function Messages() {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -38,45 +40,29 @@ export default function Messages() {
 
     return (
         <Box paddingTop={1}>
-            <Paper style={{width:"375px", height:'100vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
-                <List style={{height: '100%', overflow: 'auto'}}>
-                    {conversations.length ?
-                        conversations.map(
-                            conversation =>
-                                <Box marginBottom={2} >
-                                    <ConversationListItem conversation={conversation}/>
-                                </Box>
-                        ): null
-                    }
-
-                    {/*<ListItemButton*/}
-                    {/*    selected={selectedIndex === 0}*/}
-                    {/*    onClick={(event) => handleListItemClick(event, 0)}*/}
-                    {/*>*/}
-                    {/*    <ListItemAvatar>*/}
-                    {/*        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />*/}
-                    {/*    </ListItemAvatar>*/}
-                    {/*    <ListItemText*/}
-                    {/*        primary="Brunch this weekend?"*/}
-                    {/*        secondary={*/}
-                    {/*            <React.Fragment>*/}
-                    {/*                <Typography*/}
-                    {/*                    sx={{ display: 'inline' }}*/}
-                    {/*                    component="span"*/}
-                    {/*                    variant="body2"*/}
-                    {/*                    color="text.primary"*/}
-                    {/*                >*/}
-                    {/*                    Ali Connors*/}
-                    {/*                </Typography>*/}
-                    {/*                {" — I'll be in your neighborhood doing errands this…"}*/}
-                    {/*            </React.Fragment>*/}
-                    {/*        }*/}
-                    {/*    />*/}
-                    {/*</ListItemButton>*/}
-                    {/*<Divider variant="inset" component="li" />*/}
-                    {/*<ConversationListItem firstName={"Sylvio"} lastName={"Henriques"} lastMessage={"test"} urlProfilePicture={"test"} createAt={"12/12/2022"}/>*/}
-                </List>
-            </Paper>
+            <Grid container>
+                <Grid item style={{width:"375px"}}>
+                    <Paper style={{height:'100vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
+                        <List style={{height: '100%', overflow: 'auto'}}>
+                            {conversations.length ?
+                                conversations.map(
+                                    conversation =>
+                                        <Box marginBottom={2} >
+                                            <ConversationListItem conversation={conversation}/>
+                                        </Box>
+                                ): null
+                            }
+                        </List>
+                    </Paper>
+                </Grid>
+                <Grid item xs>
+                    <Paper style={{height:'100vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
+                        <MessageLeft
+                            message="Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!!"
+                        />
+                    </Paper>
+                </Grid>
+            </Grid>
         </Box>
 
     )
