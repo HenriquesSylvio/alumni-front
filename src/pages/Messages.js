@@ -27,10 +27,6 @@ export default function Messages() {
         setConversations(response.data.conversations)
     };
 
-    const handleListItemClick = (event, index) => {
-        setSelectedIndex(index);
-    };
-
     useEffect( () => {
         const getData = async () => {
             await getConversations();
