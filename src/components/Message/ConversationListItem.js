@@ -17,13 +17,15 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import OpenModalAddPost from "../../contexts/OpenModalAddPost";
 import SelectedConversationIndex from "../../contexts/SelectedConversationIndex";
+import getMessages from "../../services/GetMessagesApi";
 
 export default function ConversationListItem({conversation}) {
-
     const {selectedConversationIndex, setSelectedConversationIndex} = useContext(SelectedConversationIndex);
 
-    const handleListItemClick = (event, index) => {
+
+    const handleListItemClick = async (event, index) => {
         setSelectedConversationIndex(index);
+        const response = await getMessages(index);
     };
 
     return (
@@ -46,7 +48,7 @@ export default function ConversationListItem({conversation}) {
                         >
                             {conversation.createAt}
                         </Typography>
-                        {" — " + conversation.lastMessage}
+                        {" — " + conversation.content}
                     </React.Fragment>
                 }
             />

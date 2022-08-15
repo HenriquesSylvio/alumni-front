@@ -9,6 +9,6 @@ const config = {
     headers: { Authorization: `Bearer ${getItem('Token')}` }
 };
 
-export default function getMessagesApi() {
-    return axios.get(URLApi + `messages`, config)
+export default function getMessages(idConversation) {
+    return axios.get(URLApi + `message/${idConversation}`, config)
 }
