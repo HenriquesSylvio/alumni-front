@@ -62,7 +62,7 @@ export default function Messages() {
                             message="Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!!"
                         />
                         <MessageRight
-                            message="Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!!"
+                            message="Ceci est un test !!! Ceci ests un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!!"
                         />
                     </Paper>
                 </Grid>
