@@ -221,7 +221,7 @@ export default function Post() {
                 }
 
             </Grid>
-            <Box>
+            {/*<Box>*/}
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -245,7 +245,7 @@ export default function Post() {
                         </Box>
                     </Fade>
                 </Modal>
-            </Box>
+            {/*</Box>*/}
         </Grid>
             )}
 

@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";

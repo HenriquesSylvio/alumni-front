@@ -70,7 +70,50 @@ export default function MainFeed({post, couleur, ...rest}) {
                 </Grid>
             </Grid>
             <p>{post.content}</p>
-            d
+            <Grid container>
+                <Grid item xs>
+                    <ShowCommentButton post={post}/>
+                </Grid>
+                <Grid item>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="flex-end"
+                        alignItems="center"
+                        paddingRight={0}
+                    >
+                        <IconButton sx={{marginRight: 1}} onClick={handleOpen}>
+                            <ChatBubbleOutlineIcon/>
+                        </IconButton>
+                        <Typography variant="body2">
+                            {post.numberComment}
+                        </Typography>
+                        <Typography variant="body2" paddingRight={3} paddingLeft={1}>
+                            commentaire(s)
+                        </Typography>
+                        {(likeLoading && (
+                                <CircularProgress size={30} sx={{marginRight: 1}}/>
+                            ))
+                            ||
+                            (likeByUser === true && (
+                                <IconButton onClick={LikePost} sx={{marginRight: 1}}>
+                                    <ThumbUpIcon/>
+                                </IconButton>
+                            ))
+                            ||
+                            <IconButton onClick={LikePost} sx={{marginRight: 1}}>
+                                <ThumbUpOffAltIcon/>
+                            </IconButton>
+                        }
+                        <Typography variant="body2">
+                            {likeCounter}
+                        </Typography>
+                        <Typography variant="body2" paddingLeft={1}>
+                            like(s)
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
         </Card>
     );
 }

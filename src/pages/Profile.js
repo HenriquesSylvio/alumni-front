@@ -1,19 +1,45 @@
 
 import {Box} from "@mui/system";
-import {CircularProgress, Stack} from "@mui/material";
+import {CircularProgress, Fade, Modal, Paper, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import MainFeed from "../components/Post/MainFeed";
 import DetailUser from "../components/Profile/DetailUser";
 import getProfile from "../services/ProfileApi";
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import getPostByUser from "../services/PostByUserApi";
 import { useParams } from "react-router-dom";
+import Backdrop from "@mui/material/Backdrop";
+import SendMessageForm from "../components/Profile/SendMessageForm";
+import OpenModalSendMessage from "../contexts/OpenModalSendMessage";
+
+const styleBox = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 'auto',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+    display: { xs: 'none', md: 'flex' },
+};
+const styleResponsiveBox = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    display: { xs: 'flex', md: 'none' }
+};
 
 export default function Profile() {
 
     const [posts, setPosts] = useState('');
     const [user, setUser] = useState('');
     const [loadingPage, setLoading] = useState(true);
+    const {isOpenSendMessage, setIsOpenSendMessage} = useContext(OpenModalSendMessage);
     let params = useParams();
     let userId = '';
 
@@ -32,6 +58,10 @@ export default function Profile() {
         console.log(response.data);
         userId = response.data.id;
     };
+
+    const handleClose = () => {
+        setIsOpenSendMessage(false)
+    }
 
     const getPostByUserId = async () => {
         console.log(userId);
@@ -113,6 +143,28 @@ export default function Profile() {
                         </Box>
                     </Box>
                 )}
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    open={isOpenSendMessage}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    <Fade in={isOpenSendMessage}>
+                        <Box>
+                            <Paper sx={styleBox}>
+                                <SendMessageForm />
+                            </Paper>
+                            <Paper sx={styleResponsiveBox}>
+                                <SendMessageForm />
+                            </Paper>
+                        </Box>
+                    </Fade>
+                </Modal>
             </Box>
         );
     }

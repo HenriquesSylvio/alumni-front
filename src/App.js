@@ -21,6 +21,7 @@ import OpenModalSearch from "./contexts/OpenModalSearch";
 import Messages from "./pages/Messages";
 import SelectedConversationIndex from "./contexts/SelectedConversationIndex";
 import MessageConversation from "./contexts/MessageConversation";
+import OpenModalSendMessage from "./contexts/OpenModalSendMessage";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
@@ -32,6 +33,8 @@ const App = () => {
     const [isOpenSearch, setIsOpenSearch] = useState(false);
     const [selectedConversationIndex, setSelectedConversationIndex] = useState(0);
     const [messageConversation, setMessageConversation] = useState([]);
+    const [isOpenSendMessage, setIsOpenSendMessage] = useState(false);
+
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
@@ -39,30 +42,32 @@ const App = () => {
               <OpenModalAddPost.Provider value={{isOpenAddPost, setIsOpenAddPost}}>
                   <OpenModalAddComment.Provider value={{isOpenAddComment, setIsOpenAddComment}}>
                       <OpenModalSearch.Provider value={{isOpenSearch, setIsOpenSearch}}>
-                          <ResponseIdPost.Provider value={{idPost, setIdPost}}>
-                              <SelectedConversationIndex.Provider value={{selectedConversationIndex, setSelectedConversationIndex}}>
-                                  <MessageConversation.Provider value={{messageConversation, setMessageConversation}}>
-                                      <BrowserRouter>
-                                          <Layout>
-                                              <Routes>
-                                                  <Route path='/' element={<Home/>}/>
-                                                  <Route exact path='/inscription' element={<Inscription/>}/>
-                                                  <Route element={<AuthenticatedRoute/>}>
-                                                      <Route exact path='/feed' element={<Feed/>}/>
-                                                      <Route exact path='/profile/:id' element={<Profile/>}/>
-                                                      <Route exact path='/post/:id' element={<Post/>}/>
-                                                      <Route exact path='/profile' element={<Profile/>}/>
-                                                      <Route exact path='/events' element={<Event/>}/>
-                                                      <Route exact path='/messages' element={<Messages/>}/>
-                                                      <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
-                                                  </Route>
-                                              </Routes>
-                                              <ToastContainer />
-                                          </Layout>
-                                      </BrowserRouter>
-                                  </MessageConversation.Provider>
-                              </SelectedConversationIndex.Provider>
-                          </ResponseIdPost.Provider>
+                              <ResponseIdPost.Provider value={{idPost, setIdPost}}>
+                                  <SelectedConversationIndex.Provider value={{selectedConversationIndex, setSelectedConversationIndex}}>
+                                      <MessageConversation.Provider value={{messageConversation, setMessageConversation}}>
+                                          <OpenModalSendMessage.Provider value={{isOpenSendMessage, setIsOpenSendMessage}}>
+                                          <BrowserRouter>
+                                              <Layout>
+                                                  <Routes>
+                                                      <Route path='/' element={<Home/>}/>
+                                                      <Route exact path='/inscription' element={<Inscription/>}/>
+                                                      <Route element={<AuthenticatedRoute/>}>
+                                                          <Route exact path='/feed' element={<Feed/>}/>
+                                                          <Route exact path='/profile/:id' element={<Profile/>}/>
+                                                          <Route exact path='/post/:id' element={<Post/>}/>
+                                                          <Route exact path='/profile' element={<Profile/>}/>
+                                                          <Route exact path='/events' element={<Event/>}/>
+                                                          <Route exact path='/messages' element={<Messages/>}/>
+                                                          <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
+                                                      </Route>
+                                                  </Routes>
+                                                  <ToastContainer />
+                                              </Layout>
+                                          </BrowserRouter>
+                                          </OpenModalSendMessage.Provider>
+                                      </MessageConversation.Provider>
+                                  </SelectedConversationIndex.Provider>
+                              </ResponseIdPost.Provider>
                       </OpenModalSearch.Provider>
                   </OpenModalAddComment.Provider>
             </OpenModalAddPost.Provider>
