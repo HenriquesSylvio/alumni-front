@@ -30,12 +30,14 @@ export default function SendMessageForm({idUser}) {
     const handleSubmit = async event => {
         event.preventDefault();
 
+        setLoadingForm(true)
         setErrors(validate(values));
         if (Object.keys(errors).length === 0) {
             await sendMessage(values.content, idUser);
             toast.success('Le message a été envoyé ! 😄')
             setIsOpenSendMessage(false);
         }
+        setLoadingForm(false)
     };
 
     const handleChange = ({currentTarget}) => {
@@ -80,18 +82,32 @@ export default function SendMessageForm({idUser}) {
                                 onChange={handleChange}
                                 error={ errors.content }
                                 helperText={ errors.content }
+                                disabled={loadingForm}
                             />
                         </Grid>
                     </Grid>
+                    {(loadingForm && (
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                marginTop: 2
+                            }}>
+                                <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                            </Box>
+                        ))
+                        ||
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={handleSubmit}
+                            onClick={handleClick}
+                            disabled={loadingForm}
                         >
                             Envoyer
                         </Button>
+                    }
                 </Box>
             </Grid>
         </Container>
