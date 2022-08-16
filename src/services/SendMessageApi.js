@@ -9,6 +9,7 @@ const config = {
 };
 
 export function sendMessage(content, received_by) {
+    console.log({content : content, received_by : {id: received_by}});
     return axios
         .post(`${URLApi}message`, {content : content, received_by : {id: received_by}}, config);
 }
