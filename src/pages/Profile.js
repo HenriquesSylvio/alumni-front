@@ -123,17 +123,6 @@ export default function Profile() {
                                        post =>
                                            <Box marginBottom={2} >
                                                <MainFeed
-                                                   // firstName={post.firstName}
-                                                   // lastName={post.lastName}
-                                                   // titre={post.title}
-                                                   // description={post.content}
-                                                   // nbComment={post.numberComment}
-                                                   // nbLike={post.numberLike}
-                                                   // like={post.like}
-                                                   // idPost={post.idPost}
-                                                   // createAt={post.createAt}
-                                                   // url_profile_picture={post.urlProfilePicture}
-                                                   // idUser={post.idUser}
                                                    post={post}
                                                >
                                                </MainFeed>
@@ -157,10 +146,10 @@ export default function Profile() {
                     <Fade in={isOpenSendMessage}>
                         <Box>
                             <Paper sx={styleBox}>
-                                <SendMessageForm />
+                                <SendMessageForm idUser={params.id}/>
                             </Paper>
                             <Paper sx={styleResponsiveBox}>
-                                <SendMessageForm />
+                                <SendMessageForm idUser={params.id}/>
                             </Paper>
                         </Box>
                     </Fade>

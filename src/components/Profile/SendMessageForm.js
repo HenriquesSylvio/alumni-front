@@ -9,23 +9,44 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import CreateIcon from '@mui/icons-material/Create';
-import validate from "../../validators/AddPostValidator";
+import validate from "../../validators/SendMessageValidator";
 import {addPost} from "../../services/AddPostApi";
 import {toast} from "react-toastify";
 import {addComment} from "../../services/AddCommentApi";
 import OpenModalAddComment from "../../contexts/OpenModalAddComment";
 import {CircularProgress} from "@mui/material";
+import {addEvent} from "../../services/AddEventApi";
+import OpenModalSendMessage from "../../contexts/OpenModalSendMessage";
+import {sendMessage} from "../../services/SendMessageApi";
 
-export default function SendMessageForm() {
+export default function SendMessageForm({idUser}) {
     const [errors, setErrors] = useState({});
     const [loadingForm, setLoadingForm] = React.useState(false);
+    const {isOpenSendMessage, setIsOpenSendMessage} = useContext(OpenModalSendMessage);
     const [values, setValues] = useState({
         content: ""
     });
 
-    useEffect( () => {
-        console.log("test")
-    }, []);
+    const handleSubmit = async event => {
+        event.preventDefault();
+
+        setErrors(validate(values));
+        if (Object.keys(errors).length === 0) {
+            await sendMessage(values.content, idUser);
+            toast.success('Le message a été envoyé ! 😄')
+            setIsOpenSendMessage(false);
+        }
+    };
+
+    const handleChange = ({currentTarget}) => {
+        const {name, value} = currentTarget;
+
+        setValues({...values, [name]: value})
+    }
+
+    function handleClick() {
+        setErrors(validate(values));
+    }
 
     return (
         <Container component="main">
@@ -37,6 +58,7 @@ export default function SendMessageForm() {
                 alignItems="center"
                 justifyContent="center"
                 style={{ minHeight: '100%' }}
+                onSubmit={handleSubmit}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                     <CreateIcon />
@@ -55,6 +77,9 @@ export default function SendMessageForm() {
                                 label="Contenu du message"
                                 multiline
                                 rows={10}
+                                onChange={handleChange}
+                                error={ errors.content }
+                                helperText={ errors.content }
                             />
                         </Grid>
                     </Grid>
@@ -63,6 +88,7 @@ export default function SendMessageForm() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            onClick={handleSubmit}
                         >
                             Envoyer
                         </Button>

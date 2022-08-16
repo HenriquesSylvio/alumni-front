@@ -60,23 +60,24 @@ export default function ButtonsInteractionUser({idUser, subscribe}) {
     };
 
     return (
-        <Box>
-            {/*<CardActions>*/}
-            {/*    {(subscribeLoading && (*/}
-            {/*            <CircularProgress size={30} sx={{marginRight: 1}}/>*/}
-            {/*        ))*/}
-            {/*        ||*/}
-            {/*        (subscribeByUser === true && (*/}
-            {/*            <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={handleRemoveSubcribe}>Désabonner</Button>*/}
-            {/*        ))*/}
-            {/*        ||*/}
-            {/*        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={handleSubcribe}>S'abonner</Button>*/}
-            {/*    }*/}
-            {/*    /!*<Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={handleSubcribe}>S'abonner</Button>*!/*/}
-            {/*</CardActions>*/}
-            {/*<CardActions onClick={handleOpen}>*/}
+        <>
+            <CardActions>
+                {(subscribeLoading && (
+                        <CircularProgress size={30} sx={{marginRight: 1}}/>
+                    ))
+                    ||
+                    (subscribeByUser === true && (
+                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={handleRemoveSubcribe}>Désabonner</Button>
+                    ))
+                    ||
+                    <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={handleSubcribe}>S'abonner</Button>
+                }
+                {/*<Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={handleSubcribe}>S'abonner</Button>*/}
+            </CardActions>
+            <CardActions onClick={handleOpen}>
                 <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={handleOpen}>Message</Button>
-            {/*</CardActions>*/}
-        </Box>
+            </CardActions>
+
+        </>
     );
 }
