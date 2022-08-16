@@ -18,14 +18,18 @@ import ListItemButton from "@mui/material/ListItemButton";
 import OpenModalAddPost from "../../contexts/OpenModalAddPost";
 import SelectedConversationIndex from "../../contexts/SelectedConversationIndex";
 import getMessages from "../../services/GetMessagesApi";
+import MessageConversation from "../../contexts/MessageConversation";
 
 export default function ConversationListItem({conversation}) {
     const {selectedConversationIndex, setSelectedConversationIndex} = useContext(SelectedConversationIndex);
-
+    const {messageConversation, setMessageConversation} = useContext(MessageConversation);
 
     const handleListItemClick = async (event, index) => {
         setSelectedConversationIndex(index);
         const response = await getMessages(index);
+        console.log(response.data.message)
+        setMessageConversation(response.data.messages);
+        console.log(messageConversation);
     };
 
     return (
