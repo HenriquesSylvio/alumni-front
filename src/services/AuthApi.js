@@ -20,6 +20,7 @@ export function login(credentials) {
         .post(URLApi + "login_check", credentials)
         .then(response => response.data.token)
         .then(token => {
+            // console.log(token);
             addItem('Token', token);
             return true;
         });

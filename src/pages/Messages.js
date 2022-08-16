@@ -21,10 +21,12 @@ import MessageConversation from "../contexts/MessageConversation";
 import TextField from "@mui/material/TextField";
 import {sendMessage} from "../services/SendMessageApi";
 import SelectedConversationIndex from "../contexts/SelectedConversationIndex";
+import getMessages from "../services/GetMessagesApi";
 
 export default function Messages() {
     const [conversations, setConversations] = useState('');
-    const {messageConversation} = useContext(MessageConversation);
+    const [repeater, setRepeater] = useState(0)
+    const {messageConversation, setMessageConversation} = useContext(MessageConversation);
     const {selectedConversationIndex, setSelectedConversationIndex} = useContext(SelectedConversationIndex);
     const [values, setValues] = useState({
         content: "",
@@ -34,6 +36,12 @@ export default function Messages() {
         const response = await getConversation()
         console.log(response);
         setConversations(response.data.conversations)
+    };
+
+    const getAllMessage = async () => {
+        const response = await getMessages(selectedConversationIndex)
+        console.log(response);
+        setMessageConversation(response.data.messages)
     };
 
     const handleSubmit = async event => {
@@ -50,10 +58,13 @@ export default function Messages() {
     useEffect( () => {
         const getData = async () => {
             await getConversations();
+            await getAllMessage();
         }
         getData();
 
-    }, []);
+
+        setTimeout(() => setRepeater(prevState=>prevState+1), 2000);
+    }, [repeater, selectedConversationIndex]);
 
     return (
         <Box paddingTop={1}>

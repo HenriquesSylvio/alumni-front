@@ -21,7 +21,7 @@ const theme = createTheme();
 
 export default function SignIn() {
     const navigate = useNavigate();
-    const {setIsAuthenticated} = useContext(Auth);
+    const {isAuthenticated,setIsAuthenticated} = useContext(Auth);
     const {setActiveProfile} = useContext(ActiveConnectedUser)
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = React.useState(false);
@@ -48,6 +48,9 @@ export default function SignIn() {
         setActiveProfile(response.data)
 
     }
+    useEffect( () => {
+        getItem('Token');
+    }, [isAuthenticated]);
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -60,9 +63,11 @@ export default function SignIn() {
                 console.log(values)
                 const response = await login(values);
                 await setIsAuthenticated(response);
-                console.log(`Bearer ${getItem('Token')}`);
-                getMyProfile()
+                // console.log(`Bearer ${getItem('Token')}`);
+                // navigate(0);
                 navigate('/feed')
+
+                await getMyProfile()
                 toast.success('Bienvenue ! 😄')
             } catch ({response}) {
                 toast.error(response.data.erreur + ' 😃')
