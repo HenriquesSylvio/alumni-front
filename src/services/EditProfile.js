@@ -10,5 +10,5 @@ const config = {
 
 export function EditProfile(credentials) {
     return axios
-        .put(`${URLApi}user/edit`, credentials, config);
+        .put(`${URLApi}user/edit`, credentials, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
 }

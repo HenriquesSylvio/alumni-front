@@ -9,5 +9,5 @@ const config = {
 };
 
 export default function getCommentByIdApi(id, pageNumber = 1) {
-    return axios.get(`${URLApi}post/${id}/comment?current_page=${pageNumber}`, config)
+    return axios.get(`${URLApi}post/${id}/comment?current_page=${pageNumber}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }

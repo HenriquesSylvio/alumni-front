@@ -9,5 +9,5 @@ const config = {
 };
 
 export default function getPostById(id) {
-    return axios.get(`${URLApi}post/${id}`, config)
+    return axios.get(`${URLApi}post/${id}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }

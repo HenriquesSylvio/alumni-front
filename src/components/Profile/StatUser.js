@@ -55,46 +55,6 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts}) {
                 // paddingRight={2}
                 sx={{display: { xs: 'flex', md: 'none' }}}
             >
-                {/*<Box sx={{ position: "absolute"}} paddingRight="20">*/}
-                {/*    {(nbSubscriber = 0 && (*/}
-                {/*            <Typography variant="body2" align={"center"} fontWeight={"bold"}>*/}
-                {/*                0*/}
-                {/*            </Typography>*/}
-                {/*        ))*/}
-                {/*        ||*/}
-                {/*        <Typography variant="body2" align={"center"} fontWeight={"bold"}>*/}
-                {/*            {nbSubscriber}*/}
-                {/*        </Typography>*/}
-                {/*    }*/}
-                {/*    <Typography variant="body2" color="text.secondary">*/}
-                {/*        Abonnés*/}
-                {/*    </Typography>*/}
-                {/*</Box>*/}
-                {/*<Box sx={{ position: "absolute"}}>*/}
-                {/*    <Typography variant="body2" align={"center"} fontWeight={"bold"}>*/}
-                {/*        {nbPosts}*/}
-                {/*    </Typography>*/}
-                {/*    <Typography variant="body2" color="text.secondary">*/}
-                {/*        Publications*/}
-                {/*    </Typography>*/}
-                {/*</Box>*/}
-                {/*<Box sx={{ position: "absolute"}} paddingLeft="20">*/}
-                {/*    {(nbSubscription = 0 && (*/}
-                {/*            <Typography variant="body2" align={"center"} fontWeight={"bold"}>*/}
-                {/*                0*/}
-                {/*            </Typography>*/}
-                {/*        ))*/}
-                {/*        ||*/}
-                {/*        <Typography variant="body2" align={"center"} fontWeight={"bold"}>*/}
-                {/*            {nbSubscription}*/}
-                {/*        </Typography>*/}
-                {/*    }*/}
-                {/*    <Typography variant="body2" color="text.secondary">*/}
-                {/*        Abonnements*/}
-                {/*    </Typography>*/}
-                {/*</Box>*/}
-
-                {/*<Grid container spacing={3}>*/}
                     <Grid item xs align={"center"}>
                         {(nbSubscriber = 0 && (
                             <Typography variant="body2" fontWeight={"bold"}>

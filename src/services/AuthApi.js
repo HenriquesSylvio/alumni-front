@@ -20,12 +20,14 @@ export function login(credentials) {
         .post(URLApi + "login_check", credentials)
         .then(response => response.data.token)
         .then(token => {
-            addItem('Token', token);
+            // console.log(token);
+            addItem('Token',token);
             return true;
         });
 }
 
 export function logout() {
+    removeItem('Profile')
     removeItem('Token')
 }
 

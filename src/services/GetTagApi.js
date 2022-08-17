@@ -9,5 +9,5 @@ const config = {
 };
 
 export default function getTag() {
-    return axios.get(URLApi + "tag", config)
+    return axios.get(URLApi + "tag", {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }

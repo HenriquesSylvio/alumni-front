@@ -10,5 +10,5 @@ const config = {
 
 export function addPost(credentials) {
     return axios
-        .post(URLApi + "post", credentials, config);
+        .post(URLApi + "post", credentials, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
 }
