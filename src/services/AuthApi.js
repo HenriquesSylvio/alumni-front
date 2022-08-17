@@ -21,7 +21,7 @@ export function login(credentials) {
         .then(response => response.data.token)
         .then(token => {
             // console.log(token);
-            addItem('Token', token);
+            addItem('Token',token);
             return true;
         });
 }

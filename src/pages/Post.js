@@ -119,7 +119,7 @@ export default function Post() {
         }
         idActivePost = params.id
         getData();
-
+        console.log(activeProfile);
         window.addEventListener('scroll', handleScroll)
         return () => {
             window.removeEventListener('scroll', handleScroll);

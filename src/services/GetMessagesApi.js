@@ -10,5 +10,5 @@ const config = {
 };
 
 export default function getMessages(idConversation) {
-    return axios.get(URLApi + `message/${idConversation}`, config)
+    return axios.get(URLApi + `message/${idConversation}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }

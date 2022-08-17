@@ -11,5 +11,5 @@ const config = {
 
 export function deleteLikePost(idPost) {
     return axios
-        .delete(`${URLApi}post/like/${idPost}`, config);
+        .delete(`${URLApi}post/like/${idPost}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
 }

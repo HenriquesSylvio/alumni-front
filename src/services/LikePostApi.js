@@ -11,5 +11,5 @@ const config = {
 
 export function postLikePost(idPost) {
     return axios
-        .post(`${URLApi}post/like`, {post: {id: idPost}}, config);
+        .post(`${URLApi}post/like`, {post: {id: idPost}}, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
 }

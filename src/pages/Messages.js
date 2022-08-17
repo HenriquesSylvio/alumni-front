@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
-import {Button, Divider, ListItemAvatar, Paper} from "@mui/material";
+import {Button, CircularProgress, Divider, ListItemAvatar, Paper} from "@mui/material";
 import ConversationListItem from "../components/Message/ConversationListItem";
 import {useContext, useEffect, useState} from "react";
 import getConversation from "../services/GetConversationApi";
@@ -21,19 +21,21 @@ import TextField from "@mui/material/TextField";
 import {sendMessage} from "../services/SendMessageApi";
 import SelectedConversationIndex from "../contexts/SelectedConversationIndex";
 import getMessages from "../services/GetMessagesApi";
+import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
 
 export default function Messages() {
     const [conversations, setConversations] = useState('');
     const [repeater, setRepeater] = useState(0)
     const {messageConversation, setMessageConversation} = useContext(MessageConversation);
     const {selectedConversationIndex, setSelectedConversationIndex} = useContext(SelectedConversationIndex);
+    const {activeProfile} = useContext(ActiveConnectedUser);
     const [values, setValues] = useState({
         content: "",
     });
-
+    let test = activeProfile
     const getConversations = async () => {
         const response = await getConversation()
-        console.log(response);
+        // console.log(response);
         setConversations(response.data.conversations)
     };
 
@@ -46,6 +48,7 @@ export default function Messages() {
     const handleSubmit = async event => {
         event.preventDefault();
         await sendMessage(values.content, selectedConversationIndex)
+        console.log("noice")
     };
 
     const handleChange = ({currentTarget}) => {
@@ -54,17 +57,24 @@ export default function Messages() {
         setValues({...values, [name]: value})
     }
 
+    // useEffect( () => {
+    //     const getData = async () => {
+    //         await getConversations();
+    //         await getAllMessage();
+    //     }
+    //     getData();
+    //     // console.log(test)
+    //
+    //     setTimeout(() => setRepeater(prevState=>prevState+1), 2000);
+    // }, [repeater, selectedConversationIndex]);
     useEffect( () => {
         const getData = async () => {
             await getConversations();
             await getAllMessage();
         }
         getData();
-
-
-        setTimeout(() => setRepeater(prevState=>prevState+1), 2000);
-    }, [repeater, selectedConversationIndex]);
-
+        // console.log(test)
+    }, []);
     return (
         <Box paddingTop={1}>
             <Grid container>
@@ -93,7 +103,13 @@ export default function Messages() {
                         {messageConversation.length ?
                             messageConversation.map(
                                 message =>
+                                (message.idUser === activeProfile.id && (
                                     <MessageRight
+                                        message={message.content}
+                                    />
+                                ))
+                                ||
+                                    <MessageLeft
                                         message={message.content}
                                     />
                             ): null

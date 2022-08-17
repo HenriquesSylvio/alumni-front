@@ -11,5 +11,5 @@ const config = {
 
 export function deleteParticipateEvent(idEvent) {
     return axios
-        .delete(`${URLApi}event/participate/${idEvent}`, config);
+        .delete(`${URLApi}event/participate/${idEvent}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
 }

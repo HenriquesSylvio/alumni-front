@@ -26,6 +26,8 @@ export default function SignIn() {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = React.useState(false);
 
+    let authenticated = false;
+
     function handleClick() {
         setErrors(validate(values));
     }
@@ -48,9 +50,14 @@ export default function SignIn() {
         setActiveProfile(response.data)
 
     }
+
     useEffect( () => {
-        getItem('Token');
-    }, [isAuthenticated]);
+        if(authenticated)
+        {
+            console.log('test2')
+            navigate('/feed', { replace: true })
+        }
+    }, [navigate, isAuthenticated]);
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -62,13 +69,17 @@ export default function SignIn() {
             try {
                 console.log(values)
                 const response = await login(values);
-                await setIsAuthenticated(response);
+                console.log("teteette")
+                console.log(response)
+                authenticated = response
+                setIsAuthenticated(response);
                 // console.log(`Bearer ${getItem('Token')}`);
                 // navigate(0);
-                navigate('/feed')
-
-                await getMyProfile()
+                navigate('/feed', { replace: true })
+                // window.location.reload(false);
                 toast.success('Bienvenue ! 😄')
+                await getMyProfile()
+
             } catch ({response}) {
                 toast.error(response.data.erreur + ' 😃')
                 setLoading(false);
@@ -76,6 +87,28 @@ export default function SignIn() {
             }
          }
     };
+
+    // const handleSubmit = async event => {
+    //     event.preventDefault();
+    //
+    //     try {
+    //         const response = await login(values);
+    //         setIsAuthenticated(response);
+    //         await getMyProfile();
+    //         navigate('/feed', { replace: true })
+    //         toast.success('Bienvenue ! 😄')
+    //     } catch ({response}) {
+    //         toast.error("L'e-mail ou le mot de passe est incorrect. Veuillez réessayer ! 😃")
+    //         console.log(response)
+    //     }
+    // }
+    //
+    // useEffect(() => {
+    //     if(isAuthenticated)
+    //     {
+    //         navigate('/feed', { replace: true })
+    //     }
+    // }, [navigate, isAuthenticated]);
 
     return (
         <ThemeProvider theme={theme}>

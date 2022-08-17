@@ -9,5 +9,5 @@ const config = {
 };
 
 export default function getConversation() {
-    return axios.get(`${URLApi}message/conversation`, config)
+    return axios.get(`${URLApi}message/conversation`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }
