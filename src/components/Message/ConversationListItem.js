@@ -26,10 +26,10 @@ export default function ConversationListItem({conversation}) {
 
     const handleListItemClick = async (event, index) => {
         setSelectedConversationIndex(index);
-        const response = await getMessages(index);
-        console.log(response.data.message)
-        setMessageConversation(response.data.messages);
-        console.log(messageConversation);
+        // const response = await getMessages(index);
+        // console.log(response.data.message)
+        // setMessageConversation(response.data.messages);
+        // console.log(messageConversation);
     };
 
     return (

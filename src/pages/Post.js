@@ -19,6 +19,7 @@ import DetailUser from "../components/Profile/DetailUser";
 import getProfile from "../services/ProfileApi";
 // import OpenModalAddPost from "../contexts/OpenModalAddComment";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
+import {getItem} from "../services/LocaleStorage";
 // import { useParams } from "react-router-dom";
 
 const styleBox = {
@@ -50,7 +51,7 @@ export default function Post() {
     const {isOpenAddComment, setIsOpenAddComment} = useContext(OpenModalAddComment);
     const {idPost, setIdPost} = useContext(ResponseIdPost);
     const [author, setAuthor] = useState('');
-    const {activeProfile} = useContext(ActiveConnectedUser);
+    const [activeProfile] = useState(JSON.parse(getItem('Profile')));
     const [loadingComment, setLoadingComment] = useState(false);
 
 
@@ -70,7 +71,7 @@ export default function Post() {
         setLoadingComment(true);
         try{
             // console.log("teeest")
-            console.log(idActivePost)
+
             // console.log(params.id)
             // console.log("teeest")
             // console.log(idPost)

@@ -22,17 +22,18 @@ import {sendMessage} from "../services/SendMessageApi";
 import SelectedConversationIndex from "../contexts/SelectedConversationIndex";
 import getMessages from "../services/GetMessagesApi";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
+import {getItem} from "../services/LocaleStorage";
 
 export default function Messages() {
     const [conversations, setConversations] = useState('');
     const [repeater, setRepeater] = useState(0)
     const {messageConversation, setMessageConversation} = useContext(MessageConversation);
     const {selectedConversationIndex, setSelectedConversationIndex} = useContext(SelectedConversationIndex);
-    const {activeProfile} = useContext(ActiveConnectedUser);
+    const [activeProfile] = useState(JSON.parse(getItem('Profile')));
     const [values, setValues] = useState({
         content: "",
     });
-    let test = activeProfile
+    let test = activeProfile.id
     const getConversations = async () => {
         const response = await getConversation()
         // console.log(response);
@@ -48,7 +49,7 @@ export default function Messages() {
     const handleSubmit = async event => {
         event.preventDefault();
         await sendMessage(values.content, selectedConversationIndex)
-        console.log("noice")
+        console.log(test)
     };
 
     const handleChange = ({currentTarget}) => {
@@ -57,16 +58,21 @@ export default function Messages() {
         setValues({...values, [name]: value})
     }
 
-    // useEffect( () => {
-    //     const getData = async () => {
-    //         await getConversations();
-    //         await getAllMessage();
-    //     }
-    //     getData();
-    //     // console.log(test)
-    //
-    //     setTimeout(() => setRepeater(prevState=>prevState+1), 2000);
-    // }, [repeater, selectedConversationIndex]);
+    useEffect( () => {
+        const getData = async () => {
+            await getConversations();
+            await getAllMessage();
+        }
+        getData();
+
+        setTimeout(() => setRepeater(prevState=>prevState+1), 5000);
+    }, [repeater]);
+
+    useEffect( () => {
+        const element = document.getElementById('chat');
+        element.scrollTop = element.scrollHeight;
+    }, [messageConversation]);
+
     useEffect( () => {
         const getData = async () => {
             await getConversations();
@@ -74,7 +80,7 @@ export default function Messages() {
         }
         getData();
         // console.log(test)
-    }, []);
+    }, [selectedConversationIndex]);
     return (
         <Box paddingTop={1}>
             <Grid container>
@@ -93,13 +99,7 @@ export default function Messages() {
                     </Paper>
                 </Grid>
                 <Grid item xs>
-                    <Paper style={{boxShadow: "none", height:'86vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
-                        {/*<MessageLeft*/}
-                        {/*    message="Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!!"*/}
-                        {/*/>*/}
-                        {/*<MessageRight*/}
-                        {/*    message="Ceci est un test !!! Ceci ests un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!! Ceci est un test !!!"*/}
-                        {/*/>*/}
+                    <Paper id="chat" style={{boxShadow: "none", height:'86vh', display:'flex', flexDirection:'column',overflow: "scroll"}}>
                         {messageConversation.length ?
                             messageConversation.map(
                                 message =>

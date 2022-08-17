@@ -15,7 +15,7 @@ import {login} from "../../../../../services/AuthApi";
 import Auth from "../../../../../contexts/Auth";
 import getProfile from "../../../../../services/ProfileApi";
 import ActiveConnectedUser from "../../../../../contexts/ActiveConnectedUser";
-import {getItem} from "../../../../../services/LocaleStorage";
+import {addItem, getItem} from "../../../../../services/LocaleStorage";
 
 const theme = createTheme();
 
@@ -46,8 +46,9 @@ export default function SignIn() {
 
     const getMyProfile = async () => {
         const response = await getProfile()
-        console.log(response)
-        setActiveProfile(response.data)
+        console.log(response.data)
+        addItem('Profile',  JSON.stringify(response.data))
+        console.log(getItem('Profile'))
 
     }
 

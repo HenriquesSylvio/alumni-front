@@ -27,6 +27,7 @@ export function login(credentials) {
 }
 
 export function logout() {
+    removeItem('Profile')
     removeItem('Token')
 }
 

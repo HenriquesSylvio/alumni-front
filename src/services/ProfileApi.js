@@ -9,6 +9,5 @@ const config = {
 };
 
 export default function getProfile(id = 'me') {
-    console.log(`Bearer ${getItem('Token')}`);
     return axios.get(`${URLApi}user/${id}`, {headers: {Authorization: `Bearer ${getItem('Token')}`}})
 }
