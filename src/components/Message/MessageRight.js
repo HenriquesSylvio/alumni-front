@@ -45,7 +45,7 @@ export default function MessageRight({message, firstName, lastName}) {
         <Box display="flex" justifyContent="flex-end">
             <MessageOrange>
                 <Box>
-                    <Typography padding="0" margin="0">{message}</Typography>
+                    <Typography padding="0" margin="0" style={{ wordWrap: "break-word" }}>{message}</Typography>
                 </Box>
             </MessageOrange>
         </Box>

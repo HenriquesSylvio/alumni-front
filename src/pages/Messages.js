@@ -35,18 +35,26 @@ export default function Messages() {
     const {selectedConversationIndex, setSelectedConversationIndex} = useContext(SelectedConversationIndex);
     const [activeProfile] = useState(JSON.parse(getItem('Profile')));
     const [hiddenConversation, setHiddenConversation] = useState(false);
-    let gettingMesage = false;
+    // const [hiddenMessage, setHiddenMessage] = useState(false);
+    let getLastConversation = 0;
     const [values, setValues] = useState({
         content: "",
     });
     const [content, setContent] = useState();
+
     const getConversations = async () => {
         const response = await getConversation()
-        // console.log(response);
+        getLastConversation = response.data.conversations[0].id;
+        console.log(response.data.conversations[0].id);
         setConversations(response.data.conversations)
     };
 
     const getAllMessage = async () => {
+        console.log("teeeest")
+        console.log(messageConversation.length)
+        if (messageConversation.length === 0) {
+            setSelectedConversationIndex(conversations[0].id)
+        }
         const response = await getMessages(selectedConversationIndex)
         console.log(response);
         setMessageConversation(response.data.messages)
@@ -78,6 +86,10 @@ export default function Messages() {
 
         setTimeout(() => setRepeater(prevState=>prevState+1), 5000);
     }, [repeater]);
+
+    useEffect( () => {
+        console.log("ceci est un trrest")
+    }, []);
 
     const handleListItemClick = async (event, index) => {
         setSelectedConversationIndex(index);
@@ -131,6 +143,7 @@ export default function Messages() {
                         </List>
                     </Paper>
                 </Grid>
+
                 <Grid item hidden={hiddenConversation} sx={{ display: { md: 'none' }}}>
                     <Paper style={{boxShadow: "none", height:'90vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
                         <List style={{height: '100%', overflow: 'auto'}}>
@@ -169,8 +182,46 @@ export default function Messages() {
                     </Paper>
                 </Grid>
 
-                <Grid item xs  hidden={!hiddenConversation}>
-                    <IconButton onClick={invisibleConversation} sx={{ display: { xs: 'block', md: 'none' }}}>
+                <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
+                    <Paper id="chat" style={{boxShadow: "none", height:'84vh', display:'flex', flexDirection:'column',overflow: "scroll"}}>
+                        {messageConversation.length ?
+                            messageConversation.map(
+                                message =>
+                                    (message.idUser === activeProfile.id && (
+                                        <MessageRight
+                                            message={message.content}
+                                        />
+                                    ))
+                                    ||
+                                    <MessageLeft
+                                        message={message.content}
+                                    />
+                            ): null
+                        }
+                    </Paper>
+                    <Box onSubmit={handleSubmit} sx={{
+                        display: "flex",
+                        width: "100%",
+                        paddingBottom: 0
+                    }}>
+                        <TextField
+                            value={content}
+                            sx={{width: "100%"}}
+                            id="content"
+                            label="Recherche"
+                            name="content"
+                            autoComplete="content"
+                            onChange={handleChange}
+                        />
+                        <Button id="content-message" variant="contained" color="primary" onClick={handleSubmit}>
+                            <SendIcon />
+                        </Button>
+                    </Box>
+                </Grid>
+            {/*</Grid>*/}
+
+                <Grid item xs  hidden={!hiddenConversation} sx={{ display: { md: 'none' }}}>
+                    <IconButton onClick={invisibleConversation}>
                         <ArrowBackIcon />
                     </IconButton>
                     <Paper id="chat" style={{boxShadow: "none", height:'84vh', display:'flex', flexDirection:'column',overflow: "scroll"}}>
