@@ -11,5 +11,5 @@ const config = {
 
 export function postSubscribe(idUser) {
     return axios
-        .post(`${URLApi}user/subscribe`, {subscriber: {id: idUser}}, config);
+        .post(`${URLApi}user/subscribe`, {subscriber: {id: idUser}}, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
 }

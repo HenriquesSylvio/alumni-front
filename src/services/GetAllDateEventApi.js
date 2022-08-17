@@ -9,5 +9,5 @@ const config = {
 };
 
 export default function getAllDateEvent() {
-    return axios.get(`${URLApi}event/date`, config)
+    return axios.get(`${URLApi}event/date`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }

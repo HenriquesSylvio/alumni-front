@@ -14,9 +14,10 @@ import { CalendarPicker } from '@mui/x-date-pickers'
 import { PickersDay, PickersDayProps } from "@mui/x-date-pickers/PickersDay";
 import Moment from 'moment';
 import getAllDateEvent from "../services/GetAllDateEventApi";
+import {getItem} from "../services/LocaleStorage";
 
 export default function Event() {
-    const {activeProfile} = useContext(ActiveConnectedUser);
+    const [activeProfile] = useState(JSON.parse(getItem('Profile')));
     const [canInterateEvent, setCanInterateEvent] = useState(false);
     const [loadingEvent, setLoadingEvent] = useState(false);
     const [loadingByDate, setLoadingByDate] = useState(false);

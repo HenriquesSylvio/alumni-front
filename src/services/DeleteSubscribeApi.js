@@ -10,5 +10,5 @@ const config = {
 
 export function deleteSubscribe(idUser) {
     return axios
-        .delete(`${URLApi}user/subscribe/${idUser}`, config);
+        .delete(`${URLApi}user/subscribe/${idUser}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
 }

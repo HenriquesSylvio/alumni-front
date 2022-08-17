@@ -9,5 +9,5 @@ const config = {
 };
 
 export default function getProfile(id = 'me') {
-    return axios.get(`${URLApi}user/${id}`, config)
+    return axios.get(`${URLApi}user/${id}`, {headers: {Authorization: `Bearer ${getItem('Token')}`}})
 }

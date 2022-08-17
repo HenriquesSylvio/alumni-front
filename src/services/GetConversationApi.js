@@ -8,6 +8,6 @@ const config = {
     headers: { Authorization: `Bearer ${getItem('Token')}` }
 };
 
-export default function getTag() {
-    return axios.get(URLApi + "tag", {headers: { Authorization: `Bearer ${getItem('Token')}` }})
+export default function getConversation() {
+    return axios.get(`${URLApi}message/conversation`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }

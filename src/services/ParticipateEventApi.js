@@ -11,5 +11,5 @@ const config = {
 
 export function postParticipateEvent(idEvent) {
     return axios
-        .post(`${URLApi}event/participate`, {event: {id: idEvent}}, config);
+        .post(`${URLApi}event/participate`, {event: {id: idEvent}}, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
 }

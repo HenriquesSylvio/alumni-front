@@ -17,5 +17,5 @@ export default function getEvents(pageNumber = 1, date, keyword) {
     if (keyword) {
         url = `${url}&keyword=${keyword}`
     }
-    return axios.get(url, config)
+    return axios.get(url, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }

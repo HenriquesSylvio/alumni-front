@@ -10,5 +10,5 @@ const config = {
 };
 
 export default function getPosts(pageNumber = 1, keyword) {
-    return axios.get(URLApi + `post?current_page=${pageNumber}&keyword=${keyword}`, config)
+    return axios.get(URLApi + `post?current_page=${pageNumber}&keyword=${keyword}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }

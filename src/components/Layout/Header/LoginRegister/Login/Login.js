@@ -15,16 +15,20 @@ import {login} from "../../../../../services/AuthApi";
 import Auth from "../../../../../contexts/Auth";
 import getProfile from "../../../../../services/ProfileApi";
 import ActiveConnectedUser from "../../../../../contexts/ActiveConnectedUser";
-import {getItem} from "../../../../../services/LocaleStorage";
+import {addItem, getItem} from "../../../../../services/LocaleStorage";
+import Admin from "../../../../../contexts/Admin";
 
 const theme = createTheme();
 
 export default function SignIn() {
     const navigate = useNavigate();
-    const {setIsAuthenticated} = useContext(Auth);
+    const {isAuthenticated,setIsAuthenticated} = useContext(Auth);
+    const {setIsAdmin} = useContext(Admin);
     const {setActiveProfile} = useContext(ActiveConnectedUser)
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = React.useState(false);
+
+    let authenticated = false;
 
     function handleClick() {
         setErrors(validate(values));
@@ -44,10 +48,16 @@ export default function SignIn() {
 
     const getMyProfile = async () => {
         const response = await getProfile()
-        console.log(response)
-        setActiveProfile(response.data)
-
+        console.log("Admin ? ")
+        addItem('Profile',  JSON.stringify(response.data))
     }
+
+    useEffect( () => {
+        if(authenticated)
+        {
+            navigate('/feed', { replace: true })
+        }
+    }, [navigate, isAuthenticated]);
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -59,11 +69,16 @@ export default function SignIn() {
             try {
                 console.log(values)
                 const response = await login(values);
-                await setIsAuthenticated(response);
-                console.log(`Bearer ${getItem('Token')}`);
-                getMyProfile()
-                navigate('/feed')
+                console.log("teteette")
+                console.log(response)
+                authenticated = response
+                setIsAuthenticated(response);
+                const token = JSON.parse(atob(getItem('Token').split('.')[1])).roles
+                setIsAdmin(token.some(item => item === 'ROLE_ADMIN'));
+                navigate('/feed', { replace: true })
                 toast.success('Bienvenue ! 😄')
+                await getMyProfile()
+
             } catch ({response}) {
                 toast.error(response.data.erreur + ' 😃')
                 setLoading(false);

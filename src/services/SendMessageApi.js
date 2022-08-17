@@ -8,8 +8,8 @@ const config = {
     headers: {Authorization: `Bearer ${getItem('Token')}`}
 };
 
-export function addEvent(credentials) {
-    const current = new Date();
+export function sendMessage(content, received_by) {
+    console.log({content : content, received_by : {id: received_by}});
     return axios
-        .post(`${URLApi}event`, credentials, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
-        }
+        .post(`${URLApi}message`, {content : content, received_by : {id: received_by}}, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
+}

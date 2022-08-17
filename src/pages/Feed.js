@@ -1,14 +1,20 @@
 import {Stack} from '@mui/material';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import EventFeed from '../components/EventFeed/EventFeed';
 import MainFeed from '../components/Post/MainFeed';
 import getFeed from "../services/FeedApi";
 import ButtonAddPost from "../components/Post/ButtonAddPost";
+import {useNavigate} from "react-router-dom";
+import OpenModalAddComment from "../contexts/OpenModalAddComment";
+import FirstLoad from "../contexts/FirstLoad";
 
 export default function Feed() {
     let page = 1;
+    const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     let newPosts = [];
+    // let firstLoad = true;
+    const {firstLoad, setFirstLoad} = useContext(FirstLoad);
 
     const getPostFromFeed = async () => {
         const response = await getFeed(page);
@@ -29,12 +35,22 @@ export default function Feed() {
 
     useEffect(() => {
         const getData = async () => {
-            await getPostFromFeed();
+            // try {
+                await getPostFromFeed();
+            // } catch  {
+            //     navigate(0)
+            // }
+
         }
+        // if (firstLoad) {
+        //     setFirstLoad(false)
+        //     console.log("noice")
+        //     navigate(0)
+        // }
         getData();
 
         window.addEventListener('scroll', handleScroll)
-    }, []);
+    }, [firstLoad]);
 
         return (
             <div style={{display: "flex"}}>

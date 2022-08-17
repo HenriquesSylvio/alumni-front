@@ -10,5 +10,5 @@ const config = {
 };
 
 export default function getEvents(pageNumber = 1, keyword) {
-    return axios.get(URLApi + `event?current_page=${pageNumber}&keyword=${keyword}`, config)
+    return axios.get(URLApi + `event?current_page=${pageNumber}&keyword=${keyword}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }
