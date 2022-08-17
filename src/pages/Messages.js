@@ -23,6 +23,10 @@ import SelectedConversationIndex from "../contexts/SelectedConversationIndex";
 import getMessages from "../services/GetMessagesApi";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
 import {getItem} from "../services/LocaleStorage";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function Messages() {
     const [conversations, setConversations] = useState('');
@@ -30,10 +34,12 @@ export default function Messages() {
     const {messageConversation, setMessageConversation} = useContext(MessageConversation);
     const {selectedConversationIndex, setSelectedConversationIndex} = useContext(SelectedConversationIndex);
     const [activeProfile] = useState(JSON.parse(getItem('Profile')));
+    const [hiddenConversation, setHiddenConversation] = useState(false);
+    let gettingMesage = false;
     const [values, setValues] = useState({
         content: "",
     });
-    let test = activeProfile.id
+    const [content, setContent] = useState();
     const getConversations = async () => {
         const response = await getConversation()
         // console.log(response);
@@ -48,14 +54,19 @@ export default function Messages() {
 
     const handleSubmit = async event => {
         event.preventDefault();
+        setContent("");
         await sendMessage(values.content, selectedConversationIndex)
-        console.log(test)
     };
 
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget;
 
         setValues({...values, [name]: value})
+        setContent(value);
+    }
+
+    const invisibleConversation = () => {
+        setHiddenConversation(false)
     }
 
     useEffect( () => {
@@ -68,38 +79,101 @@ export default function Messages() {
         setTimeout(() => setRepeater(prevState=>prevState+1), 5000);
     }, [repeater]);
 
-    useEffect( () => {
+    const handleListItemClick = async (event, index) => {
+        setSelectedConversationIndex(index);
+        setHiddenConversation(true)
+        await getAllMessage();
+        await scrollBarGoDown();
+    };
+
+    const scrollBarGoDown = () => {
         const element = document.getElementById('chat');
         element.scrollTop = element.scrollHeight;
-    }, [messageConversation]);
+    };
 
-    useEffect( () => {
-        const getData = async () => {
-            await getConversations();
-            await getAllMessage();
-        }
-        getData();
-        // console.log(test)
-    }, [selectedConversationIndex]);
     return (
         <Box paddingTop={1}>
             <Grid container>
-                <Grid item style={{width:"375px"}}>
-                    <Paper style={{boxShadow: "none", height:'92vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
+                <Grid item style={{width:"375px"}} sx={{ display: { xs: 'none', md: 'block' }}}>
+                    <Paper style={{boxShadow: "none", height:'90vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
                         <List style={{height: '100%', overflow: 'auto'}}>
                             {conversations.length ?
                                 conversations.map(
                                     conversation =>
                                         <Box marginBottom={2} >
-                                            <ConversationListItem conversation={conversation}/>
+                                            <ListItemButton
+                                                selected={selectedConversationIndex === conversation.id}
+                                                onClick={(event) => handleListItemClick(event, conversation.id)}
+                                            >
+                                                <ListItemAvatar>
+                                                    <Avatar src={conversation.urlProfilePicture} />
+                                                </ListItemAvatar>
+                                                <ListItemText
+                                                    primary= {conversation.lastName + ' ' + conversation.firstName}
+                                                    secondary={
+                                                        <React.Fragment>
+                                                            <Typography
+                                                                sx={{ display: 'inline' }}
+                                                                component="span"
+                                                                variant="body2"
+                                                                color="text.primary"
+                                                            >
+                                                                {conversation.createAt}
+                                                            </Typography>
+                                                            {" — " + conversation.content}
+                                                        </React.Fragment>
+                                                    }
+                                                />
+                                            </ListItemButton>
                                         </Box>
                                 ): null
                             }
                         </List>
                     </Paper>
                 </Grid>
-                <Grid item xs>
-                    <Paper id="chat" style={{boxShadow: "none", height:'86vh', display:'flex', flexDirection:'column',overflow: "scroll"}}>
+                <Grid item hidden={hiddenConversation} sx={{ display: { md: 'none' }}}>
+                    <Paper style={{boxShadow: "none", height:'90vh', display:'flex', flexDirection:'column',overflow: 'auto'}}>
+                        <List style={{height: '100%', overflow: 'auto'}}>
+                            {conversations.length ?
+                                conversations.map(
+                                    conversation =>
+                                        <Box marginBottom={2} >
+                                            <ListItemButton
+                                                    selected={selectedConversationIndex === conversation.id}
+                                                    onClick={(event) => handleListItemClick(event, conversation.id)}
+                                                >
+                                                    <ListItemAvatar>
+                                                        <Avatar src={conversation.urlProfilePicture} />
+                                                    </ListItemAvatar>
+                                                    <ListItemText
+                                                        primary= {conversation.lastName + ' ' + conversation.firstName}
+                                                        secondary={
+                                                            <React.Fragment>
+                                                                <Typography
+                                                                    sx={{ display: 'inline' }}
+                                                                    component="span"
+                                                                    variant="body2"
+                                                                    color="text.primary"
+                                                                >
+                                                                    {conversation.createAt}
+                                                                </Typography>
+                                                                {" — " + conversation.content}
+                                                            </React.Fragment>
+                                                        }
+                                                    />
+                                                </ListItemButton>
+                                        </Box>
+                                ): null
+                            }
+                        </List>
+                    </Paper>
+                </Grid>
+
+                <Grid item xs  hidden={!hiddenConversation}>
+                    <IconButton onClick={invisibleConversation} sx={{ display: { xs: 'block', md: 'none' }}}>
+                        <ArrowBackIcon />
+                    </IconButton>
+                    <Paper id="chat" style={{boxShadow: "none", height:'84vh', display:'flex', flexDirection:'column',overflow: "scroll"}}>
                         {messageConversation.length ?
                             messageConversation.map(
                                 message =>
@@ -117,21 +191,19 @@ export default function Messages() {
                     </Paper>
                     <Box onSubmit={handleSubmit} sx={{
                         display: "flex",
-                        // justifyContent: "center",
                         width: "100%",
-                        // margin: `${theme.spacing(0)} auto`
                         paddingBottom: 0
                     }}>
                         <TextField
+                            value={content}
                             sx={{width: "100%"}}
                             id="content"
                             label="Recherche"
                             name="content"
                             autoComplete="content"
                             onChange={handleChange}
-                            //margin="normal"
                         />
-                        <Button variant="contained" color="primary" onClick={handleSubmit}>
+                        <Button id="content-message" variant="contained" color="primary" onClick={handleSubmit}>
                             <SendIcon />
                         </Button>
                     </Box>
