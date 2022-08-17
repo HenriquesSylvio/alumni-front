@@ -16,12 +16,14 @@ import Auth from "../../../../../contexts/Auth";
 import getProfile from "../../../../../services/ProfileApi";
 import ActiveConnectedUser from "../../../../../contexts/ActiveConnectedUser";
 import {addItem, getItem} from "../../../../../services/LocaleStorage";
+import Admin from "../../../../../contexts/Admin";
 
 const theme = createTheme();
 
 export default function SignIn() {
     const navigate = useNavigate();
     const {isAuthenticated,setIsAuthenticated} = useContext(Auth);
+    const {setIsAdmin} = useContext(Admin);
     const {setActiveProfile} = useContext(ActiveConnectedUser)
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = React.useState(false);
@@ -46,16 +48,13 @@ export default function SignIn() {
 
     const getMyProfile = async () => {
         const response = await getProfile()
-        console.log(response.data)
+        console.log("Admin ? ")
         addItem('Profile',  JSON.stringify(response.data))
-        console.log(getItem('Profile'))
-
     }
 
     useEffect( () => {
         if(authenticated)
         {
-            console.log('test2')
             navigate('/feed', { replace: true })
         }
     }, [navigate, isAuthenticated]);
@@ -74,10 +73,9 @@ export default function SignIn() {
                 console.log(response)
                 authenticated = response
                 setIsAuthenticated(response);
-                // console.log(`Bearer ${getItem('Token')}`);
-                // navigate(0);
+                const token = JSON.parse(atob(getItem('Token').split('.')[1])).roles
+                setIsAdmin(token.some(item => item === 'ROLE_ADMIN'));
                 navigate('/feed', { replace: true })
-                // window.location.reload(false);
                 toast.success('Bienvenue ! 😄')
                 await getMyProfile()
 
@@ -88,28 +86,6 @@ export default function SignIn() {
             }
          }
     };
-
-    // const handleSubmit = async event => {
-    //     event.preventDefault();
-    //
-    //     try {
-    //         const response = await login(values);
-    //         setIsAuthenticated(response);
-    //         await getMyProfile();
-    //         navigate('/feed', { replace: true })
-    //         toast.success('Bienvenue ! 😄')
-    //     } catch ({response}) {
-    //         toast.error("L'e-mail ou le mot de passe est incorrect. Veuillez réessayer ! 😃")
-    //         console.log(response)
-    //     }
-    // }
-    //
-    // useEffect(() => {
-    //     if(isAuthenticated)
-    //     {
-    //         navigate('/feed', { replace: true })
-    //     }
-    // }, [navigate, isAuthenticated]);
 
     return (
         <ThemeProvider theme={theme}>

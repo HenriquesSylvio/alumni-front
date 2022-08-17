@@ -84,7 +84,7 @@ export default function Messages() {
         }
         getData();
 
-        setTimeout(() => setRepeater(prevState=>prevState+1), 5000);
+        setTimeout(() => setRepeater(prevState=>prevState+1), 2000);
     }, [repeater]);
 
     useEffect( () => {
@@ -181,6 +181,7 @@ export default function Messages() {
                         </List>
                     </Paper>
                 </Grid>
+
 
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                     <Paper id="chat" style={{boxShadow: "none", height:'84vh', display:'flex', flexDirection:'column',overflow: "scroll"}}>
