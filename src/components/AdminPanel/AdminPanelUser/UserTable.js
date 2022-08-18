@@ -13,6 +13,7 @@ import {useEffect} from "react";
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from "@mui/material/IconButton";
+import {deleteUser} from "../../../services/DeleteUserApi";
 
 const columns = [
     { id: 'lastName', label: 'Nom', minWidth: 100 },
@@ -67,9 +68,10 @@ export default function StickyHeadTable() {
     //     console.log(users)
     // };
 
-    const handleDelete = (index,e) => {
+    const handleDelete = async (index, idUser) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
             setUsers(users.filter((v, i) => i !== index))
+            await deleteUser(idUser);
         }
     }
 
@@ -119,7 +121,7 @@ export default function StickyHeadTable() {
                                                 <CheckIcon color="success"/>
                                             </IconButton>
                                             {/*<IconButton onClick={(e) => deleteUser(user.id, index)}>*/}
-                                            <IconButton onClick={e => handleDelete(index, e)}>
+                                            <IconButton onClick={e => handleDelete(index, user.id)}>
                                                 <ClearIcon color="error"/>
                                             </IconButton>
 
