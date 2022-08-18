@@ -32,20 +32,19 @@ const columns = [
 ];
 
 
-export default function StickyHeadTable() {
+export default function WaitingUserTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [users, setUsers] = React.useState({});
 
     useEffect(() => {
         const getData = async () => {
-            await getPostFromFeed();
+            await getUsers();
         }
         getData();
-        console.log('sheeeeesh')
     }, []);
 
-    const getPostFromFeed = async () => {
+    const getUsers = async () => {
         const response = await getUserWaitingForValidation();
         console.log(response.data.users);
         setUsers(response.data.users);
@@ -128,7 +127,6 @@ export default function StickyHeadTable() {
                                             <IconButton onClick={e => handleAccept(index, user.id)}>
                                                 <CheckIcon color="success"/>
                                             </IconButton>
-                                            {/*<IconButton onClick={(e) => deleteUser(user.id, index)}>*/}
                                             <IconButton onClick={e => handleDelete(index, user.id)}>
                                                 <ClearIcon color="error"/>
                                             </IconButton>

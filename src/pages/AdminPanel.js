@@ -5,7 +5,8 @@ import TabPanel from "@mui/lab/TabPanel";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import React from 'react';
-import UserTable from "../components/AdminPanel/AdminPanelUser/UserTable";
+import WaitingUserTable from "../components/AdminPanel/AdminPanelUser/WaitingUserTable";
+import ActiveUserTable from "../components/AdminPanel/AdminPanelUser/ActiveUserTable";
 
 
 export default function AdminPanel() {
@@ -21,11 +22,15 @@ export default function AdminPanel() {
             <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
-                        <Tab label="Utilisateur" value="1" />
+                        <Tab label="Utilisateurs en attente" value="1" />
+                        <Tab label="Utilisateurs actifs" value="2" />
                     </TabList>
                 </Box>
                 <TabPanel value="1">
-                    <UserTable />
+                    <WaitingUserTable />
+                </TabPanel>
+                <TabPanel value="2">
+                    <ActiveUserTable />
                 </TabPanel>
             </TabContext>
         </Box>
