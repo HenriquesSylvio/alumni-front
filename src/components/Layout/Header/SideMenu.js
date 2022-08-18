@@ -15,11 +15,24 @@ import CelebrationIcon from "@mui/icons-material/Celebration";
 import WorkIcon from "@mui/icons-material/Work";
 import MessageIcon from "@mui/icons-material/Message";
 import {useNavigate} from "react-router-dom";
+import {Divider} from "@mui/material";
+import Auth from "../../../contexts/Auth";
+import Admin from "../../../contexts/Admin";
+import {useContext, useState} from "react";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import {getItem} from "../../../services/LocaleStorage";
 
 export default function SideMenu() {
     const [state, setState] = React.useState({
         left: false,
     });
+    const {isAdmin} = useContext(Admin);
+    // const {token} = useState(JSON.parse(atob(getItem('Token').split('.')[1])).roles)
+    // const token =
+    // console.log(token.some(item => item === 'ROLE_ADMIN'));
+    // setIsAdmin(token.some(item => item === 'ROLE_ADMIN'));
+
     let  navigate = useNavigate();
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -74,6 +87,25 @@ export default function SideMenu() {
                         <ListItemText primary="Messages" />
                     </ListItemButton>
                 </ListItem>
+
+                {(JSON.parse(atob(getItem('Token').split('.')[1])).roles.some(item => item === 'ROLE_ADMIN') && (
+                    <>
+                        <Divider/>
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={() => navigate(`/AdminPanel`)}>
+                                <ListItemIcon>
+                                    <AdminPanelSettingsIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Panel admin" />
+                            </ListItemButton>
+                        </ListItem>
+                    </>
+
+                    ))
+                    ||
+                    null
+                }
+
             </List>
         </Box>
     );

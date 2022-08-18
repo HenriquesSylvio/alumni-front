@@ -48,7 +48,6 @@ export default function SignIn() {
 
     const getMyProfile = async () => {
         const response = await getProfile()
-        console.log("Admin ? ")
         addItem('Profile',  JSON.stringify(response.data))
     }
 
@@ -74,6 +73,7 @@ export default function SignIn() {
                 authenticated = response
                 setIsAuthenticated(response);
                 const token = JSON.parse(atob(getItem('Token').split('.')[1])).roles
+                console.log(token.some(item => item === 'ROLE_ADMIN'));
                 setIsAdmin(token.some(item => item === 'ROLE_ADMIN'));
                 navigate('/feed', { replace: true })
                 toast.success('Bienvenue ! 😄')

@@ -24,6 +24,8 @@ import MessageConversation from "./contexts/MessageConversation";
 import OpenModalSendMessage from "./contexts/OpenModalSendMessage";
 import FirstLoad from "./contexts/FirstLoad";
 import Admin from "./contexts/Admin";
+import AdminRoute from "./contexts/AdminRoute";
+import AdminPanel from "./pages/AdminPanel";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
@@ -64,6 +66,9 @@ const App = () => {
                                                                   <Route exact path='/events' element={<Event/>}/>
                                                                   <Route exact path='/messages' element={<Messages/>}/>
                                                                   <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
+                                                                  <Route element={<AdminRoute/>}>
+                                                                      <Route exact path='/adminPanel' element={<AdminPanel/>}/>
+                                                                  </Route>
                                                               </Route>
                                                           </Routes>
                                                           <ToastContainer />
