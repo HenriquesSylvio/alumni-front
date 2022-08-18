@@ -40,16 +40,13 @@ export default function StickyHeadTable() {
             await getPostFromFeed();
         }
         getData();
+        console.log('sheeeeesh')
     }, []);
 
     const getPostFromFeed = async () => {
         const response = await getUserWaitingForValidation();
-        // newPosts = response.data.data;
-        //
         console.log(response.data.users);
         setUsers(response.data.users);
-        // newPosts = response.data.posts.items;
-        // setUsers(newPosts)
     };
 
     const handleChangePage = (event, newPage) => {
@@ -60,6 +57,21 @@ export default function StickyHeadTable() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    // const deleteUser = async (idUser, indexRow) => {
+    //     if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+    //         const j = users[indexRow];
+    //     }
+    //     const j = delete users[indexRow]
+    //     console.log(j)
+    //     console.log(users)
+    // };
+
+    const handleDelete = (index,e) => {
+        if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+            setUsers(users.filter((v, i) => i !== index))
+        }
+    }
 
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -89,9 +101,9 @@ export default function StickyHeadTable() {
                         {users.length ?
                             users
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((user) => {
+                            .map((user, index) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={user.code}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={user.id}>
                                         {columns.map((column) => {
                                             const value = user[column.id];
                                             return (
@@ -106,7 +118,8 @@ export default function StickyHeadTable() {
                                             <IconButton>
                                                 <CheckIcon color="success"/>
                                             </IconButton>
-                                            <IconButton>
+                                            {/*<IconButton onClick={(e) => deleteUser(user.id, index)}>*/}
+                                            <IconButton onClick={e => handleDelete(index, e)}>
                                                 <ClearIcon color="error"/>
                                             </IconButton>
 
