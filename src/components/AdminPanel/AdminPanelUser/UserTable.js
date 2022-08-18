@@ -14,6 +14,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from "@mui/material/IconButton";
 import {deleteUser} from "../../../services/DeleteUserApi";
+import {acceptUser} from "../../../services/AcceptUserApi";
 
 const columns = [
     { id: 'lastName', label: 'Nom', minWidth: 100 },
@@ -68,12 +69,19 @@ export default function StickyHeadTable() {
     //     console.log(users)
     // };
 
+    const handleAccept = async (index, idUser) => {
+        if (window.confirm('Êtes-vous sûr de vouloir accepter cet utilisateur ?')) {
+            setUsers(users.filter((v, i) => i !== index))
+            await acceptUser(idUser);
+        }
+    }
     const handleDelete = async (index, idUser) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
             setUsers(users.filter((v, i) => i !== index))
             await deleteUser(idUser);
         }
     }
+
 
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -117,7 +125,7 @@ export default function StickyHeadTable() {
                                             );
                                         })}
                                         <TableCell key="action" align="center">
-                                            <IconButton>
+                                            <IconButton onClick={e => handleAccept(index, user.id)}>
                                                 <CheckIcon color="success"/>
                                             </IconButton>
                                             {/*<IconButton onClick={(e) => deleteUser(user.id, index)}>*/}
