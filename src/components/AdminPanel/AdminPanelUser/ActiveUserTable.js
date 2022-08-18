@@ -22,6 +22,8 @@ import Button from "@mui/material/Button";
 import SearchIcon from '@mui/icons-material/Search';
 import SendIcon from "@mui/icons-material/Send";
 import getUsers from "../../../services/GetUsersApi";
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
 
 const columns = [
     { id: 'lastName', label: 'Nom', minWidth: 100 },
@@ -53,6 +55,7 @@ export default function ActiveUserTable() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setUsers("")
         await searchUsers(1);
     };
     //
@@ -69,9 +72,6 @@ export default function ActiveUserTable() {
     }
 
     const handleChangePage = async (event, newPage) => {
-        console.log(maxPage)
-        console.log(newPage)
-
         if (maxPage < newPage){
             await searchUsers(newPage + 1)
             setMaxPage(newPage);
@@ -113,11 +113,15 @@ export default function ActiveUserTable() {
             {/*    component="form"*/}
             {/*    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}*/}
             {/*>*/}
+            <Container component="main">
             <Box sx={{
                 display: "flex",
                 width: "100%",
                 paddingBottom: 2
-            }}>
+            }}
+                 onSubmit={handleSubmit}
+                 component="form"
+            >
                 <TextField
                     sx={{width: "100%"}}
                     id="content"
@@ -130,6 +134,7 @@ export default function ActiveUserTable() {
                     <SearchIcon />
                 </Button>
             </Box>
+            </Container>
             {/*</Paper>*/}
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 440 }}>
