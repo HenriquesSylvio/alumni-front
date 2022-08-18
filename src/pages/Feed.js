@@ -35,22 +35,12 @@ export default function Feed() {
 
     useEffect(() => {
         const getData = async () => {
-            // try {
-                await getPostFromFeed();
-            // } catch  {
-            //     navigate(0)
-            // }
-
+            await getPostFromFeed();
         }
-        // if (firstLoad) {
-        //     setFirstLoad(false)
-        //     console.log("noice")
-        //     navigate(0)
-        // }
         getData();
 
         window.addEventListener('scroll', handleScroll)
-    }, [firstLoad]);
+    }, []);
 
         return (
             <div style={{display: "flex"}}>
