@@ -70,13 +70,13 @@ export default function WaitingUserTable() {
 
     const handleAccept = async (index, idUser) => {
         if (window.confirm('Êtes-vous sûr de vouloir accepter cet utilisateur ?')) {
-            setUsers(users.filter((v, i) => i !== index))
+            setUsers(users.filter((v, i) => i !== index + (page * 10)))
             await acceptUser(idUser);
         }
     }
     const handleDelete = async (index, idUser) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
-            setUsers(users.filter((v, i) => i !== index))
+            setUsers(users.filter((v, i) => i !== index + (page * 10)))
             await deleteUser(idUser);
         }
     }
@@ -141,7 +141,7 @@ export default function WaitingUserTable() {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
+                rowsPerPageOptions={10}
                 component="div"
                 count={users.length}
                 rowsPerPage={rowsPerPage}

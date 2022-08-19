@@ -25,6 +25,7 @@ import getUsers from "../../../services/GetUsersApi";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import getPosts from "../../../services/GetPostsApi";
+import {deletePost} from "../../../services/DeletePostApi";
 
 const columns = [
     { id: 'content', label: 'Contenu de la publication', minWidth: 300 },
@@ -47,15 +48,15 @@ export default function PostTable() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setPosts("")
-        await searchUsers(1);
+        await searchPosts(1);
     };
-    //
-    const searchUsers = async (numberPage) => {
+
+    const searchPosts = async (numberPage) => {
         // console.log(numberPage);
         const response = await getPosts(numberPage, values.content);
         newPosts = response.data.data;
         if (posts.length){
-            setPosts((oldUser) => [...oldUser, ...newPosts])
+            setPosts((oldPosts) => [...oldPosts, ...newPosts])
         } else {
             setPosts(newPosts)
         }
@@ -64,7 +65,7 @@ export default function PostTable() {
 
     const handleChangePage = async (event, newPage) => {
         if (maxPage < newPage){
-            await searchUsers(newPage + 1)
+            await searchPosts(newPage + 1)
             setMaxPage(newPage);
         }
         setPage(newPage);
@@ -82,9 +83,11 @@ export default function PostTable() {
         console.log(values)
     }
 
-    const handleDelete = async (index, idUser) => {
+    const handleDelete = async (index, idPost) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cette publication ?')) {
-
+            setPosts(posts.filter((v, i) => i !== index + (page * 10)))
+            await deletePost(idPost);
+            console.log(posts.filter((v, i) => i !== index + (page * 10)))
         }
     }
 
@@ -155,7 +158,7 @@ export default function PostTable() {
                                                         );
                                                     })}
                                                     <TableCell key="action" align="center">
-                                                        <IconButton onClick={e => handleDelete(index, post.id)}>
+                                                        <IconButton onClick={e => handleDelete(index, post.idPost)}>
                                                             <ClearIcon color="error"/>
                                                         </IconButton>
 

@@ -101,7 +101,7 @@ export default function ActiveUserTable() {
 
     const handleDelete = async (index, idUser) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
-            setUsers(users.filter((v, i) => i !== index))
+            setUsers(users.filter((v, i) => i !== index + (page * 10)))
             await deleteUser(idUser);
         }
     }

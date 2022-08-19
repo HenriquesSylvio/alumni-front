@@ -27,6 +27,7 @@ export default function Search() {
         const searchPosts = async () => {
             setLoading(true);
             const response = await getPosts(1, params.word);
+            console.log(response);
             setPost(response.data.data)
             setLoading(false);
         }
