@@ -25,6 +25,7 @@ import getUsers from "../../../services/GetUsersApi";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import getPosts from "../../../services/GetPostsApi";
+import {deletePost} from "../../../services/DeletePostApi";
 
 const columns = [
     { id: 'content', label: 'Contenu de la publication', minWidth: 300 },
@@ -82,9 +83,10 @@ export default function PostTable() {
         console.log(values)
     }
 
-    const handleDelete = async (index, idUser) => {
+    const handleDelete = async (index, idPost) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cette publication ?')) {
-
+            setPosts(posts.filter((v, i) => i !== index))
+            await deletePost(idPost);
         }
     }
 
@@ -155,7 +157,7 @@ export default function PostTable() {
                                                         );
                                                     })}
                                                     <TableCell key="action" align="center">
-                                                        <IconButton onClick={e => handleDelete(index, post.id)}>
+                                                        <IconButton onClick={e => handleDelete(index, post.idPost)}>
                                                             <ClearIcon color="error"/>
                                                         </IconButton>
 
