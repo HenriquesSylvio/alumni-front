@@ -18,6 +18,12 @@ import {acceptUser} from "../../../services/AcceptUserApi";
 import {getFaculty} from "../../../services/GetFacultyApi";
 import {deleteFaculty} from "../../../services/DeleteFacultyApi";
 import {toast} from "react-toastify";
+import Container from "@mui/material/Container";
+import {Box} from "@mui/system";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from '@mui/icons-material/Add';
 
 const columns = [
     { id: 'name', label: 'Libelle', minWidth: 100 },
@@ -64,68 +70,87 @@ export default function FacultyTable() {
     }
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
+        <Box>
+            {/*<Paper*/}
+            {/*    component="form"*/}
+            {/*    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}*/}
+            {/*>*/}
+            {/*<Container component="main">*/}
+                <Box sx={{
+                    display: "flex",
+                    width: "100%",
+                    paddingBottom: 2
+                }}
+                     component="form"
+                >
+                    <Button variant="contained" startIcon={<AddIcon />}>
+                        Ajouter une filière
+                    </Button>
+                </Box>
+            {/*</Container>*/}
+            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                <TableContainer sx={{ maxHeight: 440 }}>
+                    <Table stickyHeader aria-label="sticky table">
+                        <TableHead>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{ minWidth: column.minWidth }}
+                                    >
+                                        {column.label}
+                                    </TableCell>
+                                ))}
                                 <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{ minWidth: column.minWidth }}
+                                    key="action"
+                                    align="center"
+                                    style={{ minWidth: "200" }}
                                 >
-                                    {column.label}
+                                    Action
                                 </TableCell>
-                            ))}
-                            <TableCell
-                                key="action"
-                                align="center"
-                                style={{ minWidth: "200" }}
-                            >
-                                Action
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {faculties.length ?
-                            faculties
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((faculty, index) => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={faculty.id}>
-                                        {columns.map((column) => {
-                                            const value = faculty[column.id];
-                                            return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number'
-                                                        ? column.format(value)
-                                                        : value}
-                                                </TableCell>
-                                            );
-                                        })}
-                                        <TableCell key="action" align="center">
-                                            <IconButton onClick={e => handleDelete(index, faculty.id)}>
-                                                <ClearIcon color="error"/>
-                                            </IconButton>
-                                        </TableCell>
-                                    </TableRow>
-                                );
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {faculties.length ?
+                                faculties
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((faculty, index) => {
+                                    return (
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={faculty.id}>
+                                            {columns.map((column) => {
+                                                const value = faculty[column.id];
+                                                return (
+                                                    <TableCell key={column.id} align={column.align}>
+                                                        {column.format && typeof value === 'number'
+                                                            ? column.format(value)
+                                                            : value}
+                                                    </TableCell>
+                                                );
+                                            })}
+                                            <TableCell key="action" align="center">
+                                                <IconButton onClick={e => handleDelete(index, faculty.id)}>
+                                                    <ClearIcon color="error"/>
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                }
+                                ) : null
                             }
-                            ) : null
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={10}
-                component="div"
-                count={faculties.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-        </Paper>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={10}
+                    component="div"
+                    count={faculties.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </Paper>
+        </Box>
     );
 }
