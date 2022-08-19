@@ -6,5 +6,5 @@ const URLApi = "http://127.0.0.1:8080/api/"
 
 export function getFaculty(credentials) {
     return axios
-        .post(`${URLApi}faculty`, credentials);
+        .get(`${URLApi}faculty`, credentials);
 }

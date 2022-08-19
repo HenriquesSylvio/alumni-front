@@ -15,9 +15,10 @@ import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from "@mui/material/IconButton";
 import {deleteUser} from "../../../services/DeleteUserApi";
 import {acceptUser} from "../../../services/AcceptUserApi";
+import {getFaculty} from "../../../services/GetFacultyApi";
 
 const columns = [
-    { id: 'faculty_label', label: 'Libelle', minWidth: 100 },
+    { id: 'name', label: 'Libelle', minWidth: 100 },
     // { id: 'action', label: 'Action', minWidth: 200 },
 ];
 
@@ -29,13 +30,15 @@ export default function FacultyTable() {
 
     useEffect(() => {
         const getData = async () => {
-            await getFaculty();
+            await getFaculties();
         }
         getData();
     }, []);
 
-    const getFaculty = async () => {
-
+    const getFaculties = async () => {
+        const response = await getFaculty();
+        console.log(response.data.faculty);
+        setFaculties(response.data.faculty);
     };
 
     const handleChangePage = (event, newPage) => {
