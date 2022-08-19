@@ -9,6 +9,7 @@ import WaitingUserTable from "../components/AdminPanel/AdminPanelUser/WaitingUse
 import ActiveUserTable from "../components/AdminPanel/AdminPanelUser/ActiveUserTable";
 import PostTable from "../components/AdminPanel/AdminPanelPost/PostTable";
 import EventTable from "../components/AdminPanel/AdminPanelEvent/EventTable";
+import FacultyTable from "../components/AdminPanel/AdminPanelFaculty/FacultyTable";
 
 
 export default function AdminPanel() {
@@ -27,7 +28,8 @@ export default function AdminPanel() {
                         <Tab label="Utilisateurs en attente" value="1" />
                         <Tab label="Utilisateurs actifs" value="2" />
                         <Tab label="Publications" value="3" />
-                        <Tab label="Evénements" value="4" />
+                        <Tab label="événements" value="4" />
+                        <Tab label="Filières" value="5" />
                     </TabList>
                 </Box>
                 <TabPanel value="1">
@@ -41,6 +43,9 @@ export default function AdminPanel() {
                 </TabPanel>
                 <TabPanel value="4">
                     <EventTable />
+                </TabPanel>
+                <TabPanel value="5">
+                    <FacultyTable />
                 </TabPanel>
             </TabContext>
         </Box>
