@@ -7,6 +7,7 @@ import TabList from "@mui/lab/TabList";
 import React from 'react';
 import WaitingUserTable from "../components/AdminPanel/AdminPanelUser/WaitingUserTable";
 import ActiveUserTable from "../components/AdminPanel/AdminPanelUser/ActiveUserTable";
+import PostTable from "../components/AdminPanel/AdminPanelPost/PostTable";
 
 
 export default function AdminPanel() {
@@ -24,6 +25,7 @@ export default function AdminPanel() {
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                         <Tab label="Utilisateurs en attente" value="1" />
                         <Tab label="Utilisateurs actifs" value="2" />
+                        <Tab label="Publications" value="3" />
                     </TabList>
                 </Box>
                 <TabPanel value="1">
@@ -31,6 +33,9 @@ export default function AdminPanel() {
                 </TabPanel>
                 <TabPanel value="2">
                     <ActiveUserTable />
+                </TabPanel>
+                <TabPanel value="3">
+                    <PostTable />
                 </TabPanel>
             </TabContext>
         </Box>
