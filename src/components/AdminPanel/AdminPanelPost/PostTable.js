@@ -24,6 +24,7 @@ import SendIcon from "@mui/icons-material/Send";
 import getUsers from "../../../services/GetUsersApi";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import getPosts from "../../../services/GetPostsApi";
 
 const columns = [
     { id: 'content', label: 'Contenu de la publication', minWidth: 300 },
@@ -34,29 +35,29 @@ const columns = [
 export default function PostTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(15);
-    const [users, setUsers] = React.useState({});
+    const [posts, setPosts] = React.useState({});
     const [meta, setMeta] = React.useState({});
     const [maxPage, setMaxPage] = React.useState(0);
     const [values, setValues] = useState({
         content: "",
     });
 
-    let newUsers = {}
+    let newPosts = {}
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setUsers("")
+        setPosts("")
         await searchUsers(1);
     };
     //
     const searchUsers = async (numberPage) => {
         // console.log(numberPage);
-        const response = await getUsers(numberPage, values.content);
-        newUsers = response.data.data;
-        if (users.length){
-            setUsers((oldUser) => [...oldUser, ...newUsers])
+        const response = await getPosts(numberPage, values.content);
+        newPosts = response.data.data;
+        if (posts.length){
+            setPosts((oldUser) => [...oldUser, ...newPosts])
         } else {
-            setUsers(newUsers)
+            setPosts(newPosts)
         }
         setMeta(response.data.meta)
     }
@@ -137,14 +138,14 @@ export default function PostTable() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {users.length ?
-                                users
+                            {posts.length ?
+                                posts
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((user, index) => {
+                                    .map((post, index) => {
                                             return (
-                                                <TableRow hover role="checkbox" tabIndex={-1} key={user.id}>
+                                                <TableRow hover role="checkbox" tabIndex={-1} key={post.id}>
                                                     {columns.map((column) => {
-                                                        const value = user[column.id];
+                                                        const value = post[column.id];
                                                         return (
                                                             <TableCell key={column.id} align={column.align}>
                                                                 {column.format && typeof value === 'number'
@@ -154,7 +155,7 @@ export default function PostTable() {
                                                         );
                                                     })}
                                                     <TableCell key="action" align="center">
-                                                        <IconButton onClick={e => handleDelete(index, user.id)}>
+                                                        <IconButton onClick={e => handleDelete(index, post.id)}>
                                                             <ClearIcon color="error"/>
                                                         </IconButton>
 
