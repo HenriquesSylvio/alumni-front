@@ -8,6 +8,7 @@ import React from 'react';
 import WaitingUserTable from "../components/AdminPanel/AdminPanelUser/WaitingUserTable";
 import ActiveUserTable from "../components/AdminPanel/AdminPanelUser/ActiveUserTable";
 import PostTable from "../components/AdminPanel/AdminPanelPost/PostTable";
+import EventTable from "../components/AdminPanel/AdminPanelEvent/EventTable";
 
 
 export default function AdminPanel() {
@@ -26,6 +27,7 @@ export default function AdminPanel() {
                         <Tab label="Utilisateurs en attente" value="1" />
                         <Tab label="Utilisateurs actifs" value="2" />
                         <Tab label="Publications" value="3" />
+                        <Tab label="Evénements" value="4" />
                     </TabList>
                 </Box>
                 <TabPanel value="1">
@@ -36,6 +38,9 @@ export default function AdminPanel() {
                 </TabPanel>
                 <TabPanel value="3">
                     <PostTable />
+                </TabPanel>
+                <TabPanel value="4">
+                    <EventTable />
                 </TabPanel>
             </TabContext>
         </Box>

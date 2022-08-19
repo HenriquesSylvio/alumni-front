@@ -35,6 +35,7 @@ export default function Search() {
         const searchEvents = async () => {
             setLoading(true);
             const response = await getEvents(1, "", params.word);
+            console.log(response)
             setEvents(response.data.data)
             setLoading(false);
         }

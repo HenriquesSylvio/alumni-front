@@ -24,48 +24,48 @@ import SendIcon from "@mui/icons-material/Send";
 import getUsers from "../../../services/GetUsersApi";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import getPosts from "../../../services/GetPostsApi";
-import {deletePost} from "../../../services/DeletePostApi";
+import getEvents from "../../../services/GetEventsApi";
 
 const columns = [
-    { id: 'content', label: 'Contenu de la publication', minWidth: 300 },
-    { id: 'createAt', label: 'Date de création', minWidth: 100 },
+    { id: 'title', label: 'Titre', minWidth: 150 },
+    { id: 'description', label: 'Description', minWidth: 300 },
+    { id: 'date', label: 'Date', minWidth: 50 },
 ];
 
 
-export default function PostTable() {
+export default function EventTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(15);
-    const [posts, setPosts] = React.useState({});
+    const [events, setEvents] = React.useState({});
     const [meta, setMeta] = React.useState({});
     const [maxPage, setMaxPage] = React.useState(0);
     const [values, setValues] = useState({
         content: "",
     });
 
-    let newPosts = {}
+    let newEvents = {}
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setPosts("")
-        await searchPosts(1);
+        setEvents("")
+        await searchEvents(1);
     };
 
-    const searchPosts = async (numberPage) => {
+    const searchEvents = async (numberPage) => {
         // console.log(numberPage);
-        const response = await getPosts(numberPage, values.content);
-        newPosts = response.data.data;
-        if (posts.length){
-            setPosts((oldPosts) => [...oldPosts, ...newPosts])
+        const response = await getEvents(numberPage, values.content);
+        newEvents = response.data.data;
+        if (events.length){
+            setEvents((oldEvents) => [...oldEvents, ...newEvents])
         } else {
-            setPosts(newPosts)
+            setEvents(newEvents)
         }
         setMeta(response.data.meta)
     }
 
     const handleChangePage = async (event, newPage) => {
         if (maxPage < newPage){
-            await searchPosts(newPage + 1)
+            await searchEvents(newPage + 1)
             setMaxPage(newPage);
         }
         setPage(newPage);
@@ -83,12 +83,7 @@ export default function PostTable() {
         console.log(values)
     }
 
-    const handleDelete = async (index, idPost) => {
-        if (window.confirm('Êtes-vous sûr de vouloir supprimer cette publication ?')) {
-            setPosts(posts.filter((v, i) => i !== index + (page * 10)))
-            await deletePost(idPost);
-            console.log(posts.filter((v, i) => i !== index + (page * 10)))
-        }
+    const handleDelete = async (index, idEvent) => {
     }
 
 
@@ -141,14 +136,14 @@ export default function PostTable() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {posts.length ?
-                                posts
+                            {events.length ?
+                                events
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((post, index) => {
+                                    .map((event, index) => {
                                             return (
-                                                <TableRow hover role="checkbox" tabIndex={-1} key={post.idPost}>
+                                                <TableRow hover role="checkbox" tabIndex={-1} key={event.idEvent}>
                                                     {columns.map((column) => {
-                                                        const value = post[column.id];
+                                                        const value = event[column.id];
                                                         return (
                                                             <TableCell key={column.id} align={column.align}>
                                                                 {column.format && typeof value === 'number'
@@ -158,7 +153,7 @@ export default function PostTable() {
                                                         );
                                                     })}
                                                     <TableCell key="action" align="center">
-                                                        <IconButton onClick={e => handleDelete(index, post.idPost)}>
+                                                        <IconButton onClick={e => handleDelete(index, event.idEvent)}>
                                                             <ClearIcon color="error"/>
                                                         </IconButton>
 
