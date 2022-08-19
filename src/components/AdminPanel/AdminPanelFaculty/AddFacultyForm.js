@@ -16,6 +16,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import OpenModalAddFaculty from "../../../contexts/OpenModalAddFaculty";
+import {addFaculty} from "../../../services/AddFacultyApi";
 
 export default function AddFacultyForm() {
     const {isOpenAddFaculty, setIsAddFaculty} = useContext(OpenModalAddFaculty);
@@ -33,7 +34,9 @@ export default function AddFacultyForm() {
     const handleSubmit = async event => {
         event.preventDefault();
 
-        toast.success('La filière a été créer ! 😄')
+        await addFaculty(values);
+        setIsAddFaculty(false);
+        toast.success('La filière a été créer ! 😄');
         // setIsOpenAddPost(false);
         }
 
