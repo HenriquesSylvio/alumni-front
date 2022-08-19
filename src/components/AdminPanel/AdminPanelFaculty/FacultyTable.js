@@ -16,6 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import {deleteUser} from "../../../services/DeleteUserApi";
 import {acceptUser} from "../../../services/AcceptUserApi";
 import {getFaculty} from "../../../services/GetFacultyApi";
+import {deleteFaculty} from "../../../services/DeleteFacultyApi";
 
 const columns = [
     { id: 'name', label: 'Libelle', minWidth: 100 },
@@ -62,6 +63,7 @@ export default function FacultyTable() {
     const handleDelete = async (index, idFaculy) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cet filière ?')) {
             setFaculties(faculties.filter((v, i) => i !== index + (page * 10)))
+            await deleteFaculty(idFaculy);
         }
     }
 
