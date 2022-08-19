@@ -68,8 +68,6 @@ export default function SignIn() {
             try {
                 console.log(values)
                 const response = await login(values);
-                console.log("teteette")
-                console.log(response)
                 authenticated = response
                 setIsAuthenticated(response);
                 const token = JSON.parse(atob(getItem('Token').split('.')[1])).roles

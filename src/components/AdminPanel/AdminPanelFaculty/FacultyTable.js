@@ -17,10 +17,10 @@ import {deleteUser} from "../../../services/DeleteUserApi";
 import {acceptUser} from "../../../services/AcceptUserApi";
 import {getFaculty} from "../../../services/GetFacultyApi";
 import {deleteFaculty} from "../../../services/DeleteFacultyApi";
+import {toast} from "react-toastify";
 
 const columns = [
     { id: 'name', label: 'Libelle', minWidth: 100 },
-    // { id: 'action', label: 'Action', minWidth: 200 },
 ];
 
 
@@ -51,22 +51,17 @@ export default function FacultyTable() {
         setPage(0);
     };
 
-    // const deleteUser = async (idUser, indexRow) => {
-    //     if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
-    //         const j = users[indexRow];
-    //     }
-    //     const j = delete users[indexRow]
-    //     console.log(j)
-    //     console.log(users)
-    // };
-
     const handleDelete = async (index, idFaculy) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cet filière ?')) {
-            setFaculties(faculties.filter((v, i) => i !== index + (page * 10)))
-            await deleteFaculty(idFaculy);
+            try {
+                setFaculties(faculties.filter((v, i) => i !== index + (page * 10)))
+                await deleteFaculty(idFaculy);
+            } catch {
+                toast.error("Impossible de supprimer la filière, car des utilisateurs y sont rattachés ! 😃")
+            }
+
         }
     }
-
 
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
