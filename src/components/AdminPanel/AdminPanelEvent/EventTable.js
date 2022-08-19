@@ -25,6 +25,8 @@ import getUsers from "../../../services/GetUsersApi";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import getEvents from "../../../services/GetEventsApi";
+import {deletePost} from "../../../services/DeletePostApi";
+import {deleteEvent} from "../../../services/DeleteEventApi";
 
 const columns = [
     { id: 'title', label: 'Titre', minWidth: 150 },
@@ -47,6 +49,8 @@ export default function EventTable() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setMaxPage(0)
+        setPage(0)
         setEvents("")
         await searchEvents(1);
     };
@@ -84,6 +88,14 @@ export default function EventTable() {
     }
 
     const handleDelete = async (index, idEvent) => {
+        if (window.confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
+            setEvents(events.filter((v, i) => i !== index + (page * 15)))
+            await deleteEvent(idEvent);
+            // console.log(events.filter((v, i) => i !== index + (page * 15)))
+        }
+        // console.log(index)
+        // console.log(idEvent)
+        // console.log(events.filter((v, i) => i === index + (page * 15)))
     }
 
 

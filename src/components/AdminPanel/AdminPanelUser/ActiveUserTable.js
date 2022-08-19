@@ -55,6 +55,8 @@ export default function ActiveUserTable() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setMaxPage(0)
+        setPage(0)
         setUsers("")
         await searchUsers(1);
     };
@@ -101,7 +103,7 @@ export default function ActiveUserTable() {
 
     const handleDelete = async (index, idUser) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
-            setUsers(users.filter((v, i) => i !== index + (page * 10)))
+            setUsers(users.filter((v, i) => i !== index + (page * 15)))
             await deleteUser(idUser);
         }
     }

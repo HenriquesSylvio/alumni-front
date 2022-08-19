@@ -47,6 +47,8 @@ export default function PostTable() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setMaxPage(0)
+        setPage(0)
         setPosts("")
         await searchPosts(1);
     };
@@ -85,7 +87,7 @@ export default function PostTable() {
 
     const handleDelete = async (index, idPost) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cette publication ?')) {
-            setPosts(posts.filter((v, i) => i !== index + (page * 10)))
+            setPosts(posts.filter((v, i) => i !== index + (page * 15)))
             await deletePost(idPost);
             console.log(posts.filter((v, i) => i !== index + (page * 10)))
         }
