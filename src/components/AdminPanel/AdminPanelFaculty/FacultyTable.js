@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import getFeed from "../../../services/FeedApi";
 import getUserWaitingForValidation from "../../../services/GetUserWaitingForValidationApi";
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from "@mui/material/IconButton";
@@ -24,13 +24,39 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from '@mui/icons-material/Add';
+import OpenModalAddFaculty from "../../../contexts/OpenModalAddFaculty";
+import Backdrop from "@mui/material/Backdrop";
+import {Fade, Modal} from "@mui/material";
+import AddCommentForm from "../../Post/AddCommentForm";
+import AddFacultyForm from "./AddFacultyForm";
 
 const columns = [
     { id: 'name', label: 'Libelle', minWidth: 100 },
 ];
-
+const styleBox = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 'auto',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+    display: { xs: 'none', md: 'flex' },
+};
+const styleResponsiveBox = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    display: { xs: 'flex', md: 'none' }
+};
 
 export default function FacultyTable() {
+    const {isOpenAddFaculty, setIsAddFaculty} = useContext(OpenModalAddFaculty);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [faculties, setFaculties] = React.useState({});
@@ -41,6 +67,15 @@ export default function FacultyTable() {
         }
         getData();
     }, []);
+
+    const handleClose = () => {
+        setIsAddFaculty(false)
+        // setIdPost(0)
+    }
+
+    const handleOpen = () => {
+        setIsAddFaculty(true);
+    };
 
     const getFaculties = async () => {
         const response = await getFaculty();
@@ -71,23 +106,15 @@ export default function FacultyTable() {
 
     return (
         <Box>
-            {/*<Paper*/}
-            {/*    component="form"*/}
-            {/*    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}*/}
-            {/*>*/}
-            {/*<Container component="main">*/}
-                <Box sx={{
-                    display: "flex",
-                    width: "100%",
-                    paddingBottom: 2
-                }}
-                     component="form"
-                >
-                    <Button variant="contained" startIcon={<AddIcon />}>
+            <Box sx={{
+                display: "flex",
+                width: "100%",
+                paddingBottom: 2
+            }} component="form">
+                    <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpen}>
                         Ajouter une filière
                     </Button>
                 </Box>
-            {/*</Container>*/}
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 440 }}>
                     <Table stickyHeader aria-label="sticky table">
@@ -151,6 +178,28 @@ export default function FacultyTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={isOpenAddFaculty}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={isOpenAddFaculty}>
+                    <Box>
+                        <Paper sx={styleBox}>
+                            <AddFacultyForm/>
+                        </Paper>
+                        <Paper sx={styleResponsiveBox}>
+                            <AddFacultyForm/>
+                        </Paper>
+                    </Box>
+                </Fade>
+            </Modal>
         </Box>
     );
 }

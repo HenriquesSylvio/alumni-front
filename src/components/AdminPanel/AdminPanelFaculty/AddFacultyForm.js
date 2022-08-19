@@ -11,15 +11,14 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import CreateIcon from '@mui/icons-material/Create';
-import {addEvent} from "../../services/AddEventApi";
-import validate from "../../validators/AddEventValidator";
 import {useContext} from "react";
-import OpenModalAddPost from "../../contexts/OpenModalAddPost";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers'
+import OpenModalAddFaculty from "../../../contexts/OpenModalAddFaculty";
 
 export default function AddFacultyForm() {
+    const {isOpenAddFaculty, setIsAddFaculty} = useContext(OpenModalAddFaculty);
     const [loadingForm, setLoadingForm] = React.useState(false);
     const [values, setValues] = useState({
         name: ""
@@ -34,11 +33,9 @@ export default function AddFacultyForm() {
     const handleSubmit = async event => {
         event.preventDefault();
 
-        // await addEvent(values);
         toast.success('La filière a été créer ! 😄')
         // setIsOpenAddPost(false);
         }
-
 
 
     return (
@@ -60,8 +57,8 @@ export default function AddFacultyForm() {
                     Création d'une filière
                 </Typography>
                 <Box component="form" noValidate sx={{ mt: 1 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                    <Grid container>
+                        <Grid item xs>
                             <TextField
                                 required
                                 fullWidth

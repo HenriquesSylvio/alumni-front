@@ -26,6 +26,7 @@ import FirstLoad from "./contexts/FirstLoad";
 import Admin from "./contexts/Admin";
 import AdminRoute from "./contexts/AdminRoute";
 import AdminPanel from "./pages/AdminPanel";
+import OpenModalAddFaculty from "./contexts/OpenModalAddFaculty";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
     const [isOpenSendMessage, setIsOpenSendMessage] = useState(false);
     const [firstLoad, setFirstLoad] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isOpenAddFaculty, setIsAddFaculty] = useState(false);
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
@@ -53,27 +55,29 @@ const App = () => {
                                           <SelectedConversationIndex.Provider value={{selectedConversationIndex, setSelectedConversationIndex}}>
                                               <MessageConversation.Provider value={{messageConversation, setMessageConversation}}>
                                                   <OpenModalSendMessage.Provider value={{isOpenSendMessage, setIsOpenSendMessage}}>
-                                                  <BrowserRouter>
-                                                      <Layout>
-                                                          <Routes>
-                                                              <Route path='/' element={<Home/>}/>
-                                                              <Route exact path='/inscription' element={<Inscription/>}/>
-                                                              <Route element={<AuthenticatedRoute/>}>
-                                                                  <Route exact path='/feed' element={<Feed/>}/>
-                                                                  <Route exact path='/profile/:id' element={<Profile/>}/>
-                                                                  <Route exact path='/post/:id' element={<Post/>}/>
-                                                                  <Route exact path='/profile' element={<Profile/>}/>
-                                                                  <Route exact path='/events' element={<Event/>}/>
-                                                                  <Route exact path='/messages' element={<Messages/>}/>
-                                                                  <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
-                                                                  <Route element={<AdminRoute/>}>
-                                                                      <Route exact path='/adminPanel' element={<AdminPanel/>}/>
-                                                                  </Route>
-                                                              </Route>
-                                                          </Routes>
-                                                          <ToastContainer />
-                                                      </Layout>
-                                                  </BrowserRouter>
+                                                      <OpenModalAddFaculty.Provider value={{isOpenAddFaculty, setIsAddFaculty}}>
+                                                          <BrowserRouter>
+                                                              <Layout>
+                                                                  <Routes>
+                                                                      <Route path='/' element={<Home/>}/>
+                                                                      <Route exact path='/inscription' element={<Inscription/>}/>
+                                                                      <Route element={<AuthenticatedRoute/>}>
+                                                                          <Route exact path='/feed' element={<Feed/>}/>
+                                                                          <Route exact path='/profile/:id' element={<Profile/>}/>
+                                                                          <Route exact path='/post/:id' element={<Post/>}/>
+                                                                          <Route exact path='/profile' element={<Profile/>}/>
+                                                                          <Route exact path='/events' element={<Event/>}/>
+                                                                          <Route exact path='/messages' element={<Messages/>}/>
+                                                                          <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
+                                                                          <Route element={<AdminRoute/>}>
+                                                                              <Route exact path='/adminPanel' element={<AdminPanel/>}/>
+                                                                          </Route>
+                                                                      </Route>
+                                                                  </Routes>
+                                                                  <ToastContainer />
+                                                              </Layout>
+                                                          </BrowserRouter>
+                                                      </OpenModalAddFaculty.Provider>
                                                   </OpenModalSendMessage.Provider>
                                               </MessageConversation.Provider>
                                           </SelectedConversationIndex.Provider>
