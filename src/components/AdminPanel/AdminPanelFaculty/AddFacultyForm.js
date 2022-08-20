@@ -39,16 +39,15 @@ export default function AddFacultyForm() {
 
     const handleSubmit = async event => {
         event.preventDefault();
-
+        setLoadingForm(true)
         await setErrors(validate(values));
-        console.log(errors)
 
         if (Object.keys(errors).length === 0) {
             await addFaculty(values);
             setIsAddFaculty(false);
             toast.success('La filière a été créer ! 😄');
         }
-        // setIsOpenAddPost(false);
+        setLoadingForm(false)
         }
 
 
@@ -83,19 +82,32 @@ export default function AddFacultyForm() {
                                 onChange={handleChange}
                                 error={ errors.name }
                                 helperText={ errors.name }
+                                disabled={loadingForm}
                             />
                         </Grid>
                     </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleClick}
-                        // loading={loadingForm}
-                    >
-                        Créer
-                    </Button>
+                    {(loadingForm && (
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                marginTop: 2
+                            }}>
+                                <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                            </Box>
+                        ))
+                        ||
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            onClick={handleClick}
+                            loading={loadingForm}
+                        >
+                            Créer
+                        </Button>
+                    }
                 </Box>
             </Grid>
         </Container>
