@@ -29,6 +29,9 @@ import Backdrop from "@mui/material/Backdrop";
 import {Fade, Modal} from "@mui/material";
 import AddCommentForm from "../../Post/AddCommentForm";
 import AddFacultyForm from "./AddFacultyForm";
+import EditIcon from '@mui/icons-material/Edit';
+import OpenModalEditFaculty from "../../../contexts/OpenModalEditFaculty";
+import EditFacultyForm from "./EditFacultyForm";
 
 const columns = [
     { id: 'name', label: 'Libelle', minWidth: 100 },
@@ -57,6 +60,7 @@ const styleResponsiveBox = {
 
 export default function FacultyTable() {
     const {isOpenAddFaculty, setIsAddFaculty} = useContext(OpenModalAddFaculty);
+    const {isOpenEditFaculty, setIsEditFaculty} = useContext(OpenModalEditFaculty);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [faculties, setFaculties] = React.useState({});
@@ -73,7 +77,8 @@ export default function FacultyTable() {
         // setIdPost(0)
     }
 
-    const handleOpen = () => {
+    const handleOpenAddFaculty = () => {
+        // console.log(Object.keys(isOpenEditFaculty).length)
         setIsAddFaculty(true);
     };
 
@@ -111,7 +116,7 @@ export default function FacultyTable() {
                 width: "100%",
                 paddingBottom: 2
             }} component="form">
-                    <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpen}>
+                    <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenAddFaculty}>
                         Ajouter une filière
                     </Button>
                 </Box>
@@ -156,6 +161,9 @@ export default function FacultyTable() {
                                                 );
                                             })}
                                             <TableCell key="action" align="center">
+                                                <IconButton onClick={() => setIsEditFaculty(faculty)}>
+                                                    <EditIcon color="primary"/>
+                                                </IconButton>
                                                 <IconButton onClick={e => handleDelete(index, faculty.id)}>
                                                     <ClearIcon color="error"/>
                                                 </IconButton>
@@ -196,6 +204,28 @@ export default function FacultyTable() {
                         </Paper>
                         <Paper sx={styleResponsiveBox}>
                             <AddFacultyForm/>
+                        </Paper>
+                    </Box>
+                </Fade>
+            </Modal>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={Object.keys(isOpenEditFaculty).length > 0}
+                onClose={() => setIsEditFaculty({})}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={Object.keys(isOpenEditFaculty).length > 0}>
+                    <Box>
+                        <Paper sx={styleBox}>
+                            <EditFacultyForm />
+                        </Paper>
+                        <Paper sx={styleResponsiveBox}>
+                            <EditFacultyForm/>
                         </Paper>
                     </Box>
                 </Fade>
