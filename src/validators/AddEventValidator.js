@@ -1,4 +1,4 @@
-export default function AddPostValidator(values) {
+export default function AddEventValidator(values) {
     let errors = {};
     if (!values.title) {
         errors.title = 'Le titre est obligatoire';

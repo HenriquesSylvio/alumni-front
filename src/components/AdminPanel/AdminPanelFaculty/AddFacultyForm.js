@@ -17,13 +17,19 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import OpenModalAddFaculty from "../../../contexts/OpenModalAddFaculty";
 import {addFaculty} from "../../../services/AddFacultyApi";
+import validate from "../../../validators/AddFacultyValidator";
 
 export default function AddFacultyForm() {
     const {isOpenAddFaculty, setIsAddFaculty} = useContext(OpenModalAddFaculty);
     const [loadingForm, setLoadingForm] = React.useState(false);
+    const [errors, setErrors] = useState({});
     const [values, setValues] = useState({
         name: ""
     });
+
+    function handleClick() {
+        setErrors(validate(values));
+    }
 
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget;
@@ -34,9 +40,14 @@ export default function AddFacultyForm() {
     const handleSubmit = async event => {
         event.preventDefault();
 
-        await addFaculty(values);
-        setIsAddFaculty(false);
-        toast.success('La filière a été créer ! 😄');
+        await setErrors(validate(values));
+        console.log(errors)
+
+        if (Object.keys(errors).length === 0) {
+            await addFaculty(values);
+            setIsAddFaculty(false);
+            toast.success('La filière a été créer ! 😄');
+        }
         // setIsOpenAddPost(false);
         }
 
@@ -70,6 +81,8 @@ export default function AddFacultyForm() {
                                 name="name"
                                 autoComplete="name"
                                 onChange={handleChange}
+                                error={ errors.name }
+                                helperText={ errors.name }
                             />
                         </Grid>
                     </Grid>
@@ -78,7 +91,7 @@ export default function AddFacultyForm() {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
-                        // onClick={handleClick}
+                        onClick={handleClick}
                         // loading={loadingForm}
                     >
                         Créer
