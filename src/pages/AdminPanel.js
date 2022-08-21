@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
-import {Tabs} from "@mui/material";
+import {Divider, Tabs} from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -10,6 +10,12 @@ import ActiveUserTable from "../components/AdminPanel/AdminPanelUser/ActiveUserT
 import PostTable from "../components/AdminPanel/AdminPanelPost/PostTable";
 import EventTable from "../components/AdminPanel/AdminPanelEvent/EventTable";
 import FacultyTable from "../components/AdminPanel/AdminPanelFaculty/FacultyTable";
+import {getItem} from "../services/LocaleStorage";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import ListItemText from "@mui/material/ListItemText";
 
 
 export default function AdminPanel() {
@@ -30,6 +36,13 @@ export default function AdminPanel() {
                         <Tab label="Publications" value="3" />
                         <Tab label="événements" value="4" />
                         <Tab label="Filières" value="5" />
+                        {(JSON.parse(atob(getItem('Token').split('.')[1])).roles.some(item => item === 'ROLE_SUPER_ADMIN') && (
+                            <Tab label="Admins" value="6" />
+                            ))
+                            ||
+                            null
+                        }
+
                     </TabList>
                 </Box>
                 <TabPanel value="1">
@@ -45,6 +58,9 @@ export default function AdminPanel() {
                     <EventTable />
                 </TabPanel>
                 <TabPanel value="5">
+                    <FacultyTable />
+                </TabPanel>
+                <TabPanel value="6">
                     <FacultyTable />
                 </TabPanel>
             </TabContext>

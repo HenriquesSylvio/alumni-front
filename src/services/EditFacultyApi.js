@@ -8,7 +8,7 @@ const config = {
 };
 
 
-export function deleteFaculty(idFaculty, credentials) {
+export function editFaculty(credentials, idFaculty) {
     return axios
         .put(`${URLApi}faculty/${idFaculty}`, credentials,{headers: { Authorization: `Bearer ${getItem('Token')}` }});
 }

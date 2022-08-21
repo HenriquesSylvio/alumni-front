@@ -19,12 +19,14 @@ import OpenModalAddFaculty from "../../../contexts/OpenModalAddFaculty";
 import {addFaculty} from "../../../services/AddFacultyApi";
 import validate from "../../../validators/AddFacultyValidator";
 import OpenModalEditFaculty from "../../../contexts/OpenModalEditFaculty";
+import {editFaculty} from "../../../services/EditFacultyApi";
 
 export default function EditFacultyForm() {
     const {isOpenEditFaculty, setIsEditFaculty} = useContext(OpenModalEditFaculty);
     const [loadingForm, setLoadingForm] = React.useState(false);
     const [errors, setErrors] = useState({});
     const [values, setValues] = useState({
+        id: isOpenEditFaculty.id,
         name: isOpenEditFaculty.name
     });
 
@@ -43,9 +45,10 @@ export default function EditFacultyForm() {
         setLoadingForm(true)
         await setErrors(validate(values));
 
+        // console.log(values.id)
         if (Object.keys(errors).length === 0) {
-            await addFaculty(values);
-            setIsEditFaculty(0);
+            await editFaculty(values, values.id);
+            setIsEditFaculty({});
             toast.success('La filière a été modifier ! 😄');
         }
         setLoadingForm(false)
