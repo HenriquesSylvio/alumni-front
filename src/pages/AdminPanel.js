@@ -16,6 +16,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import ListItemText from "@mui/material/ListItemText";
+import AdminUserTable from "../components/AdminPanel/AdminPanelUser/AdminUserTable";
 
 
 export default function AdminPanel() {
@@ -61,7 +62,7 @@ export default function AdminPanel() {
                     <FacultyTable />
                 </TabPanel>
                 <TabPanel value="6">
-                    <FacultyTable />
+                    <AdminUserTable />
                 </TabPanel>
             </TabContext>
         </Box>
