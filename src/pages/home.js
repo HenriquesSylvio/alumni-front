@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useContext, useEffect} from "react"
 import Button from '@mui/material/Button';
 import ModalDialog from "../components/ModalDialog/ModalDialog";
 import { useState } from "react";
@@ -18,8 +18,17 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import MailIcon from '@mui/icons-material/Mail';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import OpenModalAuth from "../contexts/OpenModalAuth";
+import TabIndexAuth from "../contexts/TabIndexAuth";
 
 const Home = () => {
+    const {isOpenAuth, setIsOpenAuth} = useContext(OpenModalAuth);
+    const {tabIndexAuth, setTabIndexAuth} = useContext(TabIndexAuth);
+
+    const handleOpenAuth = () => {
+        setTabIndexAuth("2");
+        setIsOpenAuth(true);
+    }
 
 
     const style = {
@@ -27,7 +36,7 @@ const Home = () => {
         // borderTop: "1px solid #00A5A5",
         // textAlign: "center",
         padding: "20px",
-        position: "fixed",
+        // position: "fixed",
         left: "0",
         bottom: "0",
         // height: "100px",
@@ -73,7 +82,8 @@ const Home = () => {
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                style={{ minHeight: '95vh' }}
+                style={{ minHeight: '85vh' }}
+                sx={{ display: { xs: 'none', sm: 'flex' } }}
             >
                 <Card sx={{ maxWidth: 1000,  position: "absolute", minHeight:500}}>
                     <Box display="flex" alignContent="center" alignItems="center" sx={{paddingTop:5}}>
@@ -95,14 +105,59 @@ const Home = () => {
                             </Typography>
                             <br/>
                             <br/>
-                            <Typography variant="h5" style={{fontFamily: 'Fira Sans'}} textAlign="center" paddingRight={"10%"} paddingLeft={"10%"}>
-                                Pas encore inscrit ? Cliquez ici !
+                            <Typography variant="h5" style={{fontFamily: 'Fira Sans'}} textAlign="center">
+                                Pas encore inscrit ?
+                            </Typography>
+                            <Typography variant="h5" style={{fontFamily: 'Fira Sans'}} textAlign="center">
+                                Cliquez ici !
                             </Typography>
                         </CardContent>
                     </Box>
 
                 </Card>
             </Grid>
+            <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                style={{ minHeight: '85vh' }}
+                sx={{ display: { xs: 'flex', sm: 'none' } }}
+            >
+                <Card sx={{ maxWidth: 1000,  position: "absolute"}}>
+                    <Box display="flex" alignContent="center" alignItems="center">
+                        <CardContent>
+                            <Typography variant="h6" style={{fontFamily: 'Fira Sans'}} textAlign="center" sx={{paddingTop:1}}>
+                                Bienvenue au site des alulmnis de la
+                            </Typography>
+                            <Typography variant="h5" component="div" className="font-link" style={{fontFamily: 'Fugaz One'}}  textAlign="center">
+                                Normandie Web School !
+                            </Typography>
+                            <br/>
+                            <Typography variant="body2" style={{fontFamily: 'Fira Sans'}} textAlign="center" paddingRight={"10%"} paddingLeft={"10%"}>
+                                Nous vous souhaitons une bonne expérience sur cette plateforme !
+                            </Typography>
+                            <br/>
+                            <Typography variant="body2" style={{fontFamily: 'Fira Sans'}} textAlign="center" paddingRight={"10%"} paddingLeft={"10%"}>
+                                Cette plateforme est le réseau social de l’école. Ici vous pourrez contacter vos anciens camarades, participer à des évènements créés par des élèves, interagir sur des posts et plus encore !
+                            </Typography>
+                            <br/>
+                            <Typography variant="body2" style={{fontFamily: 'Fira Sans'}} textAlign="center">
+                                Pas encore inscrit ?
+                            </Typography>
+                            {/*<Box onClick={() => window.open("https://www.instagram.com/nws_rouen/")}>*/}
+                                <Typography variant="body2" style={{fontFamily: 'Fira Sans'}} textAlign="center" onClick={handleOpenAuth}>
+                                    Cliquez ici !
+                                </Typography>
+                            {/*</Box>*/}
+
+                        </CardContent>
+                    </Box>
+
+                </Card>
+            </Grid>
+
 
             <Box>
                 <Box style={style}>
@@ -113,19 +168,19 @@ const Home = () => {
                         alignItems="center"
                     >
                         <Box sx={{marginRight: 5}}>
-                            <Box display="flex"  color="white" marginBottom={2}>
+                            <Box display="flex"  color="white" marginBottom={1}>
                                 <LocationOnIcon />
                                 <Typography paddingLeft={2} variant="body2" style={{fontFamily: 'Fira Sans'}}>
                                     22 Place Henri Gadeau de Kerville 76100 ROUEN (Métro Saint-Sever)
                                 </Typography>
                             </Box>
-                            <Box display="flex"  color="white" marginBottom={2}>
+                            <Box display="flex"  color="white" marginBottom={1}>
                                 <PhoneIcon />
                                 <Typography paddingLeft={2} variant="body2" style={{fontFamily: 'Fira Sans'}} color="white">
                                     02 79 02 73 78
                                 </Typography>
                             </Box>
-                            <Box display="flex" color="white">
+                            <Box display="flex" color="white" marginBottom={1}>
                                 <MailIcon />
                                 <Typography paddingLeft={2} variant="body2" style={{fontFamily: 'Fira Sans'}} >
                                     contact@normandiewebschool.fr
@@ -134,19 +189,19 @@ const Home = () => {
                         </Box>
                         {/*<Divider orientation="vertical" flexItem sx={{marginLeft: 5, marginRight: 5}} />*/}
                         <Box >
-                            <Box display="flex"  color="white" marginBottom={2} onClick={() => window.open("https://www.instagram.com/nws_rouen/")}>
+                            <Box display="flex"  color="white" marginBottom={1} onClick={() => window.open("https://www.instagram.com/nws_rouen/")}>
                                 <InstagramIcon />
                                 <Typography paddingLeft={2} variant="body2" style={{fontFamily: 'Fira Sans'}}>
                                     Normandie Web School (@nws_rouen)
                                 </Typography>
                             </Box>
-                            <Box display="flex"  color="white" marginBottom={2} onClick={() => window.open("https://www.tiktok.com/@normandiewebschool")}>
+                            <Box display="flex"  color="white" marginBottom={1} onClick={() => window.open("https://www.tiktok.com/@normandiewebschool")}>
                                 <TikTokIcon />
                                 <Typography paddingLeft={2} variant="body2" style={{fontFamily: 'Fira Sans'}} color="white">
                                     @normandiewebschool
                                 </Typography>
                             </Box>
-                            <Box display="flex" color="white" onClick={() => window.open("https://www.linkedin.com/school/normandiewebschool/")}>
+                            <Box display="flex" color="white" onClick={() => window.open("https://www.linkedin.com/school/normandiewebschool/")} marginBottom={1}>
                                 <LinkedInIcon />
                                 <Typography paddingLeft={2} variant="body2" style={{fontFamily: 'Fira Sans'}}>
                                     https://www.linkedin.com/school/normandiewebschool/
@@ -157,6 +212,7 @@ const Home = () => {
                 </Box>
             </Box>
         </Box>
+
     // sx={{backgroundColor:"#00A5A5", color: "white", '&:hover': {color: '#00A5A5'}}} saria-label="add" onClick={handleOpen}
         // <Box display="flex" justifyContent="center" alignItems="center">
         //   <Avatar

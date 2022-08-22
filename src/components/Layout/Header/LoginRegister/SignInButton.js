@@ -9,6 +9,10 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import SignIn from "./Login/Login";
 import SignUp from "./Register/Register";
+import Auth from "../../../../contexts/Auth";
+import OpenModalAuth from "../../../../contexts/OpenModalAuth";
+import {useContext} from "react";
+import TabIndexAuth from "../../../../contexts/TabIndexAuth";
 
 const style = {
     position: 'absolute',
@@ -23,15 +27,17 @@ const style = {
 };
 
 export default function SignInButton() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false)
+    // const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setIsOpenAuth(true);
+    const handleClose = () => setIsOpenAuth(false)
+    const {isOpenAuth, setIsOpenAuth} = useContext(OpenModalAuth);
+    const {tabIndexAuth, setTabIndexAuth} = useContext(TabIndexAuth);
 
-
-    const [value, setValue] = React.useState('1');
+    // const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        // console.log(tabIndexAuth);
+        setTabIndexAuth(newValue);
     };
 
     return (
@@ -42,7 +48,7 @@ export default function SignInButton() {
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={open}
+                open={isOpenAuth}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -50,9 +56,9 @@ export default function SignInButton() {
                     timeout: 500,
                 }}
             >
-                <Fade in={open}>
+                <Fade in={isOpenAuth}>
                     <Box sx={style}>
-                        <TabContext value={value}>
+                        <TabContext value={tabIndexAuth}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                                     <Tab label="Connexion" value="1" />

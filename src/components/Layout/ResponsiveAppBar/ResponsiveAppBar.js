@@ -11,6 +11,12 @@ import MessageIcon from '@mui/icons-material/Message';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import FeedIcon from '@mui/icons-material/Feed';
 import WorkIcon from '@mui/icons-material/Work';
+import Box from "@mui/material/Box";
+import ButtonSearch from "../Header/Search/ButtonSearch";
+import IconProfilePicture from "../Header/IconProfilePicture";
+import SignInButton from "../Header/LoginRegister/SignInButton";
+import Auth from "../../../contexts/Auth";
+import {useContext} from "react";
 
 const StyledFab = styled(Fab)({
     position: 'absolute',
@@ -26,48 +32,56 @@ export default function BottomAppBar() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    const {isAuthenticated} = useContext(Auth);
 
     return (
+
         <React.Fragment>
             <CssBaseline />
-            <AppBar
-                position="fixed"
-                color="primary"
-                sx={{ top: 'auto', bottom: 0, bgcolor: 'white' }}
-            >
-                <Toolbar>
-                    <BottomNavigation
-                        sx={{ width: '100%' }}
-                        value={value}
-                        onChange={handleChange}
+            {(isAuthenticated && (
+                    <AppBar
+                        position="fixed"
+                        color="primary"
+                        sx={{ top: 'auto', bottom: 0, bgcolor: 'white' }}
                     >
-                        <BottomNavigationAction
-                            label="Actualité"
-                            value="Actualité"
-                            icon={<FeedIcon />}
-                        />
-                        <BottomNavigationAction
-                            label="Evenements"
-                            value="Evenements"
-                            icon={<CelebrationIcon />}
-                        />
+                        <Toolbar>
+                            <BottomNavigation
+                                sx={{ width: '100%' }}
+                                value={value}
+                                onChange={handleChange}
+                            >
+                                <BottomNavigationAction
+                                    label="Actualité"
+                                    value="Actualité"
+                                    icon={<FeedIcon />}
+                                />
+                                <BottomNavigationAction
+                                    label="Evenements"
+                                    value="Evenements"
+                                    icon={<CelebrationIcon />}
+                                />
 
-                        <BottomNavigationAction
-                            label="Emplois"
-                            value="Emplois"
-                            icon={<WorkIcon />}
-                        />
-                        <BottomNavigationAction
-                            label="Messages"
-                            value="Messages"
-                            icon={<MessageIcon />}
-                        />
-                    </BottomNavigation>
-                    <StyledFab color="secondary">
-                        <AddIcon />
-                    </StyledFab>
-                </Toolbar>
-            </AppBar>
+                                <BottomNavigationAction
+                                    label="Emplois"
+                                    value="Emplois"
+                                    icon={<WorkIcon />}
+                                />
+                                <BottomNavigationAction
+                                    label="Messages"
+                                    value="Messages"
+                                    icon={<MessageIcon />}
+                                />
+                            </BottomNavigation>
+                            <StyledFab color="secondary">
+                                <AddIcon />
+                            </StyledFab>
+                        </Toolbar>
+                    </AppBar>
+                ))
+                ||
+                null
+            }
+
         </React.Fragment>
     );
 }
