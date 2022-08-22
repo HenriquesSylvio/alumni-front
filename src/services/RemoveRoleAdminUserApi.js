@@ -9,5 +9,5 @@ const config = {
 };
 
 export default function removeRoleAdminUser(idUser) {
-    return axios.patch(`${URLApi}user/removeAdmin/${idUser}`, {headers: {Authorization: `Bearer ${getItem('Token')}`}})
+    return axios.patch(`${URLApi}user/removeAdmin/${idUser}`, "",{headers: {Authorization: `Bearer ${getItem('Token')}`}})
 }

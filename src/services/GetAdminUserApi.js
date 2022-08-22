@@ -9,5 +9,5 @@ const config = {
 };
 
 export default function getAdminUser() {
-    return axios.get(`${URLApi}user/admin`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
+    return axios.get(`${URLApi}user/admin`,{headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }

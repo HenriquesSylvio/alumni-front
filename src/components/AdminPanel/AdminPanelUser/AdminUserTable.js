@@ -16,6 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import {deleteUser} from "../../../services/DeleteUserApi";
 import {acceptUser} from "../../../services/AcceptUserApi";
 import getAdminUser from "../../../services/GetAdminUserApi";
+import removeRoleAdminUser from "../../../services/RemoveRoleAdminUserApi";
 
 const columns = [
     { id: 'last_name', label: 'Nom', minWidth: 100 },
@@ -66,7 +67,10 @@ export default function AdminUserTable() {
     //     }
     // }
     const handleDelete = async (index, idUser) => {
-
+        if (window.confirm('Êtes-vous sûr de vouloir supprimer les droits d\'administrations pour cet utilisateur ?')) {
+            setUsers(users.filter((v, i) => i !== index + (page * 10)))
+            await removeRoleAdminUser(idUser);
+        }
     }
 
 
