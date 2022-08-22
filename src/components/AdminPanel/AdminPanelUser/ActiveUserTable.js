@@ -24,6 +24,11 @@ import SendIcon from "@mui/icons-material/Send";
 import getUsers from "../../../services/GetUsersApi";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import {getItem} from "../../../services/LocaleStorage";
+import Tab from "@mui/material/Tab";
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
+import {addRoleAdminUser} from "../../../services/AddRoleAdminUserApi";
+import {toast} from "react-toastify";
 
 const columns = [
     { id: 'lastName', label: 'Nom', minWidth: 100 },
@@ -55,6 +60,8 @@ export default function ActiveUserTable() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setMaxPage(0)
+        setPage(0)
         setUsers("")
         await searchUsers(1);
     };
@@ -101,8 +108,15 @@ export default function ActiveUserTable() {
 
     const handleDelete = async (index, idUser) => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
-            setUsers(users.filter((v, i) => i !== index))
+            setUsers(users.filter((v, i) => i !== index + (page * 15)))
             await deleteUser(idUser);
+        }
+    }
+
+    const handleAddAdmin = async (index, idUser) => {
+        if (window.confirm('Êtes-vous sûr de vouloir rajouter cet utilisateur en tant qu\'admin ?')) {
+            await addRoleAdminUser(idUser);
+            toast.success('L\'utilisateur est désormais admin ! 🥳');
         }
     }
 
@@ -180,7 +194,14 @@ export default function ActiveUserTable() {
                                                         <IconButton onClick={e => handleDelete(index, user.id)}>
                                                             <ClearIcon color="error"/>
                                                         </IconButton>
-
+                                                        {(JSON.parse(atob(getItem('Token').split('.')[1])).roles.some(item => item === 'ROLE_SUPER_ADMIN') && (
+                                                                <IconButton onClick={e => handleAddAdmin(index, user.id)}>
+                                                                    <AddModeratorIcon color="primary"/>
+                                                                </IconButton>
+                                                            ))
+                                                            ||
+                                                            null
+                                                        }
                                                     </TableCell>
                                                 </TableRow>
                                             );

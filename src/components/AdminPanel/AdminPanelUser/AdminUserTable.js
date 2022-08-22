@@ -15,24 +15,16 @@ import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from "@mui/material/IconButton";
 import {deleteUser} from "../../../services/DeleteUserApi";
 import {acceptUser} from "../../../services/AcceptUserApi";
+import getAdminUser from "../../../services/GetAdminUserApi";
+import removeRoleAdminUser from "../../../services/RemoveRoleAdminUserApi";
 
 const columns = [
-    { id: 'lastName', label: 'Nom', minWidth: 100 },
-    { id: 'firstName', label: 'Prénom', minWidth: 100 },
-    { id: 'email', label: 'Email', minWidth: 170 },
-    // { id: 'promo', label: 'Nom d', minWidth: 170 },
-    {
-        id: 'promo',
-        label: 'Promo',
-        minWidth: 50,
-        align: 'right',
-    },
-    { id: 'faculty_label', label: 'Filière', minWidth: 200 },
-    // { id: 'action', label: 'Action', minWidth: 200 },
+    { id: 'last_name', label: 'Nom', minWidth: 100 },
+    { id: 'first_name', label: 'Prénom', minWidth: 100 },
 ];
 
 
-export default function WaitingUserTable() {
+export default function AdminUserTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [users, setUsers] = React.useState({});
@@ -45,7 +37,7 @@ export default function WaitingUserTable() {
     }, []);
 
     const getUsers = async () => {
-        const response = await getUserWaitingForValidation();
+        const response = await getAdminUser();
         console.log(response.data.users);
         setUsers(response.data.users);
     };
@@ -68,16 +60,16 @@ export default function WaitingUserTable() {
     //     console.log(users)
     // };
 
-    const handleAccept = async (index, idUser) => {
-        if (window.confirm('Êtes-vous sûr de vouloir accepter cet utilisateur ?')) {
-            setUsers(users.filter((v, i) => i !== index + (page * 10)))
-            await acceptUser(idUser);
-        }
-    }
+    // const handleAccept = async (index, idUser) => {
+    //     if (window.confirm('Êtes-vous sûr de vouloir accepter cet utilisateur ?')) {
+    //         setUsers(users.filter((v, i) => i !== index + (page * 10)))
+    //         await acceptUser(idUser);
+    //     }
+    // }
     const handleDelete = async (index, idUser) => {
-        if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+        if (window.confirm('Êtes-vous sûr de vouloir supprimer les droits d\'administrations pour cet utilisateur ?')) {
             setUsers(users.filter((v, i) => i !== index + (page * 10)))
-            await deleteUser(idUser);
+            await removeRoleAdminUser(idUser);
         }
     }
 
@@ -109,33 +101,33 @@ export default function WaitingUserTable() {
                     <TableBody>
                         {users.length ?
                             users
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((user, index) => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={user.id}>
-                                        {columns.map((column) => {
-                                            const value = user[column.id];
-                                            return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number'
-                                                        ? column.format(value)
-                                                        : value}
-                                                </TableCell>
-                                            );
-                                        })}
-                                        <TableCell key="action" align="center">
-                                            <IconButton onClick={e => handleAccept(index, user.id)}>
-                                                <CheckIcon color="success"/>
-                                            </IconButton>
-                                            <IconButton onClick={e => handleDelete(index, user.id)}>
-                                                <ClearIcon color="error"/>
-                                            </IconButton>
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((user, index) => {
+                                        return (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={user.id}>
+                                                {columns.map((column) => {
+                                                    const value = user[column.id];
+                                                    return (
+                                                        <TableCell key={column.id} align={column.align}>
+                                                            {column.format && typeof value === 'number'
+                                                                ? column.format(value)
+                                                                : value}
+                                                        </TableCell>
+                                                    );
+                                                })}
+                                                <TableCell key="action" align="center">
+                                                    {/*<IconButton onClick={e => handleAccept(index, user.id)}>*/}
+                                                    {/*    <CheckIcon color="success"/>*/}
+                                                    {/*</IconButton>*/}
+                                                    <IconButton onClick={e => handleDelete(index, user.id)}>
+                                                        <ClearIcon color="error"/>
+                                                    </IconButton>
 
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            }
-                            ) : null
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    }
+                                ) : null
                         }
                     </TableBody>
                 </Table>

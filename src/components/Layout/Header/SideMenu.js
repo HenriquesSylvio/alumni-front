@@ -88,7 +88,7 @@ export default function SideMenu() {
                     </ListItemButton>
                 </ListItem>
 
-                {(JSON.parse(atob(getItem('Token').split('.')[1])).roles.some(item => item === 'ROLE_ADMIN') && (
+                {(JSON.parse(atob(getItem('Token').split('.')[1])).roles.some(item => item === 'ROLE_ADMIN' || item === 'ROLE_SUPER_ADMIN') && (
                     <>
                         <Divider/>
                         <ListItem disablePadding>
