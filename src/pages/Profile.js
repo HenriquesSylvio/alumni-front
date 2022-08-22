@@ -90,7 +90,7 @@ export default function Profile() {
                     </Box>
                 ) : (
                     <Box paddingRight={"10%"} paddingLeft={"10%"}>
-                        <Box  marginTop={15}>
+                        <Box>
                             <DetailUser
                                 firstName={user.firstName}
                                 lastName={user.lastName}
