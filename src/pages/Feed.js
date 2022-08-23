@@ -1,4 +1,4 @@
-import {Stack} from '@mui/material';
+import {Fade, Modal, Stack} from '@mui/material';
 import React, {useContext, useEffect, useState} from 'react';
 import EventFeed from '../components/EventFeed/EventFeed';
 import MainFeed from '../components/Post/MainFeed';
@@ -7,14 +7,49 @@ import ButtonAddPost from "../components/Post/ButtonAddPost";
 import {useNavigate} from "react-router-dom";
 import OpenModalAddComment from "../contexts/OpenModalAddComment";
 import FirstLoad from "../contexts/FirstLoad";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import AddCommentForm from "../components/Post/AddCommentForm";
+import ResponseIdPost from "../contexts/ResponseIdPost";
+
+const styleBox = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 'auto',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+    display: { xs: 'none', md: 'flex' },
+};
+const styleResponsiveBox = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    display: { xs: 'flex', md: 'none' }
+};
 
 export default function Feed() {
+    const {isOpenAddComment, setIsOpenAddComment} = useContext(OpenModalAddComment);
+    const {idPost, setIdPost} = useContext(ResponseIdPost);
     let page = 1;
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     let newPosts = [];
     // let firstLoad = true;
     const {firstLoad, setFirstLoad} = useContext(FirstLoad);
+
+
+    const handleClose = () => {
+        setIsOpenAddComment(false)
+        // setIdPost(0)
+    }
+
 
     const getPostFromFeed = async () => {
         const response = await getFeed(page);
@@ -69,6 +104,29 @@ export default function Feed() {
                 {/*    </Stack>*/}
                 {/*</div>*/}
                 <ButtonAddPost/>
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    open={isOpenAddComment}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    {/*<Fade>*/}
+                    <Fade in={isOpenAddComment}>
+                        <Box>
+                            <Box sx={styleBox}>
+                                <AddCommentForm idPost={idPost}/>
+                            </Box>
+                            <Box sx={styleResponsiveBox}>
+                                <AddCommentForm idPost={idPost}/>
+                            </Box>
+                        </Box>
+                    </Fade>
+                </Modal>
             </div>
         )
 }
