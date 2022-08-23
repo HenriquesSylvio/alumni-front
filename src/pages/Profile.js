@@ -11,6 +11,9 @@ import { useParams } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import SendMessageForm from "../components/Profile/SendMessageForm";
 import OpenModalSendMessage from "../contexts/OpenModalSendMessage";
+import AddCommentForm from "../components/Post/AddCommentForm";
+import OpenModalAddComment from "../contexts/OpenModalAddComment";
+import ResponseIdPost from "../contexts/ResponseIdPost";
 
 const styleBox = {
     position: 'absolute',
@@ -40,6 +43,8 @@ export default function Profile() {
     const [user, setUser] = useState('');
     const [loadingPage, setLoading] = useState(true);
     const {isOpenSendMessage, setIsOpenSendMessage} = useContext(OpenModalSendMessage);
+    const {isOpenAddComment, setIsOpenAddComment} = useContext(OpenModalAddComment);
+    const {idPost, setIdPost} = useContext(ResponseIdPost);
     let params = useParams();
     let userId = '';
 
@@ -60,7 +65,8 @@ export default function Profile() {
     };
 
     const handleClose = () => {
-        setIsOpenSendMessage(false)
+        setIsOpenSendMessage(false);
+        setIsOpenAddComment(false);
     }
 
     const getPostByUserId = async () => {
@@ -70,6 +76,7 @@ export default function Profile() {
         console.log(response.data.posts);
         setLoading(!loadingPage);
     };
+
 
         return (
             <Box
@@ -151,6 +158,29 @@ export default function Profile() {
                             </Paper>
                             <Paper sx={styleResponsiveBox}>
                                 <SendMessageForm idUser={params.id}/>
+                            </Paper>
+                        </Box>
+                    </Fade>
+                </Modal>
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    open={isOpenAddComment}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    {/*<Fade>*/}
+                    <Fade in={isOpenAddComment}>
+                        <Box>
+                            <Paper sx={styleBox}>
+                                <AddCommentForm idPost={idPost}/>
+                            </Paper>
+                            <Paper sx={styleResponsiveBox}>
+                                <AddCommentForm idPost={idPost}/>
                             </Paper>
                         </Box>
                     </Fade>
