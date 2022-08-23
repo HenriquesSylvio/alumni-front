@@ -23,6 +23,7 @@ export default function IconProfilePicture() {
     const { setIsAuthenticated } = useContext(Auth);
     const { setActiveUser } = useContext(ActiveConnectedUser)
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    // const [img] = React.useState(JSON.parse(getItem('Profile')).urlProfilePicture)
     // const [activeProfile] = useState(JSON.parse(getItem('Profile')));
 
     const handleOpenUserMenu = (event) => {
@@ -43,7 +44,8 @@ export default function IconProfilePicture() {
         <Box component="span"  sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
-                    <Avatar src={useState(JSON.parse(getItem('Profile'))).urlProfilePicture} />
+                    {/*<Avatar src={JSON.parse(getItem('Profile')).urlProfilePicture} />*/}
+                    <Avatar />
                 </IconButton>
             </Tooltip>
             <Menu

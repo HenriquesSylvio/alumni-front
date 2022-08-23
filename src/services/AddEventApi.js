@@ -9,7 +9,6 @@ const config = {
 };
 
 export function addEvent(credentials) {
-    const current = new Date();
     return axios
         .post(`${URLApi}event`, credentials, {headers: { Authorization: `Bearer ${getItem('Token')}` }});
         }

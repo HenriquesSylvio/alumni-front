@@ -47,7 +47,7 @@ export default function Search() {
             console.log(response.data.data)
             setLoading(false);
         }
-
+        // console.log(JSON.parse(getItem('Profile')).urlProfilePicture)
         setTypeSearch(params.typeSearch)
 
         if (params.typeSearch === "post") {

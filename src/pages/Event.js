@@ -15,6 +15,7 @@ import { PickersDay, PickersDayProps } from "@mui/x-date-pickers/PickersDay";
 import Moment from 'moment';
 import getAllDateEvent from "../services/GetAllDateEventApi";
 import {getItem} from "../services/LocaleStorage";
+import frLocale from "date-fns/locale/fr";
 
 export default function Event() {
     const [activeProfile] = useState(JSON.parse(getItem('Profile')));
@@ -191,7 +192,7 @@ export default function Event() {
                 </Grid>
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                     <Card>
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={frLocale}>
                             <CalendarPicker date={dateCalendar} renderDay={customDayRenderer} onChange={(newDate) => ChangeDate(newDate)} />
                         </LocalizationProvider>
                     </Card>

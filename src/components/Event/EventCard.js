@@ -6,6 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import {postParticipateEvent} from "../../services/ParticipateEventApi";
 import {deleteParticipateEvent} from "../../services/DeleteParticipateEvent";
+import Moment from "moment";
 
 // export default function EventCard({firstName, lastName, title, idEvent, idUser, description, date}) {
 export default function EventCard({event, canInterate}) {
@@ -29,15 +30,10 @@ export default function EventCard({event, canInterate}) {
         setParticipateLoading(false)
     };
 
-    // useEffect(() => {
-    //     console.log(event.date)
-    //     console.log(date)
-    //     if (event.date > date) {
-    //         setCanInterate(false)
-    //     } else {
-    //         setCanInterate(true)
-    //     }
-    // }, []);
+    useEffect(() => {
+        // console.log()
+        // console.log(event.date > Moment().format('DD/MM/YYYY 00:00'))
+    }, []);
 
     return (
         <Card  sx={{ paddingRight:1 }} >
@@ -78,12 +74,12 @@ export default function EventCard({event, canInterate}) {
                     ))
                     ||
                     (participateByUser === true && (
-                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleUnparticipate} disabled={canInterate}>
+                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleUnparticipate} disabled={event.date < Moment().format('DD/MM/YYYY 00:00')}>
                             Ne plus participer
                         </Button>
                     ))
                     ||
-                    <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleParticipate} disabled={canInterate}>
+                    <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleParticipate} disabled={event.date < Moment().format('DD/MM/YYYY 00:00')}>
                         Participer
                     </Button>
                 }

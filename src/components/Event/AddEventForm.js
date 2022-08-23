@@ -18,6 +18,7 @@ import OpenModalAddPost from "../../contexts/OpenModalAddPost";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers'
+import frLocale from 'date-fns/locale/fr';
 
 export default function AddEventForm() {
     const [errors, setErrors] = useState({});
@@ -100,7 +101,7 @@ export default function AddEventForm() {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={frLocale}>
                                 <DatePicker
                                     minDate={new Date()}
                                     label="Date de l'événement"
