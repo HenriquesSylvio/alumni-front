@@ -101,14 +101,14 @@ const Home = () => {
                             </Typography>
                             <br/>
                             <Typography variant="h5" style={{fontFamily: 'Fira Sans'}} textAlign="center" paddingRight={"10%"} paddingLeft={"10%"}>
-                                Cette plateforme est le réseau social de l’école. Ici vous pourrez contacter vos anciens camarades, participer à des évènements créés par des élèves, interagir sur des posts et plus encore !
+                                Cette plateforme est le réseau social de l’école. Ici vous pourrez contacter vos anciens camarades, participer à des évènements, interagir sur des publications et plus encore !
                             </Typography>
                             <br/>
                             <br/>
                             <Typography variant="h5" style={{fontFamily: 'Fira Sans'}} textAlign="center">
                                 Pas encore inscrit ?
                             </Typography>
-                            <Typography variant="h5" style={{fontFamily: 'Fira Sans'}} textAlign="center">
+                            <Typography variant="h5" style={{fontFamily: 'Fira Sans'}} textAlign="center"  onClick={handleOpenAuth}>
                                 Cliquez ici !
                             </Typography>
                         </CardContent>
@@ -140,7 +140,7 @@ const Home = () => {
                             </Typography>
                             <br/>
                             <Typography variant="body2" style={{fontFamily: 'Fira Sans'}} textAlign="center" paddingRight={"10%"} paddingLeft={"10%"}>
-                                Cette plateforme est le réseau social de l’école. Ici vous pourrez contacter vos anciens camarades, participer à des évènements créés par des élèves, interagir sur des posts et plus encore !
+                                Cette plateforme est le réseau social de l’école. Ici vous pourrez contacter vos anciens camarades, participer à des évènements, interagir sur des publications et plus encore !
                             </Typography>
                             <br/>
                             <Typography variant="body2" style={{fontFamily: 'Fira Sans'}} textAlign="center">

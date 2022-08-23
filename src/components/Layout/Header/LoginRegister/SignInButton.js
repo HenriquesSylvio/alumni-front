@@ -13,8 +13,21 @@ import Auth from "../../../../contexts/Auth";
 import OpenModalAuth from "../../../../contexts/OpenModalAuth";
 import {useContext} from "react";
 import TabIndexAuth from "../../../../contexts/TabIndexAuth";
+import Paper from "@mui/material/Paper";
+import EditFacultyForm from "../../../AdminPanel/AdminPanelFaculty/EditFacultyForm";
 
-const style = {
+// const style = {
+//     position: 'absolute',
+//     top: '50%',
+//     left: '50%',
+//     transform: 'translate(-50%, -50%)',
+//     width: 'auto',
+//     bgcolor: 'background.paper',
+//     boxShadow: 24,
+//     p: 4,
+//     borderRadius: 2
+// };
+const styleBox = {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -23,7 +36,18 @@ const style = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-    borderRadius: 2
+    borderRadius: 2,
+    display: { xs: 'none', md: 'block' },
+};
+const styleResponsiveBox = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    overflow:"scroll",
+    display: { xs: 'block', md: 'none' }
 };
 
 export default function SignInButton() {
@@ -57,21 +81,55 @@ export default function SignInButton() {
                 }}
             >
                 <Fade in={isOpenAuth}>
-                    <Box sx={style}>
-                        <TabContext value={tabIndexAuth}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
-                                <TabList onChange={handleChange} aria-label="lab API tabs example">
-                                    <Tab label="Connexion" value="1" />
-                                    <Tab label="Inscription" value="2" />
-                                </TabList>
-                            </Box>
-                            <TabPanel value="1">
-                                <SignIn />
-                            </TabPanel>
-                            <TabPanel value="2">
-                                <SignUp />
-                            </TabPanel>
-                        </TabContext>
+                    {/*<Box sx={style}>*/}
+                    {/*    <TabContext value={tabIndexAuth}>*/}
+                    {/*        <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>*/}
+                    {/*            <TabList onChange={handleChange} aria-label="lab API tabs example">*/}
+                    {/*                <Tab label="Connexion" value="1" />*/}
+                    {/*                <Tab label="Inscription" value="2" />*/}
+                    {/*            </TabList>*/}
+                    {/*        </Box>*/}
+                    {/*        <TabPanel value="1">*/}
+                    {/*            <SignIn />*/}
+                    {/*        </TabPanel>*/}
+                    {/*        <TabPanel value="2">*/}
+                    {/*            <SignUp />*/}
+                    {/*        </TabPanel>*/}
+                    {/*    </TabContext>*/}
+                    {/*</Box>*/}
+                    <Box>
+                        <Paper sx={styleBox}>
+                            <TabContext value={tabIndexAuth}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
+                                    <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                        <Tab label="Connexion" value="1" />
+                                        <Tab label="Inscription" value="2" />
+                                    </TabList>
+                                </Box>
+                                <TabPanel value="1">
+                                    <SignIn />
+                                </TabPanel>
+                                <TabPanel value="2">
+                                    <SignUp />
+                                </TabPanel>
+                            </TabContext>
+                        </Paper>
+                        <Paper sx={styleResponsiveBox}>
+                            <TabContext value={tabIndexAuth}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
+                                    <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                        <Tab label="Connexion" value="1" />
+                                        <Tab label="Inscription" value="2" />
+                                    </TabList>
+                                </Box>
+                                <TabPanel value="1">
+                                    <SignIn />
+                                </TabPanel>
+                                <TabPanel value="2">
+                                    <SignUp />
+                                </TabPanel>
+                            </TabContext>
+                        </Paper>
                     </Box>
                 </Fade>
             </Modal>
