@@ -113,7 +113,7 @@ export default function AddEventForm() {
                                         // console.log(dateFormat.getMonth())
                                         // console.log(dd + '/' + mm + '/' + yyyy);
                                         setDate(newDate)
-                                        setValues({...values, ["date"]: dd + '/' + mm + '/' + yyyy })
+                                        setValues({...values, ["date"]: dd + '/' + mm + '/' + yyyy +" 00:00"})
                                     }
                                     }
                                     renderInput={(params) => <TextField {...params} fullWidth required disabled={loadingForm}/>}

@@ -191,11 +191,16 @@ export default function Messages() {
                                     (message.idUser === activeProfile.id && (
                                         <MessageRight
                                             message={message.content}
+                                            time={message.createAt}
                                         />
                                     ))
                                     ||
                                     <MessageLeft
+                                        firstName={message.firstName}
+                                        lastName={message.lastName}
                                         message={message.content}
+                                        urlProfilePicture={message.urlProfilePicture}
+                                        time={message.createAt}
                                     />
                             ): null
                         }
@@ -232,11 +237,16 @@ export default function Messages() {
                                 (message.idUser === activeProfile.id && (
                                     <MessageRight
                                         message={message.content}
+                                        time={message.createAt}
                                     />
                                 ))
                                 ||
                                     <MessageLeft
+                                        firstName={message.firstName}
+                                        lastName={message.lastName}
                                         message={message.content}
+                                        urlProfilePicture={message.urlProfilePicture}
+                                        time={message.createAt}
                                     />
                             ): null
                         }

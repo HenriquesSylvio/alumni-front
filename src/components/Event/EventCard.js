@@ -48,6 +48,7 @@ export default function EventCard({event, canInterate}) {
             >
                 <IconButton>
                     <Avatar
+                        src={event.urlProfilePicture}
                         sx={{ width: 50, height: 50}}
                     />
 
@@ -68,7 +69,7 @@ export default function EventCard({event, canInterate}) {
                     {event.title}
                 </Typography>
                 <Typography marginLeft={2} component="div" fontWeight={"lighter"}>
-                    {event.date}
+                    {event.date.split(" 00:00")}
                 </Typography>
                 <p>{event.description}</p>
 

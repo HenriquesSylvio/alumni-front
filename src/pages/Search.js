@@ -12,17 +12,17 @@ import MinimUser from "../components/Profile/MinimUser";
 import getUsers from "../services/GetUsersApi";
 import {CircularProgress} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import {getItem} from "../services/LocaleStorage";
 
 export default function Search() {
 
     const params = useParams();
     const [typeSearch, setTypeSearch] = useState("");
-    const {activeProfile} = useContext(ActiveConnectedUser);
     const [posts, setPost] = useState('');
     const [events, setEvents] = useState('');
     const [users, setUsers] = useState('');
     const [loadingPage, setLoading] = useState(true);
-
+    const [activeProfile] = useState(JSON.parse(getItem('Profile')));
     useEffect( () => {
         const searchPosts = async () => {
             setLoading(true);

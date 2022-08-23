@@ -42,7 +42,10 @@ export default function Event() {
         const stringifiedDate = date.toISOString().slice(0, 10);
         // console.log(datesEvent)
         // Moment().add()
-        if (datesEvent.includes(Moment(stringifiedDate).add(+1, "days").format('DD/MM/YYYY'))) {
+        // console.log(stringifiedDate);
+        // console.log(Moment(syr,'DD-MM
+        // -YYYY').add(+1, "days").format('DD/MM/YYYY 00:00'))
+        if (datesEvent.includes(Moment(stringifiedDate,'YYYY-MM-DD').add(+1, "days").format('DD/MM/YYYY 00:00'))) {
             return <PickersDay {...pickersDayProps} />;
         }
         return <PickersDay {...pickersDayProps} disabled/>;
@@ -51,11 +54,12 @@ export default function Event() {
     const getEventsComing = async () => {
         setLoadingEvent(true);
         try{
-            console.log(Moment(date).format('YYYY-MM-DD'));
+            // console.log(Moment(date).format('YYYY-MM-DD'));
             const response = await getEvents(page, Moment(date).format('YYYY-MM-DD'));
             newEvents = response.data.data;
             setEvents((oldEvents) => [...oldEvents, ...newEvents])
             page += 1
+            console.log(response.data.data)
         } catch {
         }
         setLoadingEvent(false);
@@ -79,9 +83,10 @@ export default function Event() {
         const response = await getAllDateEvent();
         Object.keys(response.data.dates).forEach(function(key) {
             // arr.push(response.data.dates[key]);
-            console.log(response.data.dates[key].date)
+            // console.log(response.data.dates[key].date)
             setDatesEvent(currentDate => [...currentDate, response.data.dates[key].date])
         });
+        console.log(Moment(response.data.dates[0].date,'DD/MM/YYYY').format('DD/MM/YYYY'));
     };
 
     const handleScroll = async (e) =>{
@@ -100,11 +105,10 @@ export default function Event() {
             setLoading(true);
             await getEventsComing();
             await getDateEvent();
-            console.log("dsddssqdqsdqdsqsd")
             setLoading(false);
         }
         getData();
-        console.log("test2")
+
         window.addEventListener('scroll', handleScroll)
     }, []);
 
