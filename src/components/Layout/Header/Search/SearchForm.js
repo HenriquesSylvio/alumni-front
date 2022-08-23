@@ -21,6 +21,8 @@ import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import OpenModalSearch from "../../../../contexts/OpenModalSearch";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 
 
@@ -66,6 +68,9 @@ export default function SearchForm() {
     return (
         <Container component="main">
             <CssBaseline />
+            <IconButton onClick={() => setIsOpenSearch(false)}>
+                <CloseIcon/>
+            </IconButton>
             <Grid
                 container
                 spacing={0}

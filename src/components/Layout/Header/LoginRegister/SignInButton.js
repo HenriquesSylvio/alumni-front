@@ -15,6 +15,8 @@ import {useContext} from "react";
 import TabIndexAuth from "../../../../contexts/TabIndexAuth";
 import Paper from "@mui/material/Paper";
 import EditFacultyForm from "../../../AdminPanel/AdminPanelFaculty/EditFacultyForm";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 // const style = {
 //     position: 'absolute',
@@ -99,6 +101,9 @@ export default function SignInButton() {
                     {/*</Box>*/}
                     <Box>
                         <Paper sx={styleBox}>
+                            <IconButton onClick={() => setIsOpenAuth(false)}>
+                                <CloseIcon/>
+                            </IconButton>
                             <TabContext value={tabIndexAuth}>
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                                     <TabList onChange={handleChange} aria-label="lab API tabs example">
@@ -115,6 +120,9 @@ export default function SignInButton() {
                             </TabContext>
                         </Paper>
                         <Paper sx={styleResponsiveBox}>
+                            <IconButton onClick={() => setIsOpenAuth(false)}>
+                                <CloseIcon/>
+                            </IconButton>
                             <TabContext value={tabIndexAuth}>
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                                     <TabList onChange={handleChange} aria-label="lab API tabs example">

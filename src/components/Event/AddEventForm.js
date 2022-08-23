@@ -19,6 +19,8 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import frLocale from 'date-fns/locale/fr';
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 export default function AddEventForm() {
     const [errors, setErrors] = useState({});
@@ -69,6 +71,9 @@ export default function AddEventForm() {
     return (
         <Container component="main">
             <CssBaseline />
+            <IconButton onClick={() => setIsOpenAddPost(false)}>
+                <CloseIcon/>
+            </IconButton>
             <Grid
                 container
                 spacing={0}

@@ -17,6 +17,8 @@ import validate from "../../validators/EditProfileValidator";
 import {toast} from "react-toastify";
 import getProfile from "../../services/ProfileApi";
 import {addItem} from "../../services/LocaleStorage";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 const style = {
     position: 'absolute',
@@ -137,6 +139,9 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                             <ThemeProvider theme={theme}>
                                 <Container component="main" maxWidth="xs">
                                     <CssBaseline />
+                                    <IconButton onClick={() => setOpen(false)}>
+                                        <CloseIcon/>
+                                    </IconButton>
                                     <Box
                                         sx={{
                                             marginTop: 2,

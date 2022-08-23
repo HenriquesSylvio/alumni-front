@@ -15,6 +15,8 @@ import {addPost} from "../../services/AddPostApi";
 import validate from "../../validators/AddPostValidator";
 import {useContext} from "react";
 import OpenModalAddPost from "../../contexts/OpenModalAddPost";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 export default function AddPostForm() {
     const [errors, setErrors] = useState({});
@@ -52,6 +54,9 @@ export default function AddPostForm() {
     return (
             <Container component="main">
                 <CssBaseline />
+                <IconButton onClick={() => setIsOpenAddPost(false)}>
+                    <CloseIcon/>
+                </IconButton>
                 <Grid
                     container
                     spacing={0}

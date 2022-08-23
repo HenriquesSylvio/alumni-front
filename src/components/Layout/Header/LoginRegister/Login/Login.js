@@ -17,6 +17,8 @@ import getProfile from "../../../../../services/ProfileApi";
 import ActiveConnectedUser from "../../../../../contexts/ActiveConnectedUser";
 import {addItem, getItem} from "../../../../../services/LocaleStorage";
 import Admin from "../../../../../contexts/Admin";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 const theme = createTheme();
 
