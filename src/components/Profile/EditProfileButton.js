@@ -15,6 +15,8 @@ import { v4 } from "uuid";
 import {EditProfile} from "../../services/EditProfile";
 import validate from "../../validators/EditProfileValidator";
 import {toast} from "react-toastify";
+import getProfile from "../../services/ProfileApi";
+import {addItem} from "../../services/LocaleStorage";
 
 const style = {
     position: 'absolute',
@@ -87,6 +89,12 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
         setValues({...values, [name]: value})
     }
 
+    const getMyProfile = async () => {
+        const response = await getProfile()
+        addItem('Profile',  JSON.stringify(response.data))
+    }
+
+
     const handleSubmit = async event => {
         event.preventDefault();
         setErrors(validate(values));
@@ -98,7 +106,8 @@ export default function EditProfileButton({firstName, lastName, urlProfilePictur
                 console.log(values);
                 await EditProfile(values);
                 await deleteImage();
-                window.location.reload()
+                await getMyProfile();
+                window.location.reload();
             } catch ({response}) {
                 toast.error('Une erreur est survenue. Veuillez réessayer plus tard ! 😃')
                 console.log(response)

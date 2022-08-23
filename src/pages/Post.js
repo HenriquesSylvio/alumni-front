@@ -20,6 +20,8 @@ import getProfile from "../services/ProfileApi";
 // import OpenModalAddPost from "../contexts/OpenModalAddComment";
 import ActiveConnectedUser from "../contexts/ActiveConnectedUser";
 import {getItem} from "../services/LocaleStorage";
+import SendMessageForm from "../components/Profile/SendMessageForm";
+import OpenModalSendMessage from "../contexts/OpenModalSendMessage";
 // import { useParams } from "react-router-dom";
 
 const styleBox = {
@@ -53,7 +55,7 @@ export default function Post() {
     const [author, setAuthor] = useState('');
     const [activeProfile] = useState(JSON.parse(getItem('Profile')));
     const [loadingComment, setLoadingComment] = useState(false);
-
+    const {isOpenSendMessage, setIsOpenSendMessage} = useContext(OpenModalSendMessage);
 
     let idActivePost = "";
     const params = useParams();
@@ -63,7 +65,8 @@ export default function Post() {
     let loadingDataComment = false;
 
     const handleClose = () => {
-        setIsOpenAddComment(false)
+        setIsOpenSendMessage(false);
+        setIsOpenAddComment(false);
         // setIdPost(0)
     }
 
@@ -214,7 +217,7 @@ export default function Post() {
                             idUser={author.id}
                             subscribe={author.subcribe}
                             canModify={false}
-                            myProfile={false}
+                            myProfile={author.myProfile}
                         />
                     ))
                     ||
@@ -246,6 +249,28 @@ export default function Post() {
                         </Box>
                     </Fade>
                 </Modal>
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        open={isOpenSendMessage}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        <Fade in={isOpenSendMessage}>
+                            <Box>
+                                <Paper sx={styleBox}>
+                                    <SendMessageForm idUser={author.id}/>
+                                </Paper>
+                                <Paper sx={styleResponsiveBox}>
+                                    <SendMessageForm idUser={author.id}/>
+                                </Paper>
+                            </Box>
+                        </Fade>
+                    </Modal>
             {/*</Box>*/}
         </Grid>
             )}

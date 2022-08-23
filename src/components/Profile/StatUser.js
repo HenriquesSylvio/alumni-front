@@ -14,7 +14,7 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts}) {
                 direction="row"
                 justifyContent="space-around"
                 alignItems="flex-start"
-                paddingTop={2}
+                paddingTop={5}
                 paddingLeft={4}
                 paddingRight={4}
                 sx={{ display: { xs: 'none', md: 'flex' }}}

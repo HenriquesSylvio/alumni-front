@@ -57,7 +57,7 @@ export default function MainFeed({post, couleur, ...rest}) {
                 <IconButton onClick={goProfile}>
                     <Avatar
                         sx={{ width: 50, height: 50}}
-                        src= {post.url_profile_picture}
+                        src= {post.urlProfilePicture}
                     />
                 </IconButton>
                 <Grid marginTop={1}>
