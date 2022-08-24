@@ -118,12 +118,12 @@ export default function Profile() {
                         <Box display="flex" sx={{ flexDirection: 'column' }} marginTop={2}>
                                {
                                    posts.length ?
-                                       <Typography marginLeft={5} variant="h6" component="div">
-                                           Postes récents
+                                       <Typography marginLeft={5} variant="h6" component="div" style={{fontFamily: 'Fugaz One'}}>
+                                           Publications récents
                                        </Typography>
                                        :
-                                       <Typography marginLeft={5} variant="h5" component="div">
-                                           Aucun postes récents
+                                       <Typography marginLeft={5} variant="h5" component="div" style={{fontFamily: 'Fugaz One'}}>
+                                           Aucune publication récente
                                        </Typography>
                                }
                                {posts.length ?

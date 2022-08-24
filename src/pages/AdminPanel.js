@@ -43,7 +43,6 @@ export default function AdminPanel() {
                             ||
                             null
                         }
-
                     </TabList>
                 </Box>
                 <TabPanel value="1">

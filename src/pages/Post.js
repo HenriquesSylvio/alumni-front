@@ -175,7 +175,7 @@ export default function Post() {
                     Commentaires
                 </Typography>
                     :
-                    <Typography paddingTop={5} variant="h4" component="div">
+                    <Typography paddingTop={5} variant="h4" component="div"  style={{fontFamily: 'Fugaz One'}}>
                         Aucun commentaire trouvé !
                     </Typography>
                 }
