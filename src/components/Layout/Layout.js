@@ -12,7 +12,7 @@ class Layout extends React.Component {
             <>
                 <Header />
                 <main>{this.props.children}</main>
-                <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                <Box paddingTop={10} sx={{ display: { xs: 'block', sm: 'none' } }}>
                     <ResponsiveAppBar />
                 </Box>
 

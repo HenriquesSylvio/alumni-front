@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {getItem} from "./LocaleStorage";
 
-const URLApi = "http://127.0.0.1:8080/api/"
+const URLApi = process.env.REACT_APP_API_URL;
 // const URLApi = "https://alumni-nws-api.herokuapp.com/api/"
 
 const config = {

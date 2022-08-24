@@ -71,14 +71,14 @@ export default function SideMenu() {
                         <ListItemText primary="Evenements" />
                     </ListItemButton>
                 </ListItem>
-                <ListItem disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <WorkIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Emplois" />
-                    </ListItemButton>
-                </ListItem>
+                {/*<ListItem disablePadding>*/}
+                {/*    <ListItemButton>*/}
+                {/*        <ListItemIcon>*/}
+                {/*            <WorkIcon />*/}
+                {/*        </ListItemIcon>*/}
+                {/*        <ListItemText primary="Emplois" />*/}
+                {/*    </ListItemButton>*/}
+                {/*</ListItem>*/}
                 <ListItem disablePadding>
                     <ListItemButton onClick={() => navigate(`/messages`)}>
                         <ListItemIcon>

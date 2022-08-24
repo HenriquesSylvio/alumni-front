@@ -17,6 +17,7 @@ import IconProfilePicture from "../Header/IconProfilePicture";
 import SignInButton from "../Header/LoginRegister/SignInButton";
 import Auth from "../../../contexts/Auth";
 import {useContext} from "react";
+import {useNavigate} from "react-router-dom";
 
 const StyledFab = styled(Fab)({
     position: 'absolute',
@@ -28,11 +29,12 @@ const StyledFab = styled(Fab)({
 });
 
 export default function BottomAppBar() {
-    const [value, setValue] = React.useState('recents');
+    const [value, setValue] = React.useState('Actualité');
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
     const {isAuthenticated} = useContext(Auth);
+    let  navigate = useNavigate();
 
     return (
 
@@ -42,7 +44,7 @@ export default function BottomAppBar() {
                     <AppBar
                         position="fixed"
                         color="primary"
-                        sx={{ top: 'auto', bottom: 0, bgcolor: 'white' }}
+                        sx={{ top: 'auto', bottom: 0, bgcolor: 'white', paddingTop:"20" }}
                     >
                         <Toolbar>
                             <BottomNavigation
@@ -54,27 +56,30 @@ export default function BottomAppBar() {
                                     label="Actualité"
                                     value="Actualité"
                                     icon={<FeedIcon />}
+                                    onClick={() => navigate(`/feed`)}
                                 />
                                 <BottomNavigationAction
                                     label="Evenements"
                                     value="Evenements"
                                     icon={<CelebrationIcon />}
+                                    onClick={() => navigate(`/events`)}
                                 />
 
-                                <BottomNavigationAction
-                                    label="Emplois"
-                                    value="Emplois"
-                                    icon={<WorkIcon />}
-                                />
+                                {/*<BottomNavigationAction*/}
+                                {/*    label="Emplois"*/}
+                                {/*    value="Emplois"*/}
+                                {/*    icon={<WorkIcon />}*/}
+                                {/*/>*/}
                                 <BottomNavigationAction
                                     label="Messages"
                                     value="Messages"
                                     icon={<MessageIcon />}
+                                    onClick={() => navigate(`/messages`)}
                                 />
                             </BottomNavigation>
-                            <StyledFab color="secondary">
-                                <AddIcon />
-                            </StyledFab>
+                            {/*<StyledFab color="secondary">*/}
+                            {/*    <AddIcon />*/}
+                            {/*</StyledFab>*/}
                         </Toolbar>
                     </AppBar>
                 ))

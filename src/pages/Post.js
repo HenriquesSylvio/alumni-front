@@ -79,6 +79,7 @@ export default function Post() {
             // console.log("teeest")
             // console.log(idPost)
                 const response = await getCommentById(params.id, page)
+            console.log(response.data.posts.items)
                 newComments = response.data.posts.items;
                 setComments((oldComments) => [...oldComments, ...newComments])
                 page += 1
@@ -107,7 +108,6 @@ export default function Post() {
 
             }
             loadingDataComment = false
-
         }
     }
 
@@ -171,7 +171,7 @@ export default function Post() {
                     null
                 }
                 {comments.length ?
-                <Typography paddingTop={5} variant="h4" component="div">
+                <Typography paddingTop={5} variant="h4" component="div" style={{fontFamily: 'Fugaz One'}}>
                     Commentaires
                 </Typography>
                     :
