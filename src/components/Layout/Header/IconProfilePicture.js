@@ -16,6 +16,8 @@ import {Link} from "@mui/material";
 import {Navigate} from "react-router";
 import ActiveConnectedUser from "../../../contexts/ActiveConnectedUser";
 import {getItem} from "../../../services/LocaleStorage";
+import MessageRight from "../../Message/MessageRight";
+import MessageLeft from "../../Message/MessageLeft";
 
 export default function IconProfilePicture() {
     let navigate = useNavigate();
@@ -42,12 +44,25 @@ export default function IconProfilePicture() {
     }
     return(
         <Box component="span"  sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
-                    {/*<Avatar src={JSON.parse(getItem('Profile')).urlProfilePicture} />*/}
-                    <Avatar />
-                </IconButton>
-            </Tooltip>
+            {/*{(getItem('Profile')).urlProfilePicture === null && (*/}
+            {/*    <Tooltip title="Open settings">*/}
+            {/*        <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>*/}
+            {/*            <Avatar src={JSON.parse(getItem('Profile')).urlProfilePicture} />*/}
+            {/*            /!*<Avatar />*!/*/}
+            {/*        </IconButton>*/}
+            {/*    </Tooltip>*/}
+            {/*    ) || null*/}
+            {/*}*/}
+            {/*{(getItem('Profile')).urlProfilePicture === null && (*/}
+                <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
+                        <Avatar src={JSON.parse(getItem('Profile')).urlProfilePicture} />
+                        {/*<Avatar />*/}
+                    </IconButton>
+                </Tooltip>
+            {/*) || null*/}
+            {/*}*/}
+
             <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"

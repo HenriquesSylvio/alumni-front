@@ -19,9 +19,9 @@ export function login(credentials) {
     return axios
         .post(URLApi + "login_check", credentials)
         .then(response => response.data.token)
-        .then(token => {
+        .then(async token => {
             // console.log(token);
-            addItem('Token',token);
+            addItem('Token', token);
             return true;
         });
 }

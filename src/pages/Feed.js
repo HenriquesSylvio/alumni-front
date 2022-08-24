@@ -1,4 +1,4 @@
-import {Fade, Modal, Stack} from '@mui/material';
+import {CircularProgress, Fade, Modal, Stack} from '@mui/material';
 import React, {useContext, useEffect, useState} from 'react';
 import EventFeed from '../components/EventFeed/EventFeed';
 import MainFeed from '../components/Post/MainFeed';
@@ -11,6 +11,7 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import AddCommentForm from "../components/Post/AddCommentForm";
 import ResponseIdPost from "../contexts/ResponseIdPost";
+import Typography from "@mui/material/Typography";
 
 const styleBox = {
     position: 'absolute',
@@ -43,6 +44,7 @@ export default function Feed() {
     let newPosts = [];
     // let firstLoad = true;
     const {firstLoad, setFirstLoad} = useContext(FirstLoad);
+    const [loadingPage, setLoading] = useState(true);
 
 
     const handleClose = () => {
@@ -70,7 +72,9 @@ export default function Feed() {
 
     useEffect(() => {
         const getData = async () => {
+            setLoading(true)
             await getPostFromFeed();
+            setLoading(false)
         }
         getData();
 
@@ -78,15 +82,37 @@ export default function Feed() {
     }, []);
 
         return (
-            <div style={{display: "flex"}}>
+            <Box>
+                {loadingPage ? (
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        marginTop: 2
+                    }}>
+                        <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                    </Box>
+                ) : (
+                    <>
                 <Stack direction="column" spacing={5} sx={{flex: 1, color:"#CA4B38"}} paddingRight={"10%"} paddingLeft={"10%"}>
-                    <h1>Fil d'actualités</h1>
+                    <h1></h1>
+                    <Typography variant="h3" component="div" className="font-link" style={{fontFamily: 'Fugaz One'}}>
+                        Fil d'actualités
+                    </Typography>
                     {posts.length ?
                         posts.map(post =>
                             <MainFeed
                                 post={post}
                             />
-                        ): null
+                        ):
+                        <Box>
+                            <Typography variant="h5" style={{fontFamily: 'Fira Sans'}} textAlign="center">
+                                Aucune publication n'a été trouvée. Veuillez vous abonner à des utilisateurs de la plateforme pour avoir un fil d'actualité !
+                            </Typography>
+                            <Typography variant="h5" style={{fontFamily: 'Fira Sans'}} textAlign="center">
+                                Pour cela, cliquez en haut à droite de votre écran sur rechercher et taper le nom de vos anciens camarades de classe !
+                            </Typography>
+                        </Box>
                     }
                 </Stack>
                 {/*<div style={{width:"25%"}}>*/}
@@ -127,6 +153,8 @@ export default function Feed() {
                         </Box>
                     </Fade>
                 </Modal>
-            </div>
+                    </>
+                    )}
+            </Box>
         )
 }
