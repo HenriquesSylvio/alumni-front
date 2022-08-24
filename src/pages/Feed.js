@@ -12,6 +12,8 @@ import Box from "@mui/material/Box";
 import AddCommentForm from "../components/Post/AddCommentForm";
 import ResponseIdPost from "../contexts/ResponseIdPost";
 import Typography from "@mui/material/Typography";
+import getEvents from "../services/GetEvents";
+import Moment from "moment";
 
 const styleBox = {
     position: 'absolute',
@@ -45,7 +47,8 @@ export default function Feed() {
     // let firstLoad = true;
     const {firstLoad, setFirstLoad} = useContext(FirstLoad);
     const [loadingPage, setLoading] = useState(true);
-
+    const [loadingPost, setLoadingPost] = useState(false);
+    let loadingDataPost = false;
 
     const handleClose = () => {
         setIsOpenAddComment(false)
@@ -54,19 +57,26 @@ export default function Feed() {
 
 
     const getPostFromFeed = async () => {
-        const response = await getFeed(page);
-        // newPosts = response.data.data;
-        //
-        newPosts = response.data.posts.items;
-        console.log(newPosts);
-        setPosts((oldPosts) => [...oldPosts, ...newPosts])
-        page += 1
+        setLoadingPost(true);
+
+        try{
+            const response = await getFeed(page);
+            newPosts = response.data.posts.items;
+            console.log(newPosts);
+            setPosts((oldPosts) => [...oldPosts, ...newPosts])
+            page += 1
+        } catch {
+        }
+        setLoadingPost(false)
     };
 
     const handleScroll = async (e) =>{
-        if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
-            console.log('test');
-            await getPostFromFeed(1).then();
+        if(loadingDataPost === false) {
+            loadingDataPost = true
+            if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
+                await getPostFromFeed()
+            }
+            loadingDataPost = false
         }
     }
 
@@ -114,6 +124,16 @@ export default function Feed() {
                             </Typography>
                         </Box>
                     }
+                    {(loadingPost && (
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                marginTop: 2
+                            }}>
+                                <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                            </Box>
+                        ))}
                 </Stack>
                 {/*<div style={{width:"25%"}}>*/}
                 {/*    <Stack className="event-right" direction="column" justifyContent="space-evenly" alignItems="center" spacing={4} marginBottom={5} color="#CA4B38">*/}

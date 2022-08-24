@@ -112,7 +112,7 @@ export default function Profile() {
                                 subscribe={user.subcribe}
                                 canModify={user.myProfile}
                                 myProfile={user.myProfile}
-
+                                canDeleteMyProfile={true}
                             />
                         </Box>
                         <Box display="flex" sx={{ flexDirection: 'column' }} marginTop={2}>

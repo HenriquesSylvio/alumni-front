@@ -8,16 +8,132 @@ import Grid from "@mui/material/Grid";
 import StatUser from "./StatUser";
 import ButtonsInteractionUser from "./ButtonsInteractionUser";
 import EditProfileButton from "./EditProfileButton";
+import {getItem} from "../../services/LocaleStorage";
+import IconButton from "@mui/material/IconButton";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import {deletePost} from "../../services/DeletePostApi";
+import {deleteUser} from "../../services/DeleteUserApi";
+import {useNavigate} from "react-router-dom";
+import {logout} from "../../services/AuthApi";
+import {toast} from "react-toastify";
+import Auth from "../../contexts/Auth";
+import ActiveConnectedUser from "../../contexts/ActiveConnectedUser";
+import {useContext} from "react";
 
-export default function DetailUser({idUser ,firstName, lastName, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography, subscribe, canModify, myProfile}) {
+export default function DetailUser({idUser ,firstName, lastName, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography, subscribe, canModify, myProfile, canDeleteMyProfile}) {
+    const { setIsAuthenticated } = useContext(Auth);
+    const { setActiveUser } = useContext(ActiveConnectedUser)
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
+
+    // const handleDeletePost = async () => {
+    //     if (window.confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')) {
+    //         await deleteUser(idUser)
+    //         navigate(0);
+    //
+    // }
+    const handleLogout = async () => {
+        if (window.confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')) {
+            await deleteUser(idUser)
+            logout();
+            setIsAuthenticated(false);
+            setActiveUser([]);
+            toast.info('A bientôt ! 😋');
+        }
+    }
+
     return (
         <Card sx={{ minWidth:200}}>
+            {(canDeleteMyProfile && (
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="flex-end"
+                        alignItems="center"
+                    >
+                        <IconButton onClick={handleOpenUserMenu}>
+                            <MoreVertIcon/>
+                        </IconButton>
+                        <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+                            <MenuItem key='Delete_post' onClick={handleLogout}>
+                                <Typography textAlign="center" color="red">Supprimer le compte</Typography>
+                            </MenuItem>
+                            {/*<MenuItem key='Logout' onClick={handleLogout}>*/}
+                            {/*    <Typography textAlign="center">Se déconnecter</Typography>*/}
+                            {/*</MenuItem>*/}
+                        </Menu>
+                    </Grid>
+                ))
+                ||
+                null
+            }
             <Box display="flex" justifyContent="center" alignItems="center">
                 <Avatar
                     src= {urlProfilePicture}
                     sx={{ width: 100, height: 100, position: "absolute"}}
                 />
             </Box>
+            {/*{(post.idUser === JSON.parse(getItem('Profile')).id && (*/}
+            {/*        <Grid*/}
+            {/*            container*/}
+            {/*            direction="row"*/}
+            {/*            justifyContent="flex-end"*/}
+            {/*            alignItems="center"*/}
+            {/*        >*/}
+            {/*            <IconButton onClick={handleOpenUserMenu}>*/}
+            {/*                <MoreVertIcon/>*/}
+            {/*            </IconButton>*/}
+            {/*            <Menu*/}
+            {/*                sx={{ mt: '45px' }}*/}
+            {/*                id="menu-appbar"*/}
+            {/*                anchorEl={anchorElUser}*/}
+            {/*                anchorOrigin={{*/}
+            {/*                    vertical: 'top',*/}
+            {/*                    horizontal: 'right',*/}
+            {/*                }}*/}
+            {/*                keepMounted*/}
+            {/*                transformOrigin={{*/}
+            {/*                    vertical: 'top',*/}
+            {/*                    horizontal: 'right',*/}
+            {/*                }}*/}
+            {/*                open={Boolean(anchorElUser)}*/}
+            {/*                onClose={handleCloseUserMenu}*/}
+            {/*            >*/}
+            {/*                <MenuItem key='Delete_post' onClick={handleDeletePost}>*/}
+            {/*                    <Typography textAlign="center" color="red">Supprimer la publication</Typography>*/}
+            {/*                </MenuItem>*/}
+            {/*                /!*<MenuItem key='Logout' onClick={handleLogout}>*!/*/}
+            {/*                /!*    <Typography textAlign="center">Se déconnecter</Typography>*!/*/}
+            {/*                /!*</MenuItem>*!/*/}
+            {/*            </Menu>*/}
+            {/*        </Grid>*/}
+            {/*    ))*/}
+            {/*    ||*/}
+            {/*    null*/}
+            {/*}*/}
             <Grid
                 container
                 direction="row"
