@@ -89,6 +89,7 @@ export default function EditProfileForm({firstName, lastName, urlProfilePicture,
         if (newImage) {
             setAvatar(URL.createObjectURL(newImage));
             setImage(newImage);
+
         }
     };
 
@@ -125,7 +126,7 @@ export default function EditProfileForm({firstName, lastName, urlProfilePicture,
                     <Box display="flex" justifyContent="center" alignItems="center" marginBottom={1}>
                         <Avatar
                             src={avatar || ""}
-                            sx={{ width: 100, height: 100}}
+                            sx={{ width: 100, height: 100, display: { xs: 'block', sm: 'block' }}}
                         />
                     </Box>
                     <Box marginBottom={1}>

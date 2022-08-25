@@ -18,6 +18,13 @@ import SignInButton from "../Header/LoginRegister/SignInButton";
 import Auth from "../../../contexts/Auth";
 import {useContext} from "react";
 import {useNavigate} from "react-router-dom";
+import {getItem} from "../../../services/LocaleStorage";
+import {Divider} from "@mui/material";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import ListItemText from "@mui/material/ListItemText";
 
 const StyledFab = styled(Fab)({
     position: 'absolute',
@@ -76,6 +83,28 @@ export default function BottomAppBar() {
                                     icon={<MessageIcon />}
                                     onClick={() => navigate(`/messages`)}
                                 />
+                                {(JSON.parse(atob(getItem('Token').split('.')[1])).roles.some(item => item === 'ROLE_ADMIN' || item === 'ROLE_SUPER_ADMIN') && (
+                                        // <>
+                                        //     <Divider/>
+                                        //     <ListItem disablePadding>
+                                        //         <ListItemButton onClick={() => navigate(`/AdminPanel`)}>
+                                        //             <ListItemIcon>
+                                        //                 <AdminPanelSettingsIcon />
+                                        //             </ListItemIcon>
+                                        //             <ListItemText primary="Panel admin" />
+                                        //         </ListItemButton>
+                                        //     </ListItem>
+                                        // </>
+                                        <BottomNavigationAction
+                                            label="Panel"
+                                            value="Panel"
+                                            icon={<AdminPanelSettingsIcon/>}
+                                            onClick={() => navigate(`/adminPanel`)}
+                                        />
+                                    ))
+                                    ||
+                                    null
+                                }
                             </BottomNavigation>
                             {/*<StyledFab color="secondary">*/}
                             {/*    <AddIcon />*/}

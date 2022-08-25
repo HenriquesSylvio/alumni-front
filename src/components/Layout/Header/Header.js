@@ -28,7 +28,9 @@ export default function Header() {
                     <Box display="flex" style={{ width: '100%' }} sx={{ flexDirection: 'row' }}>
 
                     {(isAuthenticated && (
-                            <SideMenu />
+                            <Box marginTop={1} sx={{ display: { xs: 'none', sm: 'block' } }}>
+                                <SideMenu />
+                            </Box>
                         ))
                         ||
                         null
