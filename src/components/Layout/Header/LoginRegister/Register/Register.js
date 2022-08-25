@@ -12,6 +12,11 @@ import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {toast} from "react-toastify";
 import validate from "../../../../../validators/RegisterValidator";
 import {Autocomplete} from "@mui/lab";
+import {getFaculty} from "../../../../../services/GetFacultyApi";
+import ButtonSearch from "../../Search/ButtonSearch";
+import IconProfilePicture from "../../IconProfilePicture";
+import SignInButton from "../SignInButton";
+import {CircularProgress} from "@mui/material";
 
 const theme = createTheme();
 
@@ -23,10 +28,19 @@ export default function SignUp() {
     password: "",
     email: "",
     promo: "",
-    username: ""
+    username: "",
+    faculty: {
+      id: ""
+    }
   });
+  const [faculties, setFaculties] = React.useState({});
+  const [facultyId, setFacultyId] = React.useState({});
+  // const [loadingFaculty, setLoadingFaculty] = React.useState(false);
+  const [promo, setPromo] = React.useState({});
 
   const yearPromo = [];
+  const facultiesName = [];
+  const facultiesId = [];
 
   function handleClick() {
      setErrors(validate(values));
@@ -47,11 +61,48 @@ export default function SignUp() {
     for (let i = 2017; i < maxYear; i++) {
       yearPromo.push(i.toString());
     }
+    setPromo(yearPromo)
   }
 
-  useLayoutEffect(() => {
-    loadYearPromo()
-  });
+  const getFaculties = async () => {
+    const response = await getFaculty();
+    // console.log(response.data.faculty);
+
+    // for (let i = 0; i < maxYear; i++) {
+    //   yearPromo.push(i.toString());
+    // }
+    // for (var facultyName in response.data.faculty) {
+    //   console.log(facultyName.name);
+    // }
+    // console.log("facultyName.name");
+    for (var key of Object.keys(response.data.faculty)) {
+      // console.log(key + " -> " + response.data.faculty[key].name)
+      facultiesName.push(response.data.faculty[key].name.toString());
+      facultiesId.push(response.data.faculty[key].id.toString());
+    }
+    console.log(facultiesName)
+
+    // setFaculties(response.data.faculty);
+    // console.log(facultiesId)
+    setFaculties(facultiesName);
+    setFacultyId(facultiesId);
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      // setLoadingFaculty(true)
+      await loadYearPromo();
+      await getFaculties();
+      // setLoadingFaculty(false)
+    }
+    getData();
+  }, []);
+  //
+  // useLayoutEffect(() => {
+  //   loadYearPromo();
+  // });
+
+
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -127,10 +178,77 @@ export default function SignUp() {
                   helperText={ errors.email }
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/*<Grid item xs={12} sm={6}>*/}
+              {/*  <TextField*/}
+              {/*      required*/}
+              {/*      fullWidth*/}
+              
+              {/*      id="password"*/}
+              {/*      label="Mot de passe"*/}
+              {/*      name="password"*/}
+              {/*      autoComplete="password"*/}
+              {/*      type="password"*/}
+              {/*      onChange={handleChange}*/}
+              {/*      error={ errors.password }*/}
+              {/*      helperText={ errors.password }*/}
+              {/*  />*/}
+              {/*</Grid>*/}
+              {/*<Grid item xs={12} sm={6}>*/}
+              {/*  <TextField*/}
+              {/*      required*/}
+              {/*      fullWidth*/}
+              {/*      id="confirmPassword"*/}
+              {/*      label="Confirmation mot de passe"*/}
+              {/*      name="confirmPassword"*/}
+              {/*      autoComplete="confirmPassword"*/}
+              {/*      type="password"*/}
+              {/*      onChange={handleChange}*/}
+              {/*      error={ errors.confirmPassword }*/}
+              {/*      helperText={ errors.confirmPassword }*/}
+              {/*  />*/}
+              {/*</Grid>*/}
+              <Grid item xs={12} sm={6}>
+
+                {(faculties.length && (
+                        <Autocomplete
+                            fullWidth
+                            options={faculties}
+                            // onChange={(event, value) => setValues({...values, ["promo"]: value})}
+                            // onChange={(event, value) => console.log(facultiesName[1])}
+                            // onChange={(event, value) => console.log(facultiesId[facultiesName.indexOf(value)])}
+                            onChange={(event, value) => setValues({...values, "faculty" : { id: facultyId[faculties.indexOf(value)]}})}
+                            // faculty: {
+                            //   id: ""
+                            // }
+                            autoComplete="faculty"
+                            renderInput={(params) =>
+                                <TextField {...params}
+                                           required
+                                    // onChange={handleChange}
+                                           id="faculty"
+                                           name="faculty"
+                                           label="Filière"
+                                           error={ errors.faculty }
+                                           helperText={ errors.faculty }
+                                />
+                            }
+                        />
+                    ))
+                    ||
+                    <Box sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      marginTop: 2
+                    }}>
+                      <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                    </Box>
+                }
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <Autocomplete
                     fullWidth
-                    options={yearPromo}
+                    options={promo}
                     onChange={(event, value) => setValues({...values, ["promo"]: value})}
 
                     autoComplete="promo"
@@ -151,7 +269,7 @@ export default function SignUp() {
                 <TextField
                     required
                     fullWidth
-                    id="sername"
+                    id="username"
                     label="Nom d'utilisateur"
                     name="username"
                     autoComplete="username"

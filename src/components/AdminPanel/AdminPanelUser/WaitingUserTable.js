@@ -19,7 +19,7 @@ import {acceptUser} from "../../../services/AcceptUserApi";
 const columns = [
     { id: 'lastName', label: 'Nom', minWidth: 100 },
     { id: 'firstName', label: 'Prénom', minWidth: 100 },
-    { id: 'email', label: 'Email', minWidth: 170 },
+    // { id: 'email', label: 'Email', minWidth: 170 },
     // { id: 'promo', label: 'Nom d', minWidth: 170 },
     {
         id: 'promo',
