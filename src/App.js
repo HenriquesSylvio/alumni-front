@@ -30,6 +30,7 @@ import OpenModalAddFaculty from "./contexts/OpenModalAddFaculty";
 import OpenModalEditFaculty from "./contexts/OpenModalEditFaculty";
 import OpenModalAuth from "./contexts/OpenModalAuth";
 import TabIndexAuth from "./contexts/TabIndexAuth";
+import OpenModalEditProfile from "./contexts/OpenModalEditProfile";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
     const [isOpenEditFaculty, setIsEditFaculty] = useState({});
     const [isOpenAuth, setIsOpenAuth] = useState(false);
     const [tabIndexAuth, setTabIndexAuth] = useState("1");
+    const [isOpenEditProfile, setIsOpenEditProfile] = useState(false);
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
@@ -65,27 +67,29 @@ const App = () => {
                                                           <OpenModalSendMessage.Provider value={{isOpenSendMessage, setIsOpenSendMessage}}>
                                                               <OpenModalAddFaculty.Provider value={{isOpenAddFaculty, setIsAddFaculty}}>
                                                                   <OpenModalEditFaculty.Provider value={{isOpenEditFaculty, setIsEditFaculty}}>
-                                                                      <BrowserRouter>
-                                                                          <Layout>
-                                                                              <Routes>
-                                                                                  <Route path='/' element={<Home/>}/>
-                                                                                  <Route exact path='/inscription' element={<Inscription/>}/>
-                                                                                  <Route element={<AuthenticatedRoute/>}>
-                                                                                      <Route exact path='/feed' element={<Feed/>}/>
-                                                                                      <Route exact path='/profile/:id' element={<Profile/>}/>
-                                                                                      <Route exact path='/post/:id' element={<Post/>}/>
-                                                                                      <Route exact path='/profile' element={<Profile/>}/>
-                                                                                      <Route exact path='/events' element={<Event/>}/>
-                                                                                      <Route exact path='/messages' element={<Messages/>}/>
-                                                                                      <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
-                                                                                      <Route element={<AdminRoute/>}>
-                                                                                          <Route exact path='/adminPanel' element={<AdminPanel/>}/>
+                                                                      <OpenModalEditProfile.Provider value={{isOpenEditProfile, setIsOpenEditProfile}}>
+                                                                          <BrowserRouter>
+                                                                              <Layout>
+                                                                                  <Routes>
+                                                                                      <Route path='/' element={<Home/>}/>
+                                                                                      <Route exact path='/inscription' element={<Inscription/>}/>
+                                                                                      <Route element={<AuthenticatedRoute/>}>
+                                                                                          <Route exact path='/feed' element={<Feed/>}/>
+                                                                                          <Route exact path='/profile/:id' element={<Profile/>}/>
+                                                                                          <Route exact path='/post/:id' element={<Post/>}/>
+                                                                                          <Route exact path='/profile' element={<Profile/>}/>
+                                                                                          <Route exact path='/events' element={<Event/>}/>
+                                                                                          <Route exact path='/messages' element={<Messages/>}/>
+                                                                                          <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
+                                                                                          <Route element={<AdminRoute/>}>
+                                                                                              <Route exact path='/adminPanel' element={<AdminPanel/>}/>
+                                                                                          </Route>
                                                                                       </Route>
-                                                                                  </Route>
-                                                                              </Routes>
-                                                                              <ToastContainer />
-                                                                          </Layout>
-                                                                      </BrowserRouter>
+                                                                                  </Routes>
+                                                                                  <ToastContainer />
+                                                                              </Layout>
+                                                                          </BrowserRouter>
+                                                                      </OpenModalEditProfile.Provider>
                                                                   </OpenModalEditFaculty.Provider>
                                                               </OpenModalAddFaculty.Provider>
                                                           </OpenModalSendMessage.Provider>

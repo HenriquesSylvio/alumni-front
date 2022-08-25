@@ -96,44 +96,7 @@ export default function DetailUser({idUser ,firstName, lastName, urlProfilePictu
                     sx={{ width: 100, height: 100, position: "absolute"}}
                 />
             </Box>
-            {/*{(post.idUser === JSON.parse(getItem('Profile')).id && (*/}
-            {/*        <Grid*/}
-            {/*            container*/}
-            {/*            direction="row"*/}
-            {/*            justifyContent="flex-end"*/}
-            {/*            alignItems="center"*/}
-            {/*        >*/}
-            {/*            <IconButton onClick={handleOpenUserMenu}>*/}
-            {/*                <MoreVertIcon/>*/}
-            {/*            </IconButton>*/}
-            {/*            <Menu*/}
-            {/*                sx={{ mt: '45px' }}*/}
-            {/*                id="menu-appbar"*/}
-            {/*                anchorEl={anchorElUser}*/}
-            {/*                anchorOrigin={{*/}
-            {/*                    vertical: 'top',*/}
-            {/*                    horizontal: 'right',*/}
-            {/*                }}*/}
-            {/*                keepMounted*/}
-            {/*                transformOrigin={{*/}
-            {/*                    vertical: 'top',*/}
-            {/*                    horizontal: 'right',*/}
-            {/*                }}*/}
-            {/*                open={Boolean(anchorElUser)}*/}
-            {/*                onClose={handleCloseUserMenu}*/}
-            {/*            >*/}
-            {/*                <MenuItem key='Delete_post' onClick={handleDeletePost}>*/}
-            {/*                    <Typography textAlign="center" color="red">Supprimer la publication</Typography>*/}
-            {/*                </MenuItem>*/}
-            {/*                /!*<MenuItem key='Logout' onClick={handleLogout}>*!/*/}
-            {/*                /!*    <Typography textAlign="center">Se déconnecter</Typography>*!/*/}
-            {/*                /!*</MenuItem>*!/*/}
-            {/*            </Menu>*/}
-            {/*        </Grid>*/}
-            {/*    ))*/}
-            {/*    ||*/}
-            {/*    null*/}
-            {/*}*/}
+
             <Grid
                 container
                 direction="row"
@@ -174,7 +137,10 @@ export default function DetailUser({idUser ,firstName, lastName, urlProfilePictu
                 paddingTop={1}
                 sx={{ display: { xs: 'flex', md: 'none' }}}
             >
-                <ButtonsInteractionUser/>
+                {(!myProfile && (
+                    <ButtonsInteractionUser idUser={idUser} subscribe={subscribe}/>
+                ))}
+
             </Grid>
             <Box display="flex" justifyContent="center" alignItems="center" paddingBottom={2}>
                 {/*<Button style={{backgroundColor: "#00A5A5"}} size="small" variant="contained">*/}
