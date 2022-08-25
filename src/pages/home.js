@@ -89,7 +89,7 @@ const Home = () => {
                     <Box display="flex" alignContent="center" alignItems="center" sx={{paddingTop:5}}>
                         <CardContent>
                             <Typography variant="h3" style={{fontFamily: 'Fira Sans'}} textAlign="center" sx={{paddingTop:1}}>
-                                Bienvenue au site des alulmnis de la
+                                Bienvenue au site des alumnis de la
                             </Typography>
                             <br/>
                             <Typography variant="h2" component="div" className="font-link" style={{fontFamily: 'Fugaz One'}}  textAlign="center">

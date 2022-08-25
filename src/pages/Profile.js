@@ -45,6 +45,9 @@ export default function Profile() {
     const {isOpenSendMessage, setIsOpenSendMessage} = useContext(OpenModalSendMessage);
     const {isOpenAddComment, setIsOpenAddComment} = useContext(OpenModalAddComment);
     const {idPost, setIdPost} = useContext(ResponseIdPost);
+    const [loadingPost, setLoadingPost] = useState(false);
+    let loadingDataPost = false;
+
     let params = useParams();
     let userId = '';
 
@@ -138,6 +141,16 @@ export default function Profile() {
                                    ): null
                                }
                         </Box>
+                        {(loadingPost && (
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                marginTop: 2
+                            }}>
+                                <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                            </Box>
+                        ))}
                     </Box>
                 )}
                 <Modal
