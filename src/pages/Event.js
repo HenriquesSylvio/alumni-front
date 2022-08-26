@@ -72,6 +72,8 @@ export default function Event() {
         date = newDate
         setEvents('')
         await getEventsComing()
+        // console.log(newDate)
+        // console.log(today.getTime())
         if (date.getTime() > today.getTime()) {
             setCanInterateEvent(false)
         } else {

@@ -109,7 +109,7 @@ export default function Profile() {
                                 nbPosts='5'
                                 nbSubscription={user.followingNumber}
                                 promo={user.promo}
-                                sector='Développeur'
+                                sector={user.faculty_label}
                                 biography={user.biography}
                                 idUser={user.id}
                                 subscribe={user.subcribe}

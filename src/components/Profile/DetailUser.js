@@ -20,7 +20,7 @@ import {logout} from "../../services/AuthApi";
 import {toast} from "react-toastify";
 import Auth from "../../contexts/Auth";
 import ActiveConnectedUser from "../../contexts/ActiveConnectedUser";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 
 export default function DetailUser({idUser ,firstName, lastName, urlProfilePicture, nbSubscriber, nbSubscription, nbPosts, sector, promo, biography, subscribe, canModify, myProfile, canDeleteMyProfile}) {
     const { setIsAuthenticated } = useContext(Auth);
@@ -50,9 +50,15 @@ export default function DetailUser({idUser ,firstName, lastName, urlProfilePictu
         }
     }
 
+    // useEffect(() => {
+    //     console.log(JSON.parse(getItem('Profile')).id);
+    //     console.log(idUser);
+    //     console.log(JSON.parse(getItem('Profile')).id === idUser);
+    // }, [])
+
     return (
         <Card sx={{ minWidth:200}}>
-            {(canDeleteMyProfile && (
+            {(canDeleteMyProfile & JSON.parse(getItem('Profile')).id === idUser && (
                     <Grid
                         container
                         direction="row"
@@ -93,7 +99,7 @@ export default function DetailUser({idUser ,firstName, lastName, urlProfilePictu
             <Box display="flex" justifyContent="center" alignItems="center">
                 <Avatar
                     src= {urlProfilePicture}
-                    sx={{ width: 100, height: 100, position: "absolute"}}
+                    sx={{ width: 100, height: 100, position: "absolute", marginBottom:2}}
                 />
             </Box>
 

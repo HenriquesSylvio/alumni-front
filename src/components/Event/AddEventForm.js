@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -29,10 +29,10 @@ export default function AddEventForm() {
     const [values, setValues] = useState({
         title: "",
         description: "",
-        date: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear()
+        date: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear() + "00:00"
     });
     const [date, setDate] = React.useState(new Date());
-
+    const today = new Date()
     // const handleChangeDate = (newDate: Date | null) => {
     //     setDate(newDate);
     // };
@@ -40,6 +40,10 @@ export default function AddEventForm() {
     function handleClick() {
         setErrors(validate(values));
     }
+
+    useEffect(() => {
+        setDate(today)
+    }, []);
 
     const handleChange = ({currentTarget}) => {
 
@@ -65,8 +69,6 @@ export default function AddEventForm() {
         }
         setLoadingForm(false);
     };
-
-
 
     return (
         <Container component="main">
@@ -108,7 +110,13 @@ export default function AddEventForm() {
                         <Grid item xs={12} sm={6}>
                             <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={frLocale}>
                                 <DatePicker
-                                    minDate={new Date()}
+                                    minDate={today.setDate(today.getDate() + 1)}
+                                    // minDate={() => {
+                                    //     // const dateFormat = new Date(newDate)
+                                    //     const date = new Date();
+                                    //     return date.setDate(date.getDate() + 1);
+                                    // }
+                                    // }
                                     label="Date de l'événement"
                                     value={date}
                                     onChange={(newDate) => {
