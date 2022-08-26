@@ -118,7 +118,7 @@ export default function DetailUser({idUser ,firstName, lastName, urlProfilePictu
                 ))}
 
             </Grid>
-            <StatUser nbSubscriber={nbSubscriber} nbPosts={nbPosts} nbSubscription={nbSubscription}/>
+            <StatUser nbSubscriber={nbSubscriber} nbPosts={nbPosts} nbSubscription={nbSubscription} idUser={idUser}/>
 
             <Box paddingTop={6}>
                 <Typography gutterBottom variant="h6" component="div" align={"center"} >
