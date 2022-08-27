@@ -32,6 +32,7 @@ import OpenModalAuth from "./contexts/OpenModalAuth";
 import TabIndexAuth from "./contexts/TabIndexAuth";
 import OpenModalEditProfile from "./contexts/OpenModalEditProfile";
 import OpenModalSubscriber from "./contexts/OpenModalSubscriber";
+import OpenModalSubscription from "./contexts/OpenModalSubscription";
 
 // const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
     const [tabIndexAuth, setTabIndexAuth] = useState("1");
     const [isOpenEditProfile, setIsOpenEditProfile] = useState(false);
     const [isOpenSubscriber, setIsOpenSubscriber] = useState(false);
+    const [isOpenSubscription, setIsOpenSubscription] = useState(false);
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
@@ -71,27 +73,29 @@ const App = () => {
                                                                   <OpenModalEditFaculty.Provider value={{isOpenEditFaculty, setIsEditFaculty}}>
                                                                       <OpenModalEditProfile.Provider value={{isOpenEditProfile, setIsOpenEditProfile}}>
                                                                           <OpenModalSubscriber.Provider value={{isOpenSubscriber, setIsOpenSubscriber}}>
-                                                                              <BrowserRouter>
-                                                                                  <Layout>
-                                                                                      <Routes>
-                                                                                          <Route path='/' element={<Home/>}/>
-                                                                                          <Route exact path='/inscription' element={<Inscription/>}/>
-                                                                                          <Route element={<AuthenticatedRoute/>}>
-                                                                                              <Route exact path='/feed' element={<Feed/>}/>
-                                                                                              <Route exact path='/profile/:id' element={<Profile/>}/>
-                                                                                              <Route exact path='/post/:id' element={<Post/>}/>
-                                                                                              <Route exact path='/profile' element={<Profile/>}/>
-                                                                                              <Route exact path='/events' element={<Event/>}/>
-                                                                                              <Route exact path='/messages' element={<Messages/>}/>
-                                                                                              <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
-                                                                                              <Route element={<AdminRoute/>}>
-                                                                                                  <Route exact path='/adminPanel' element={<AdminPanel/>}/>
+                                                                              <OpenModalSubscription.Provider value={{isOpenSubscription, setIsOpenSubscription}}>
+                                                                                  <BrowserRouter>
+                                                                                      <Layout>
+                                                                                          <Routes>
+                                                                                              <Route path='/' element={<Home/>}/>
+                                                                                              <Route exact path='/inscription' element={<Inscription/>}/>
+                                                                                              <Route element={<AuthenticatedRoute/>}>
+                                                                                                  <Route exact path='/feed' element={<Feed/>}/>
+                                                                                                  <Route exact path='/profile/:id' element={<Profile/>}/>
+                                                                                                  <Route exact path='/post/:id' element={<Post/>}/>
+                                                                                                  <Route exact path='/profile' element={<Profile/>}/>
+                                                                                                  <Route exact path='/events' element={<Event/>}/>
+                                                                                                  <Route exact path='/messages' element={<Messages/>}/>
+                                                                                                  <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
+                                                                                                  <Route element={<AdminRoute/>}>
+                                                                                                      <Route exact path='/adminPanel' element={<AdminPanel/>}/>
+                                                                                                  </Route>
                                                                                               </Route>
-                                                                                          </Route>
-                                                                                      </Routes>
-                                                                                      <ToastContainer />
-                                                                                  </Layout>
-                                                                              </BrowserRouter>
+                                                                                          </Routes>
+                                                                                          <ToastContainer />
+                                                                                      </Layout>
+                                                                                  </BrowserRouter>
+                                                                              </OpenModalSubscription.Provider>
                                                                           </OpenModalSubscriber.Provider>
                                                                       </OpenModalEditProfile.Provider>
                                                                   </OpenModalEditFaculty.Provider>

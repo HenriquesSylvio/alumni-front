@@ -8,6 +8,6 @@ const config = {
     headers: { Authorization: `Bearer ${getItem('Token')}` }
 };
 
-export default function getSubscriber(idUser) {
+export default function getSubscription(idUser) {
     return axios.get(`${URLApi}subscription/${idUser}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }
