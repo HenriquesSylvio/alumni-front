@@ -27,6 +27,11 @@ export default function RegisterValidator(values) {
         errors.promo = 'La promo est obligatoire.'
     }
 
+    if (!values.faculty.id) {
+        errors.faculty = 'La filière est obligatoire.'
+    }
+    // console.log(!values.faculty.id);
+
     if (!values.username) {
         errors.username = 'Le nom d\'utilisateur est obligatoire.';
     }
