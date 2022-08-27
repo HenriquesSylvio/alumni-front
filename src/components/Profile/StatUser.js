@@ -1,21 +1,53 @@
 import * as React from 'react';
 import {Box} from "@mui/system";
-import {Button, Card, CardActions, CardContent} from "@mui/material";
+import {Button, Card, CardActions, CardContent, Fade, Modal} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { styled } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
 import validate from "../../validators/AddEventValidator";
 import getSubscriber from "../../services/GetSubscriberApi";
+import Backdrop from "@mui/material/Backdrop";
+import AddCommentForm from "../Post/AddCommentForm";
+import OpenModalAddComment from "../../contexts/OpenModalAddComment";
+import OpenModalSubscriber from "../../contexts/OpenModalSubscriber";
+import {useContext} from "react";
+import SubscriberDiplay from "./SubscriberDiplay";
+import Paper from "@mui/material/Paper";
+
+const styleBox = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 'auto',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+    display: { xs: 'none', md: 'flex' },
+};
+const styleResponsiveBox = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    display: { xs: 'flex', md: 'none' }
+};
 
 export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}) {
-
+    const {isOpenSubscriber, setIsOpenSubscriber} = useContext(OpenModalSubscriber);
     // function handleClickSubscriber() {
     //     console.log(idUser)
     // }
     const handleClickSubscriber = async () => {
-        const response = await getSubscriber(idUser)
-        console.log(response)
+        setIsOpenSubscriber(true)
+    }
+
+    const handleClose = () => {
+        setIsOpenSubscriber(false)
     }
 
     return (
@@ -103,6 +135,29 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                             Abonnements
                         </Typography>
                     </Grid>
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        open={isOpenSubscriber}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        {/*<Fade>*/}
+                        <Fade in={isOpenSubscriber}>
+                            <Box>
+                                <Paper sx={styleBox}>
+                                    <SubscriberDiplay idUser={idUser}/>
+                                </Paper>
+                                <Paper sx={styleResponsiveBox}>
+                                    <SubscriberDiplay idUser={idUser}/>
+                                </Paper>
+                            </Box>
+                        </Fade>
+                    </Modal>
                 {/*</Grid>*/}
             </Grid>
         </>

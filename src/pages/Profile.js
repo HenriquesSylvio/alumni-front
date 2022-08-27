@@ -53,12 +53,14 @@ export default function Profile() {
 
     useEffect( () => {
         const getData = async () => {
+            setLoading(true);
             await getProfileUser();
             await getPostByUserId();
+            setLoading(false);
         }
         getData();
 
-    }, []);
+    }, [params.id]);
 
     const getProfileUser = async () => {
         const response = await getProfile(params.id)
@@ -77,7 +79,6 @@ export default function Profile() {
         const response = await getPostByUser(userId)
         setPosts(response.data.posts)
         console.log(response.data.posts);
-        setLoading(!loadingPage);
     };
 
 

@@ -70,6 +70,7 @@ export default function Feed() {
         setLoadingPost(false)
     };
 
+
     const handleScroll = async (e) =>{
         if(loadingDataPost === false) {
             loadingDataPost = true
