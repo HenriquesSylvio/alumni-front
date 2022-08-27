@@ -6,53 +6,20 @@ import Typography from "@mui/material/Typography";
 import { styled } from '@mui/material/styles';
 import Grid from "@mui/material/Grid";
 import validate from "../../validators/AddEventValidator";
+import getSubscriber from "../../services/GetSubscriberApi";
 
 export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}) {
 
     // function handleClickSubscriber() {
     //     console.log(idUser)
     // }
-    const handleClickSubscriber = () => {
-        console.log(idUser)
+    const handleClickSubscriber = async () => {
+        const response = await getSubscriber(idUser)
+        console.log(response)
     }
 
     return (
         <>
-            {/*<Grid*/}
-            {/*    container*/}
-            {/*    direction="row"*/}
-            {/*    justifyContent="center"*/}
-            {/*    alignItems="flex-start"*/}
-            {/*    paddingTop={5}*/}
-            {/*    paddingLeft={4}*/}
-            {/*    paddingRight={4}*/}
-            {/*    sx={{ display: { xs: 'none', md: 'flex' }}}*/}
-            {/*>*/}
-            {/*    <Box sx={{ position: "absolute"}} paddingRight={30} onClick={handleClickSubscriber}>*/}
-            {/*        <Typography variant="body2" align={"center"} fontWeight={"bold"} >*/}
-            {/*            {nbSubscriber}*/}
-            {/*        </Typography>*/}
-            {/*        <Typography variant="body2" color="text.secondary">*/}
-            {/*            Abonnés*/}
-            {/*        </Typography>*/}
-            {/*    </Box>*/}
-            {/*    <Box onClick={handleClickSubscriber}>*/}
-            {/*        <Typography variant="body2" align={"center"} fontWeight={"bold"}>*/}
-            {/*            {nbPosts}*/}
-            {/*        </Typography>*/}
-            {/*        <Typography variant="body2" color="text.secondary">*/}
-            {/*            Publications*/}
-            {/*        </Typography>*/}
-            {/*    </Box>*/}
-            {/*    <Box sx={{ position: "absolute"}} paddingLeft={30}>*/}
-            {/*        <Typography variant="body2" align={"center"} fontWeight={"bold"}>*/}
-            {/*            {nbSubscription}*/}
-            {/*        </Typography>*/}
-            {/*        <Typography variant="body2" color="text.secondary">*/}
-            {/*            Abonnements*/}
-            {/*        </Typography>*/}
-            {/*    </Box>*/}
-            {/*</Grid>*/}
             <Grid
                 container
                 direction="row"

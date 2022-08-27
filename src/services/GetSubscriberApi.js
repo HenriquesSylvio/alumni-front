@@ -9,5 +9,5 @@ const config = {
 };
 
 export default function getSubscriber(idUser) {
-    return axios.get(`${URLApi}subscriber/${idUser}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
+    return axios.get(`${URLApi}user/subscriber/${idUser}`, {headers: { Authorization: `Bearer ${getItem('Token')}` }})
 }
