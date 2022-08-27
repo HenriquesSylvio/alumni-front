@@ -10,6 +10,7 @@ import Auth from "./contexts/Auth";
 import {hasAuthenticated} from "./services/AuthApi";
 import {ToastContainer} from "react-toastify";
 import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
+import NoConnectedRoute from "./contexts/NoConnectedRoute";
 import OpenModalAddPost from "./contexts/OpenModalAddPost";
 import OpenModalAddComment from "./contexts/OpenModalAddComment";
 import ResponseIdPost from "./contexts/ResponseIdPost";
@@ -79,8 +80,9 @@ const App = () => {
                                                                                       <BrowserRouter>
                                                                                           <Layout>
                                                                                               <Routes>
-                                                                                                  <Route path='/' element={<Home/>}/>
-                                                                                                  <Route exact path='/inscription' element={<Inscription/>}/>
+                                                                                                  <Route element={<NoConnectedRoute/>}>
+                                                                                                    <Route path='/' element={<Home/>}/>
+                                                                                                  </Route>
                                                                                                   <Route element={<AuthenticatedRoute/>}>
                                                                                                       <Route exact path='/feed' element={<Feed/>}/>
                                                                                                       <Route exact path='/profile/:id' element={<Profile/>}/>

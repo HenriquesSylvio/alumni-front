@@ -20,6 +20,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import OpenModalAuth from "../contexts/OpenModalAuth";
 import TabIndexAuth from "../contexts/TabIndexAuth";
+import nwsBackground from "../../src/pictures/nws-background.jpg"
 
 const Home = () => {
     const {isOpenAuth, setIsOpenAuth} = useContext(OpenModalAuth);
@@ -71,7 +72,7 @@ const Home = () => {
                         // maxHeight: { xs: 233, md: 167 },
                         // maxWidth: { xs: 350, md: 250 },
                     }}
-                    src="https://scontent-cdt1-1.xx.fbcdn.net/v/t39.30808-6/271277560_3096404060640575_2392098993131872507_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=e3f864&_nc_ohc=dOaYUxvK8l4AX-uaXwK&_nc_ht=scontent-cdt1-1.xx&oh=00_AT9Kw4W88Pfef2qAuFSSBWi5UkemE4-ZN27NHFiFBM8j3w&oe=63087441"
+                    src={nwsBackground}
                 />
 
             </Box>

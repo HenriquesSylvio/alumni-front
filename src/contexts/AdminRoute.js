@@ -8,5 +8,5 @@ Navigate.propTypes = {to: PropTypes.string};
 export default function AdminRoute() {
     // const {isAdmin} = useContext(AdminRoute);
 
-    return JSON.parse(atob(getItem('Token').split('.')[1])).roles.some(item => item === 'ROLE_ADMIN' || item === 'ROLE_SUPER_ADMIN') ? <Outlet /> : <Navigate to="/" />;
+    return JSON.parse(atob(getItem('Token').split('.')[1])).roles.some(item => item === 'ROLE_ADMIN' || item === 'ROLE_SUPER_ADMIN') ? <Outlet /> : <Navigate to="/feed" />;
 }
