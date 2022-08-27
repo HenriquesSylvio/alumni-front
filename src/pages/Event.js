@@ -16,6 +16,35 @@ import Moment from 'moment';
 import getAllDateEvent from "../services/GetAllDateEventApi";
 import {getItem} from "../services/LocaleStorage";
 import frLocale from "date-fns/locale/fr";
+import Backdrop from "@mui/material/Backdrop";
+import AddEventForm from "../components/Event/AddEventForm";
+import OpenModalAddPost from "../contexts/OpenModalAddPost";
+import OpenModalParticipant from "../contexts/OpenModalParticipant";
+import ParticipantDisplay from "../components/Event/ParticipantDisplay";
+
+
+const styleResponsiveBox = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    display: { xs: 'flex', md: 'none' }
+};
+
+const styleBox = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 'auto',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+    display: { xs: 'none', md: 'flex' },
+};
 
 export default function Event() {
     const [activeProfile] = useState(JSON.parse(getItem('Profile')));
@@ -26,6 +55,7 @@ export default function Event() {
     const [loadingPage, setLoading] = useState(true);
     const [dateCalendar, setDateCalendar] = React.useState(new Date());
     const [datesEvent, setDatesEvent] = useState([]);
+    const {isOpenParticipant, setIsOpenParticipant} = useContext(OpenModalParticipant);
 
     // let datesEvent = []
     let date = new Date();
@@ -102,6 +132,9 @@ export default function Event() {
         }
     }
 
+    const handleClose = () => {
+        setIsOpenParticipant(0)
+    }
 
     useEffect(() => {
         const getData = async () => {
@@ -203,6 +236,29 @@ export default function Event() {
             </Grid>
 
             <ButtonAddEvent/>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={isOpenParticipant !== 0}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={isOpenParticipant !== 0}>
+                    <Box>
+                        <Box sx={styleBox}>
+                            <ParticipantDisplay/>
+                        </Box>
+                        <Box sx={styleResponsiveBox}>
+                            <ParticipantDisplay/>
+                        </Box>
+                    </Box>
+
+                </Fade>
+            </Modal>
         </Box>
             )}
 

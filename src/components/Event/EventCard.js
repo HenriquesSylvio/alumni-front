@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Button, Card, CircularProgress} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
@@ -9,12 +9,14 @@ import {deleteParticipateEvent} from "../../services/DeleteParticipateEvent";
 import Moment from "moment";
 import {useNavigate} from "react-router-dom";
 import {Box} from "@mui/system";
+import OpenModalParticipant from "../../contexts/OpenModalParticipant";
 
 // export default function EventCard({firstName, lastName, title, idEvent, idUser, description, date}) {
 export default function EventCard({event, canInterate}) {
     let  navigate = useNavigate();
     const [participateByUser, setParticipate] = useState(event.participate);
     const [participateLoading, setParticipateLoading] = useState(false);
+    const {isOpenParticipant, setIsOpenParticipant} = useContext(OpenModalParticipant);
     // const [canInterate, setCanInterate] = useState(false);
     let date = new Date();
     let dateEvent = new Date(Moment(event.date).format('x'));
@@ -32,31 +34,16 @@ export default function EventCard({event, canInterate}) {
         setParticipateLoading(false)
     };
 
-    useEffect(() => {
-        // Moment(dateEvent.toLocaleDateString('fr-FR')).format('MM/DD/YYYY') < Moment(date.toLocaleDateString('fr-FR')).format('MM/DD/YYYY')}
-        // console.log(Moment(dateEvent).format('DD/MM/YYYY'))
-        // console.log(event.date.getTime());
-        // console.log(Moment(date).format('DD/MM/YYYY'))
-        // console.log(Moment(date).format('DD/MM/YYYY HH:mm'))
-        // console.log(event.date < Moment(date).format('DD/MM/YYYY HH:mm'))
-        // console.log(Moment(event.date).format('DD/MM/YYYY'));
-        // console.log)(Moment(.format('DD/MM/YYYY hh:mm'));
-        // console.log(event.date < date) Moment().format('DD/MM/YYYY 00:00')
-        // console.log(Moment(Moment().format('DD/MM/YYYY 00:00')).isAfter('2019-05-11'))
-        // console.log(event.date)
-        // console.log(Moment().format('MM/DD/YYYY'));
-        // console.log(event.date < Moment().format('MM/DD/YYYY'))
-        // console.log(Moment(dateEvent).toDate().getTime())
-        // console.log(Moment(date).toDate().getTime())
-        // console.log(Moment(dateEvent).toDate() < Moment(date).format('MM/DD/YYYY'))
-        // console.log(dateEvent.toLocaleDateString('fr-FR'))
-        // console.log(Moment(dateEvent.toLocaleDateString('fr-FR')).format('MM/DD/YYYY') < Moment().format('MM/DD/YYYY'))
-    }, []);
 
     const goProfile = () => {
         // console.log(event.idUser);
         navigate(`/profile/${event.idUser}`);
     };
+
+    const handleClickParticipant = () => {
+        setIsOpenParticipant(event.idEvent)
+    };
+
 
     return (
         <Card  sx={{ paddingRight:1 }} >
@@ -69,13 +56,6 @@ export default function EventCard({event, canInterate}) {
                 <Grid
                     item
                 >
-                    {/*<IconButton onClick={goProfile}>*/}
-                    {/*    <Avatar*/}
-                    {/*        sx={{ width: 50, height: 50}}*/}
-                    {/*        src= {post.urlProfilePicture}*/}
-                    {/*    />*/}
-                    {/*</IconButton>*/}
-
                     <Box marginTop={2}>
                         <Grid
                             container
@@ -100,6 +80,7 @@ export default function EventCard({event, canInterate}) {
                     item
                     align={"center"}
                     sx={{ display: { xs: 'none', sm: 'block' } }}
+                    onClick={handleClickParticipant}
                 >
                     <Typography variant="body2"  fontWeight={"bold"} justifyContent="center">
                         {event.numberParticipant}
@@ -115,6 +96,7 @@ export default function EventCard({event, canInterate}) {
                 align={"center"}
                 paddingBottom={2}
                 sx={{ display: { xs: 'block', sm: 'none' } }}
+                onClick={handleClickParticipant}
             >
                 <Typography variant="body2"  fontWeight={"bold"} justifyContent="center">
                     {event.numberParticipant}
