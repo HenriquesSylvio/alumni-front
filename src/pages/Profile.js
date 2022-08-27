@@ -14,6 +14,7 @@ import OpenModalSendMessage from "../contexts/OpenModalSendMessage";
 import AddCommentForm from "../components/Post/AddCommentForm";
 import OpenModalAddComment from "../contexts/OpenModalAddComment";
 import ResponseIdPost from "../contexts/ResponseIdPost";
+import OpenModalAuth from "../contexts/OpenModalAuth";
 
 const styleBox = {
     position: 'absolute',
@@ -107,7 +108,7 @@ export default function Profile() {
                                 lastName={user.lastName}
                                 urlProfilePicture={user.urlProfilePicture}
                                 nbSubscriber={user.followerNumber}
-                                nbPosts='5'
+                                nbPosts={user.nbPosts}
                                 nbSubscription={user.followingNumber}
                                 promo={user.promo}
                                 sector={user.faculty_label}

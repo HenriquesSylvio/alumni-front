@@ -150,10 +150,10 @@ export default function Post() {
                     lastName={activeProfile.lastName}
                     urlProfilePicture={activeProfile.urlProfilePicture}
                     nbSubscriber={activeProfile.followerNumber}
-                    nbPosts='5'
+                    nbPosts={activeProfile.nbPosts}
                     nbSubscription={activeProfile.followingNumber}
                     promo={activeProfile.promo}
-                    sector='Développeur'
+                    sector={activeProfile.faculty_label}
                     biography={activeProfile.biography}
                     idUser={activeProfile.id}
                     subscribe={activeProfile.subcribe}
@@ -209,10 +209,10 @@ export default function Post() {
                             lastName={author.lastName}
                             urlProfilePicture={author.urlProfilePicture}
                             nbSubscriber={author.followerNumber}
-                            nbPosts='5'
+                            nbPosts={author.nbPosts}
                             nbSubscription={author.followingNumber}
                             promo={author.promo}
-                            sector='Développeur'
+                            sector={activeProfile.faculty_label}
                             biography={author.biography}
                             idUser={author.id}
                             subscribe={author.subcribe}

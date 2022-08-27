@@ -74,6 +74,7 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                 paddingLeft={4}
                 paddingRight={4}
                 spacing={3}
+                sx={{display: { xs: 'none', md: 'flex' }}}
             >
                 <Grid item paddingRight={3} onClick={handleClickSubscriber}>
                     <Typography variant="body2" align={"center"} fontWeight={"bold"} >
@@ -111,16 +112,16 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                 sx={{display: { xs: 'flex', md: 'none' }}}
             >
                     <Grid item xs align={"center"} onClick={handleClickSubscriber}>
-                        {(nbSubscriber = 0 && (
-                            <Typography variant="body2" fontWeight={"bold"}>
-                            0
-                            </Typography>
-                            ))
-                            ||
+                        {/*{(nbSubscriber = 0 && (*/}
+                        {/*    <Typography variant="body2" fontWeight={"bold"}>*/}
+                        {/*        {nbSubscriber}*/}
+                        {/*    </Typography>*/}
+                        {/*    ))*/}
+                        {/*    ||*/}
                             <Typography variant="body2" fontWeight={"bold"}>
                         {nbSubscriber}
                             </Typography>
-                        }
+                        {/*}*/}
                         <Typography variant="body2" color="text.secondary">
                             Abonnés
                         </Typography>
@@ -134,16 +135,16 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                         </Typography>
                     </Grid>
                     <Grid item xs align={"center"} onClick={handleClickSubscription}>
-                        {(nbSubscription = 0 && (
-                            <Typography variant="body2" fontWeight={"bold"}>
-                                0
-                            </Typography>
-                            ))
-                            ||
+                        {/*{(nbSubscription = 0 && (*/}
+                        {/*    <Typography variant="body2" fontWeight={"bold"}>*/}
+                        {/*        0*/}
+                        {/*    </Typography>*/}
+                        {/*    ))*/}
+                        {/*    ||*/}
                             <Typography variant="body2" fontWeight={"bold"}>
                                 {nbSubscription}
                             </Typography>
-                        }
+                        {/*}*/}
                         <Typography variant="body2" color="text.secondary">
                             Abonnements
                         </Typography>

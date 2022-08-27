@@ -8,7 +8,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TopLoginRegister from "../TopLoginRegister";
 import {register} from "../../../../../services/RegisterApi"
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
+import {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {toast} from "react-toastify";
 import validate from "../../../../../validators/RegisterValidator";
 import {Autocomplete} from "@mui/lab";
@@ -17,6 +17,7 @@ import ButtonSearch from "../../Search/ButtonSearch";
 import IconProfilePicture from "../../IconProfilePicture";
 import SignInButton from "../SignInButton";
 import {CircularProgress} from "@mui/material";
+import OpenModalAuth from "../../../../../contexts/OpenModalAuth";
 
 const theme = createTheme();
 
@@ -37,7 +38,8 @@ export default function SignUp() {
   const [facultyId, setFacultyId] = React.useState({});
   // const [loadingFaculty, setLoadingFaculty] = React.useState(false);
   const [promo, setPromo] = React.useState({});
-
+  const [loading, setLoading] = React.useState(false);
+  const {isOpenAuth, setIsOpenAuth} = useContext(OpenModalAuth);
   const yearPromo = [];
   const facultiesName = [];
   const facultiesId = [];
@@ -109,8 +111,10 @@ export default function SignUp() {
     // setErrors(validate(values));
     console.log(errors);
     if (Object.keys(errors).length === 0) {
+      setLoading(true);
       try {
         await register(values);
+        setIsOpenAuth(false)
         toast.success('Votre compte a été créé. Il faut désormais que votre compte soit accepté par un administrateur ! 😄');
       } catch ({response}) {
         var error = response.data.erreur
@@ -120,6 +124,7 @@ export default function SignUp() {
         });
         console.log(response)
       }
+      setLoading(false);
     }
   };
 
@@ -150,6 +155,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={ errors.first_name }
                   helperText={ errors.first_name }
+                  disabled={loading}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -163,6 +169,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={ errors.last_name }
                   helperText={ errors.last_name }
+                  disabled={loading}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -176,39 +183,10 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={ errors.email }
                   helperText={ errors.email }
+                  disabled={loading}
                 />
               </Grid>
-              {/*<Grid item xs={12} sm={6}>*/}
-              {/*  <TextField*/}
-              {/*      required*/}
-              {/*      fullWidth*/}
-              
-              {/*      id="password"*/}
-              {/*      label="Mot de passe"*/}
-              {/*      name="password"*/}
-              {/*      autoComplete="password"*/}
-              {/*      type="password"*/}
-              {/*      onChange={handleChange}*/}
-              {/*      error={ errors.password }*/}
-              {/*      helperText={ errors.password }*/}
-              {/*  />*/}
-              {/*</Grid>*/}
-              {/*<Grid item xs={12} sm={6}>*/}
-              {/*  <TextField*/}
-              {/*      required*/}
-              {/*      fullWidth*/}
-              {/*      id="confirmPassword"*/}
-              {/*      label="Confirmation mot de passe"*/}
-              {/*      name="confirmPassword"*/}
-              {/*      autoComplete="confirmPassword"*/}
-              {/*      type="password"*/}
-              {/*      onChange={handleChange}*/}
-              {/*      error={ errors.confirmPassword }*/}
-              {/*      helperText={ errors.confirmPassword }*/}
-              {/*  />*/}
-              {/*</Grid>*/}
               <Grid item xs={12} sm={6}>
-
                 {(faculties.length && (
                         <Autocomplete
                             fullWidth
@@ -220,6 +198,7 @@ export default function SignUp() {
                             // faculty: {
                             //   id: ""
                             // }
+                            disabled={loading}
                             autoComplete="faculty"
 
                             renderInput={(params) =>
@@ -231,6 +210,7 @@ export default function SignUp() {
                                            label="Filière"
                                            error={ errors.faculty }
                                            helperText={ errors.faculty }
+                                           disabled={loading}
                                 />
                             }
                         />
@@ -251,7 +231,7 @@ export default function SignUp() {
                     fullWidth
                     options={promo}
                     onChange={(event, value) => setValues({...values, ["promo"]: value})}
-
+                    disabled={loading}
                     autoComplete="promo"
                     renderInput={(params) =>
                         <TextField {...params}
@@ -262,6 +242,7 @@ export default function SignUp() {
                                    label="Promo"
                                    error={ errors.promo }
                                    helperText={ errors.promo }
+                                   disabled={loading}
                         />
                 }
                 />
@@ -277,6 +258,7 @@ export default function SignUp() {
                     onChange={handleChange}
                     error={ errors.username }
                     helperText={ errors.username }
+                    disabled={loading}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -292,6 +274,7 @@ export default function SignUp() {
                     onChange={handleChange}
                     error={ errors.password }
                     helperText={ errors.password }
+                    disabled={loading}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -306,18 +289,31 @@ export default function SignUp() {
                     onChange={handleChange}
                     error={ errors.confirmPassword }
                     helperText={ errors.confirmPassword }
+                    disabled={loading}
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleClick}
-            >
-              Inscription
-            </Button>
+            {(loading && (
+                    <Box sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      marginTop: 2
+                    }}>
+                      <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                    </Box>
+                ))
+                ||
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={handleClick}
+                >
+                  Inscription
+                </Button>
+            }
           </Box>
         </Box>
       </Container>

@@ -176,10 +176,10 @@ export default function Event() {
                         lastName={activeProfile.lastName}
                         urlProfilePicture={activeProfile.urlProfilePicture}
                         nbSubscriber={activeProfile.followerNumber}
-                        nbPosts='5'
+                        nbPosts={activeProfile.nbPosts}
                         nbSubscription={activeProfile.followingNumber}
                         promo={activeProfile.promo}
-                        sector='Développeur'
+                        sector={activeProfile.faculty_label}
                         biography={activeProfile.biography}
                         idUser={activeProfile.id}
                         subscribe={activeProfile.subcribe}

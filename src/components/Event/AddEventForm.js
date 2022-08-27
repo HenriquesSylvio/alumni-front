@@ -29,7 +29,7 @@ export default function AddEventForm() {
     const [values, setValues] = useState({
         title: "",
         description: "",
-        date: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear() + "00:00"
+        date: (new Date().getDate() + 1) + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear() + "00:00"
     });
     const [date, setDate] = React.useState(new Date());
     const today = new Date()
@@ -42,6 +42,7 @@ export default function AddEventForm() {
     }
 
     useEffect(() => {
+        // console.log((new Date().getMonth() + 1) );
         setDate(today)
     }, []);
 
