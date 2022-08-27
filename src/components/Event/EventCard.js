@@ -8,6 +8,7 @@ import {postParticipateEvent} from "../../services/ParticipateEventApi";
 import {deleteParticipateEvent} from "../../services/DeleteParticipateEvent";
 import Moment from "moment";
 import {useNavigate} from "react-router-dom";
+import {Box} from "@mui/system";
 
 // export default function EventCard({firstName, lastName, title, idEvent, idUser, description, date}) {
 export default function EventCard({event, canInterate}) {
@@ -16,7 +17,7 @@ export default function EventCard({event, canInterate}) {
     const [participateLoading, setParticipateLoading] = useState(false);
     // const [canInterate, setCanInterate] = useState(false);
     let date = new Date();
-    let dateEvent = new Date(event.date);
+    let dateEvent = new Date(Moment(event.date).format('x'));
     const handleParticipate = async () => {
         setParticipateLoading(true)
         await postParticipateEvent(event.idEvent)
@@ -32,7 +33,12 @@ export default function EventCard({event, canInterate}) {
     };
 
     useEffect(() => {
-
+        // Moment(dateEvent.toLocaleDateString('fr-FR')).format('MM/DD/YYYY') < Moment(date.toLocaleDateString('fr-FR')).format('MM/DD/YYYY')}
+        // console.log(Moment(dateEvent).format('DD/MM/YYYY'))
+        // console.log(event.date.getTime());
+        // console.log(Moment(date).format('DD/MM/YYYY'))
+        // console.log(Moment(date).format('DD/MM/YYYY HH:mm'))
+        // console.log(event.date < Moment(date).format('DD/MM/YYYY HH:mm'))
         // console.log(Moment(event.date).format('DD/MM/YYYY'));
         // console.log)(Moment(.format('DD/MM/YYYY hh:mm'));
         // console.log(event.date < date) Moment().format('DD/MM/YYYY 00:00')
@@ -57,36 +63,77 @@ export default function EventCard({event, canInterate}) {
             <Grid
                 container
                 direction="row"
-                justifyContent="flex-start"
+                justifyContent="space-between"
+                alignItems="center"
             >
-                {/*<IconButton onClick={goProfile}>*/}
-                {/*    <Avatar*/}
-                {/*        sx={{ width: 50, height: 50}}*/}
-                {/*        src= {post.urlProfilePicture}*/}
-                {/*    />*/}
-                {/*</IconButton>*/}
-                <IconButton onClick={goProfile}>
-                    <Avatar
-                        src={event.urlProfilePicture}
-                        sx={{ width: 50, height: 50}}
-                    />
-                </IconButton>
-                <Grid marginTop={2}>
-                    <Typography marginLeft={2} component="div" fontWeight={"bold"}>
-                        {event.lastName} {event.firstName}
+                <Grid
+                    item
+                >
+                    {/*<IconButton onClick={goProfile}>*/}
+                    {/*    <Avatar*/}
+                    {/*        sx={{ width: 50, height: 50}}*/}
+                    {/*        src= {post.urlProfilePicture}*/}
+                    {/*    />*/}
+                    {/*</IconButton>*/}
+
+                    <Box marginTop={2}>
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                        >
+                        <IconButton onClick={goProfile}>
+                            <Avatar
+                                src={event.urlProfilePicture}
+                                sx={{ width: 50, height: 50}}
+                            />
+                        </IconButton>
+                        <Typography marginLeft={2} component="div" fontWeight={"bold"}>
+                            {event.lastName} {event.firstName}
+                        </Typography>
+                        </Grid>
+                    </Box>
+                </Grid>
+
+                <Grid
+                    item
+                    align={"center"}
+                    sx={{ display: { xs: 'none', sm: 'block' } }}
+                >
+                    <Typography variant="body2"  fontWeight={"bold"} justifyContent="center">
+                        {event.numberParticipant}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Participants
                     </Typography>
                 </Grid>
             </Grid>
+
+            <Grid
+                item
+                align={"center"}
+                paddingBottom={2}
+                sx={{ display: { xs: 'block', sm: 'none' } }}
+            >
+                <Typography variant="body2"  fontWeight={"bold"} justifyContent="center">
+                    {event.numberParticipant}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Participants
+                </Typography>
+            </Grid>
+
             <Grid
                 container
                 direction="column"
                 justifyContent="space-evenly"
                 alignItems="center"
             >
-                <Typography marginLeft={2} component="div" fontWeight={"bold"}>
+                <Typography  component="div" fontWeight={"bold"}>
                     {event.title}
                 </Typography>
-                <Typography marginLeft={2} component="div" fontWeight={"lighter"}>
+                <Typography component="div" fontWeight={"lighter"}>
                     {event.date.split(" 00:00")}
                 </Typography>
                 <p>{event.description}</p>
@@ -96,12 +143,12 @@ export default function EventCard({event, canInterate}) {
                     ))
                     ||
                     (participateByUser === true && (
-                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleUnparticipate} disabled={Moment(dateEvent.toLocaleDateString('fr-FR')).format('MM/DD/YYYY') < Moment().format('MM/DD/YYYY')}>
+                        <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleUnparticipate} disabled={event.date < Moment(date).format('DD/MM/YYYY HH:mm')}>
                             Ne plus participer
                         </Button>
                     ))
                     ||
-                    <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleParticipate} disabled={Moment(dateEvent.toLocaleDateString('fr-FR')).format('MM/DD/YYYY') < Moment().format('MM/DD/YYYY')}>
+                    <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95, marginBottom: 2}} size="small" variant="contained" onClick={handleParticipate} disabled={event.date < Moment(date).format('DD/MM/YYYY HH:mm')}>
                         Participer
                     </Button>
                 }
