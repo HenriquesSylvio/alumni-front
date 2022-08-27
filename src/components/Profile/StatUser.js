@@ -14,13 +14,16 @@ import OpenModalSubscriber from "../../contexts/OpenModalSubscriber";
 import {useContext} from "react";
 import SubscriberDiplay from "./SubscriberDiplay";
 import Paper from "@mui/material/Paper";
+import OpenModalSubscription from "../../contexts/OpenModalSubscription";
+import SubscriptionDisplay from "./SubscriptionDisplay";
 
 const styleBox = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 'auto',
+    // width: 'auto',
+    minWidth: '550px',
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
@@ -39,16 +42,26 @@ const styleResponsiveBox = {
 
 export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}) {
     const {isOpenSubscriber, setIsOpenSubscriber} = useContext(OpenModalSubscriber);
+    const {isOpenSubscription, setIsOpenSubscription} = useContext(OpenModalSubscription);
     // function handleClickSubscriber() {
     //     console.log(idUser)
     // }
-    const handleClickSubscriber = async () => {
+    const handleClickSubscriber = () => {
         setIsOpenSubscriber(true)
     }
 
-    const handleClose = () => {
+    const handleCloseSubscriber = () => {
         setIsOpenSubscriber(false)
     }
+
+    const handleClickSubscription = () => {
+        setIsOpenSubscription(true)
+    }
+
+    const handleCloseSubscription = () => {
+        setIsOpenSubscription(false)
+    }
+
 
     return (
         <>
@@ -78,7 +91,7 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                         Publications
                     </Typography>
                 </Grid>
-                <Grid item paddingLeft={4}>
+                <Grid item paddingLeft={4} onClick={handleClickSubscription}>
                     <Typography variant="body2" align={"center"} fontWeight={"bold"}>
                         {nbSubscription}
                     </Typography>
@@ -120,7 +133,7 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                             Publications
                         </Typography>
                     </Grid>
-                    <Grid item xs align={"center"}>
+                    <Grid item xs align={"center"} onClick={handleClickSubscription}>
                         {(nbSubscription = 0 && (
                             <Typography variant="body2" fontWeight={"bold"}>
                                 0
@@ -139,7 +152,7 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                         aria-labelledby="transition-modal-title"
                         aria-describedby="transition-modal-description"
                         open={isOpenSubscriber}
-                        onClose={handleClose}
+                        onClose={handleCloseSubscriber}
                         closeAfterTransition
                         BackdropComponent={Backdrop}
                         BackdropProps={{
@@ -158,6 +171,31 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                             </Box>
                         </Fade>
                     </Modal>
+
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    open={isOpenSubscription}
+                    onClose={handleCloseSubscription}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    {/*<Fade>*/}
+                    <Fade in={isOpenSubscription}>
+                        <Box>
+                            <Paper sx={styleBox}>
+                                <SubscriptionDisplay idUser={idUser}/>
+                            </Paper>
+                            <Paper sx={styleResponsiveBox}>
+                                <SubscriptionDisplay idUser={idUser}/>
+                            </Paper>
+                        </Box>
+                    </Fade>
+                </Modal>
+
                 {/*</Grid>*/}
             </Grid>
         </>

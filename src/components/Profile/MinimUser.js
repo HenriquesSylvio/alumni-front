@@ -48,7 +48,7 @@ export default function MinimUser({user}) {
                         </Grid>
                     </Box>
 
-                    <Box marginRight={2} marginLeft={4}>
+                    <Box marginRight={2} right={0} marginLeft={1} >
                         <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={goProfile}>
                             Voir le profil
                         </Button>

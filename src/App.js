@@ -34,7 +34,6 @@ import OpenModalEditProfile from "./contexts/OpenModalEditProfile";
 import OpenModalSubscriber from "./contexts/OpenModalSubscriber";
 import OpenModalSubscription from "./contexts/OpenModalSubscription";
 
-// const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated());
     const [isOpenAddPost, setIsOpenAddPost] = useState(false);
