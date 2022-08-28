@@ -6,11 +6,14 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import {useNavigate} from "react-router-dom";
+import OpenModalSubscriber from "../../contexts/OpenModalSubscriber";
+import {useContext} from "react";
 
 export default function MinimUser({user}) {
+    const {isOpenSubscriber, setIsOpenSubscriber} = useContext(OpenModalSubscriber);
     let  navigate = useNavigate();
     const goProfile = () => {
-        console.log(user.id);
+        setIsOpenSubscriber(false)
         navigate(`/profile/${user.id}`);
     };
 
@@ -45,7 +48,7 @@ export default function MinimUser({user}) {
                         </Grid>
                     </Box>
 
-                    <Box marginRight={2}>
+                    <Box marginRight={2} right={0} marginLeft={1} >
                         <Button style={{backgroundColor: "#00A5A5"}} sx={{minWidth:95}} size="small" variant="contained" onClick={goProfile}>
                             Voir le profil
                         </Button>

@@ -31,7 +31,15 @@ export default function AdminPanel() {
         <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <TabList onChange={handleChange} aria-label="lab API tabs example">
+                    {/*<TabList onChange={handleChange} aria-label="lab API tabs example" centered scrollButtons="auto" variant="scrollable">*/}
+                    {/*<TabList onChange={handleChange} aria-label="lab API tabs example" centered scrollButtons="auto" variant="scrollable">*/}
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        variant="scrollable"
+                        scrollButtons
+                        allowScrollButtonsMobile
+                    >
                         <Tab label="Utilisateurs en attente" value="1" />
                         <Tab label="Utilisateurs actifs" value="2" />
                         <Tab label="Publications" value="3" />
@@ -43,8 +51,8 @@ export default function AdminPanel() {
                             ||
                             null
                         }
-
-                    </TabList>
+                    </Tabs>
+                    {/*</TabList>*/}
                 </Box>
                 <TabPanel value="1">
                     <WaitingUserTable />

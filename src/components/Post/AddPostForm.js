@@ -15,6 +15,8 @@ import {addPost} from "../../services/AddPostApi";
 import validate from "../../validators/AddPostValidator";
 import {useContext} from "react";
 import OpenModalAddPost from "../../contexts/OpenModalAddPost";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 export default function AddPostForm() {
     const [errors, setErrors] = useState({});
@@ -42,7 +44,7 @@ export default function AddPostForm() {
         console.log(errors);
         if (Object.keys(errors).length === 0) {
             await addPost(values);
-            toast.success('Le poste a été créer ! 😄')
+            toast.success('La publication a été créée ! 😄')
             setIsOpenAddPost(false);
         }
         setLoadingForm(false);
@@ -52,6 +54,9 @@ export default function AddPostForm() {
     return (
             <Container component="main">
                 <CssBaseline />
+                <IconButton onClick={() => setIsOpenAddPost(false)}>
+                    <CloseIcon/>
+                </IconButton>
                 <Grid
                     container
                     spacing={0}

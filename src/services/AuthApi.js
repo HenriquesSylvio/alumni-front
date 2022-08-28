@@ -2,7 +2,8 @@ import axios from 'axios';
 import jwtDecode from "jwt-decode";
 import { getItem, addItem, removeItem } from "./LocaleStorage";
 
-const URLApi = `http://127.0.0.1:8080/api/`;
+// const URLApi = `http://127.0.0.1:8080/api/`;
+const URLApi = process.env.REACT_APP_API_URL;
 // const URLApi = "https://alumni-nws-api.herokuapp.com/api/"
 export function hasAuthenticated() {
     const token = getItem('Token');
@@ -19,9 +20,9 @@ export function login(credentials) {
     return axios
         .post(URLApi + "login_check", credentials)
         .then(response => response.data.token)
-        .then(token => {
+        .then(async token => {
             // console.log(token);
-            addItem('Token',token);
+            addItem('Token', token);
             return true;
         });
 }

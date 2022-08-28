@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 // import {Box} from "@mui/system";
 
 const MessageBlue = styled('div')(() => ({
+    minWidth: "150px",
     position: "relative",
     marginLeft: "20px",
     marginBottom: "10px",
@@ -44,16 +45,17 @@ const MessageBlue = styled('div')(() => ({
     }
 }));
 
-export default function MessageLeft({message, firstName, lastName}) {
+export default function MessageLeft({message, firstName, lastName, urlProfilePicture, time}) {
     return (
         <>
             <Box display="flex">
-                <Avatar/>
+                <Avatar src={urlProfilePicture}/>
                     <div>
-                        <Box marginLeft="25px">Henriques Sylvio</Box>
+                        <Box marginLeft="25px">{lastName} {firstName}</Box>
                         <MessageBlue>
                             <Box>
-                                <Typography padding="0" margin="0">{message}</Typography>
+                                <Typography display="block" padding="0" margin="0">{message}</Typography>
+                                <Box fontSize=".85em" fontWeight="300" marginTop="10px" bottom="-3px" right="5px">{time}</Box>
                             </Box>
                         </MessageBlue>
                     </div>

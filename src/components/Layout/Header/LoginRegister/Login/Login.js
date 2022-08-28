@@ -17,6 +17,9 @@ import getProfile from "../../../../../services/ProfileApi";
 import ActiveConnectedUser from "../../../../../contexts/ActiveConnectedUser";
 import {addItem, getItem} from "../../../../../services/LocaleStorage";
 import Admin from "../../../../../contexts/Admin";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import OpenModalAuth from "../../../../../contexts/OpenModalAuth";
 
 const theme = createTheme();
 
@@ -27,6 +30,7 @@ export default function SignIn() {
     const {setActiveProfile} = useContext(ActiveConnectedUser)
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = React.useState(false);
+    const {isOpenAuth, setIsOpenAuth} = useContext(OpenModalAuth);
 
     let authenticated = false;
 
@@ -69,14 +73,15 @@ export default function SignIn() {
                 console.log(values)
                 const response = await login(values);
                 authenticated = response
+                await getMyProfile()
                 setIsAuthenticated(response);
                 const token = JSON.parse(atob(getItem('Token').split('.')[1])).roles
-                console.log(token.some(item => item === 'ROLE_ADMIN'));
+                // console.log(token.some(item => item === 'ROLE_ADMIN'));
                 setIsAdmin(token.some(item => item === 'ROLE_ADMIN'));
                 navigate('/feed', { replace: true })
                 toast.success('Bienvenue ! 😄')
-                await getMyProfile()
 
+                setIsOpenAuth(false)
             } catch ({response}) {
                 toast.error(response.data.erreur + ' 😃')
                 setLoading(false);

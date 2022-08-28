@@ -50,8 +50,6 @@ export default function Messages() {
     };
 
     const getAllMessage = async () => {
-        console.log("teeeest")
-        console.log(messageConversation.length)
         if (messageConversation.length === 0) {
             setSelectedConversationIndex(conversations[0].id)
         }
@@ -62,7 +60,10 @@ export default function Messages() {
 
     const handleSubmit = async event => {
         event.preventDefault();
+        // setConversations((oldMessage) => )
+        setContent((oldMessage) => [...oldMessage, ...content])
         setContent("");
+        await scrollBarGoDown()
         await sendMessage(values.content, selectedConversationIndex)
     };
 
@@ -84,12 +85,9 @@ export default function Messages() {
         }
         getData();
 
-        setTimeout(() => setRepeater(prevState=>prevState+1), 2000);
+        setTimeout(() => setRepeater(prevState=>prevState+1), 1000);
     }, [repeater]);
 
-    useEffect( () => {
-        console.log("ceci est un trrest")
-    }, []);
 
     const handleListItemClick = async (event, index) => {
         setSelectedConversationIndex(index);
@@ -191,11 +189,16 @@ export default function Messages() {
                                     (message.idUser === activeProfile.id && (
                                         <MessageRight
                                             message={message.content}
+                                            time={message.createAt}
                                         />
                                     ))
                                     ||
                                     <MessageLeft
+                                        firstName={message.firstName}
+                                        lastName={message.lastName}
                                         message={message.content}
+                                        urlProfilePicture={message.urlProfilePicture}
+                                        time={message.createAt}
                                     />
                             ): null
                         }
@@ -232,11 +235,16 @@ export default function Messages() {
                                 (message.idUser === activeProfile.id && (
                                     <MessageRight
                                         message={message.content}
+                                        time={message.createAt}
                                     />
                                 ))
                                 ||
                                     <MessageLeft
+                                        firstName={message.firstName}
+                                        lastName={message.lastName}
                                         message={message.content}
+                                        urlProfilePicture={message.urlProfilePicture}
+                                        time={message.createAt}
                                     />
                             ): null
                         }

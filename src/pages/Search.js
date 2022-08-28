@@ -12,52 +12,101 @@ import MinimUser from "../components/Profile/MinimUser";
 import getUsers from "../services/GetUsersApi";
 import {CircularProgress} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import {getItem} from "../services/LocaleStorage";
+import getFeed from "../services/FeedApi";
 
 export default function Search() {
 
     const params = useParams();
     const [typeSearch, setTypeSearch] = useState("");
-    const {activeProfile} = useContext(ActiveConnectedUser);
     const [posts, setPost] = useState('');
     const [events, setEvents] = useState('');
     const [users, setUsers] = useState('');
+    const [loadingNextPage, setLoadingNextPage] = useState(false);
     const [loadingPage, setLoading] = useState(true);
+    const [activeProfile] = useState(JSON.parse(getItem('Profile')));
+    let loadingData = false;
+    let newData = [];
+    let page = 1;
+
+    const searchPosts = async () => {
+
+        setLoadingNextPage(true);
+        try{
+            const response = await getPosts(page, params.word);
+            console.log(response);
+            newData = response.data.data
+            setPost((oldPosts) => [...oldPosts, ...newData])
+            page += 1
+        } catch {
+        }
+        setLoadingNextPage(false)
+
+    }
+
+    const searchEvents = async () => {
+
+        setLoadingNextPage(true);
+        try{
+            const response = await getEvents(page, "", params.word);
+            console.log(response);
+            newData = response.data.data
+            setEvents((oldEvents) => [...oldEvents, ...newData])
+            page += 1
+        } catch {
+        }
+        setLoadingNextPage(false)
+    }
+
+    const searchUsers = async () => {
+        setLoadingNextPage(true);
+        try{
+            const response = await getUsers(page, params.word);
+            console.log(response);
+            newData = response.data.data
+            setUsers((oldUsers) => [...oldUsers, ...newData])
+            page += 1
+        } catch {
+        }
+        setLoadingNextPage(false);
+    }
 
     useEffect( () => {
-        const searchPosts = async () => {
-            setLoading(true);
-            const response = await getPosts(1, params.word);
-            console.log(response);
-            setPost(response.data.data)
-            setLoading(false);
-        }
-
-        const searchEvents = async () => {
-            setLoading(true);
-            const response = await getEvents(1, "", params.word);
-            console.log(response)
-            setEvents(response.data.data)
-            setLoading(false);
-        }
-
-        const searchUsers = async () => {
-            setLoading(true);
-            const response = await getUsers(1, params.word);
-            setUsers(response.data.data)
-            console.log(response.data.data)
-            setLoading(false);
-        }
-
+        // console.log(JSON.parse(getItem('Profile')).urlProfilePicture)
         setTypeSearch(params.typeSearch)
-
-        if (params.typeSearch === "post") {
-            searchPosts()
-        } else if (params.typeSearch === "event"){
-            searchEvents()
-        } else if (params.typeSearch === "user") {
-            searchUsers()
+        const getData = async () => {
+            setLoading(true);
+            if (params.typeSearch === "post") {
+                await searchPosts()
+            } else if (params.typeSearch === "event"){
+                await searchEvents()
+            } else if (params.typeSearch === "user") {
+                await searchUsers()
+            }
+            setLoading(false);
         }
+        getData();
+
+
+        window.addEventListener('scroll', handleScroll)
     }, [params.typeSearch, params.word]);
+
+    const handleScroll = async (e) =>{
+        if(loadingData === false) {
+            loadingData = true
+            if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
+                // console.log("noice")
+                if (params.typeSearch === "post") {
+                    await searchPosts()
+                } else if (params.typeSearch === "event"){
+                    await searchEvents()
+                } else if (params.typeSearch === "user") {
+                    await searchUsers()
+                }
+            }
+            loadingData = false
+        }
+    }
 
     return (
         <Box>
@@ -78,10 +127,10 @@ export default function Search() {
                         lastName={activeProfile.lastName}
                         urlProfilePicture={activeProfile.urlProfilePicture}
                         nbSubscriber={activeProfile.followerNumber}
-                        nbPosts='5'
+                        nbPosts={activeProfile.nbPosts}
                         nbSubscription={activeProfile.followingNumber}
                         promo={activeProfile.promo}
-                        sector='Développeur'
+                        sector={activeProfile.faculty_label}
                         biography={activeProfile.biography}
                         idUser={activeProfile.id}
                         subscribe={activeProfile.subcribe}
@@ -127,9 +176,20 @@ export default function Search() {
                                 Aucun utilisateur trouvé !
                             </Typography>
                     )}
+                    {(loadingNextPage && (
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            marginTop: 2
+                        }}>
+                            <CircularProgress sx={{justifyContent:"center", display:"flex"}}/>
+                        </Box>
+                    ))}
                 </Grid>
             </Grid>
             )}
+
         </Box>
     );
 }

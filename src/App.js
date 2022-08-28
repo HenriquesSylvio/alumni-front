@@ -10,6 +10,7 @@ import Auth from "./contexts/Auth";
 import {hasAuthenticated} from "./services/AuthApi";
 import {ToastContainer} from "react-toastify";
 import AuthenticatedRoute from "./contexts/AuthenticatedRoute";
+import NoConnectedRoute from "./contexts/NoConnectedRoute";
 import OpenModalAddPost from "./contexts/OpenModalAddPost";
 import OpenModalAddComment from "./contexts/OpenModalAddComment";
 import ResponseIdPost from "./contexts/ResponseIdPost";
@@ -28,8 +29,13 @@ import AdminRoute from "./contexts/AdminRoute";
 import AdminPanel from "./pages/AdminPanel";
 import OpenModalAddFaculty from "./contexts/OpenModalAddFaculty";
 import OpenModalEditFaculty from "./contexts/OpenModalEditFaculty";
+import OpenModalAuth from "./contexts/OpenModalAuth";
+import TabIndexAuth from "./contexts/TabIndexAuth";
+import OpenModalEditProfile from "./contexts/OpenModalEditProfile";
+import OpenModalSubscriber from "./contexts/OpenModalSubscriber";
+import OpenModalSubscription from "./contexts/OpenModalSubscription";
+import OpenModalParticipant from "./contexts/OpenModalParticipant";
 
-// const Profile = lazy(() => import('./pages/Profile'))
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated());
     const [isOpenAddPost, setIsOpenAddPost] = useState(false);
@@ -44,54 +50,72 @@ const App = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [isOpenAddFaculty, setIsAddFaculty] = useState(false);
     const [isOpenEditFaculty, setIsEditFaculty] = useState({});
-
+    const [isOpenAuth, setIsOpenAuth] = useState(false);
+    const [tabIndexAuth, setTabIndexAuth] = useState("1");
+    const [isOpenEditProfile, setIsOpenEditProfile] = useState(false);
+    const [isOpenSubscriber, setIsOpenSubscriber] = useState(false);
+    const [isOpenSubscription, setIsOpenSubscription] = useState(false);
+    const [isOpenParticipant, setIsOpenParticipant] = useState(0);
 
     return (
       <Auth.Provider value={{isAuthenticated, setIsAuthenticated}}>
           <Admin.Provider value={{isAdmin, setIsAdmin}}>
-              <FirstLoad.Provider value={{firstLoad, setFirstLoad}}>
-                  <ActiveConnectedUser.Provider value={{activeProfile, setActiveProfile}}>
-                      <OpenModalAddPost.Provider value={{isOpenAddPost, setIsOpenAddPost}}>
-                          <OpenModalAddComment.Provider value={{isOpenAddComment, setIsOpenAddComment}}>
-                              <OpenModalSearch.Provider value={{isOpenSearch, setIsOpenSearch}}>
-                                      <ResponseIdPost.Provider value={{idPost, setIdPost}}>
-                                          <SelectedConversationIndex.Provider value={{selectedConversationIndex, setSelectedConversationIndex}}>
-                                              <MessageConversation.Provider value={{messageConversation, setMessageConversation}}>
-                                                  <OpenModalSendMessage.Provider value={{isOpenSendMessage, setIsOpenSendMessage}}>
-                                                      <OpenModalAddFaculty.Provider value={{isOpenAddFaculty, setIsAddFaculty}}>
-                                                          <OpenModalEditFaculty.Provider value={{isOpenEditFaculty, setIsEditFaculty}}>
-                                                              <BrowserRouter>
-                                                                  <Layout>
-                                                                      <Routes>
-                                                                          <Route path='/' element={<Home/>}/>
-                                                                          <Route exact path='/inscription' element={<Inscription/>}/>
-                                                                          <Route element={<AuthenticatedRoute/>}>
-                                                                              <Route exact path='/feed' element={<Feed/>}/>
-                                                                              <Route exact path='/profile/:id' element={<Profile/>}/>
-                                                                              <Route exact path='/post/:id' element={<Post/>}/>
-                                                                              <Route exact path='/profile' element={<Profile/>}/>
-                                                                              <Route exact path='/events' element={<Event/>}/>
-                                                                              <Route exact path='/messages' element={<Messages/>}/>
-                                                                              <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
-                                                                              <Route element={<AdminRoute/>}>
-                                                                                  <Route exact path='/adminPanel' element={<AdminPanel/>}/>
-                                                                              </Route>
-                                                                          </Route>
-                                                                      </Routes>
-                                                                      <ToastContainer />
-                                                                  </Layout>
-                                                              </BrowserRouter>
-                                                          </OpenModalEditFaculty.Provider>
-                                                      </OpenModalAddFaculty.Provider>
-                                                  </OpenModalSendMessage.Provider>
-                                              </MessageConversation.Provider>
-                                          </SelectedConversationIndex.Provider>
-                                      </ResponseIdPost.Provider>
-                              </OpenModalSearch.Provider>
-                          </OpenModalAddComment.Provider>
-                    </OpenModalAddPost.Provider>
-                  </ActiveConnectedUser.Provider>
-              </FirstLoad.Provider>
+              <OpenModalAuth.Provider value={{isOpenAuth, setIsOpenAuth}}>
+                  <TabIndexAuth.Provider value={{tabIndexAuth, setTabIndexAuth}}>
+                      <FirstLoad.Provider value={{firstLoad, setFirstLoad}}>
+                          <ActiveConnectedUser.Provider value={{activeProfile, setActiveProfile}}>
+                              <OpenModalAddPost.Provider value={{isOpenAddPost, setIsOpenAddPost}}>
+                                  <OpenModalAddComment.Provider value={{isOpenAddComment, setIsOpenAddComment}}>
+                                      <OpenModalSearch.Provider value={{isOpenSearch, setIsOpenSearch}}>
+                                              <ResponseIdPost.Provider value={{idPost, setIdPost}}>
+                                                  <SelectedConversationIndex.Provider value={{selectedConversationIndex, setSelectedConversationIndex}}>
+                                                      <MessageConversation.Provider value={{messageConversation, setMessageConversation}}>
+                                                          <OpenModalSendMessage.Provider value={{isOpenSendMessage, setIsOpenSendMessage}}>
+                                                              <OpenModalAddFaculty.Provider value={{isOpenAddFaculty, setIsAddFaculty}}>
+                                                                  <OpenModalEditFaculty.Provider value={{isOpenEditFaculty, setIsEditFaculty}}>
+                                                                      <OpenModalEditProfile.Provider value={{isOpenEditProfile, setIsOpenEditProfile}}>
+                                                                          <OpenModalSubscriber.Provider value={{isOpenSubscriber, setIsOpenSubscriber}}>
+                                                                              <OpenModalSubscription.Provider value={{isOpenSubscription, setIsOpenSubscription}}>
+                                                                                  <OpenModalParticipant.Provider value={{isOpenParticipant, setIsOpenParticipant}}>
+                                                                                      <BrowserRouter>
+                                                                                          <Layout>
+                                                                                              <Routes>
+                                                                                                  <Route element={<NoConnectedRoute/>}>
+                                                                                                    <Route path='/' element={<Home/>}/>
+                                                                                                  </Route>
+                                                                                                  <Route element={<AuthenticatedRoute/>}>
+                                                                                                      <Route exact path='/feed' element={<Feed/>}/>
+                                                                                                      <Route exact path='/profile/:id' element={<Profile/>}/>
+                                                                                                      <Route exact path='/post/:id' element={<Post/>}/>
+                                                                                                      <Route exact path='/profile' element={<Profile/>}/>
+                                                                                                      <Route exact path='/events' element={<Event/>}/>
+                                                                                                      <Route exact path='/messages' element={<Messages/>}/>
+                                                                                                      <Route exact path='/search/:typeSearch/:word' element={<Search/>}/>
+                                                                                                      <Route element={<AdminRoute/>}>
+                                                                                                          <Route exact path='/adminPanel' element={<AdminPanel/>}/>
+                                                                                                      </Route>
+                                                                                                  </Route>
+                                                                                              </Routes>
+                                                                                              <ToastContainer />
+                                                                                          </Layout>
+                                                                                      </BrowserRouter>
+                                                                                  </OpenModalParticipant.Provider>
+                                                                              </OpenModalSubscription.Provider>
+                                                                          </OpenModalSubscriber.Provider>
+                                                                      </OpenModalEditProfile.Provider>
+                                                                  </OpenModalEditFaculty.Provider>
+                                                              </OpenModalAddFaculty.Provider>
+                                                          </OpenModalSendMessage.Provider>
+                                                      </MessageConversation.Provider>
+                                                  </SelectedConversationIndex.Provider>
+                                              </ResponseIdPost.Provider>
+                                      </OpenModalSearch.Provider>
+                                  </OpenModalAddComment.Provider>
+                            </OpenModalAddPost.Provider>
+                          </ActiveConnectedUser.Provider>
+                      </FirstLoad.Provider>
+                  </TabIndexAuth.Provider>
+              </OpenModalAuth.Provider>
           </Admin.Provider>
       </Auth.Provider>
   );
