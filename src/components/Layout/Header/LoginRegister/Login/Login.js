@@ -47,7 +47,6 @@ export default function SignIn() {
         const {name, value} = currentTarget;
 
         setValues({...values, [name]: value})
-        console.log(values);
     }
 
     const getMyProfile = async () => {
@@ -66,17 +65,14 @@ export default function SignIn() {
         event.preventDefault();
 
         setErrors(validate(values));
-        console.log(Object.keys(errors).length);
          if (Object.keys(errors).length === 0) {
              setLoading(true);
             try {
-                console.log(values)
                 const response = await login(values);
                 authenticated = response
                 await getMyProfile()
                 setIsAuthenticated(response);
                 const token = JSON.parse(atob(getItem('Token').split('.')[1])).roles
-                // console.log(token.some(item => item === 'ROLE_ADMIN'));
                 setIsAdmin(token.some(item => item === 'ROLE_ADMIN'));
                 navigate('/feed', { replace: true })
                 toast.success('Bienvenue ! 😄')
@@ -85,7 +81,6 @@ export default function SignIn() {
             } catch ({response}) {
                 toast.error(response.data.erreur + ' 😃')
                 setLoading(false);
-                console.log(response)
             }
          }
     };

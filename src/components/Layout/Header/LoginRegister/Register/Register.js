@@ -52,7 +52,6 @@ export default function SignUp() {
     const {name, value} = currentTarget;
 
     setValues({...values, [name]: value})
-    console.log(values);
   }
 
   const loadYearPromo = () => {
@@ -109,7 +108,6 @@ export default function SignUp() {
   const handleSubmit = async event => {
     event.preventDefault();
     // setErrors(validate(values));
-    console.log(errors);
     if (Object.keys(errors).length === 0) {
       setLoading(true);
       try {
@@ -119,10 +117,8 @@ export default function SignUp() {
       } catch ({response}) {
         var error = response.data.erreur
         Object.keys(error).forEach(function (key) {
-          console.log(error.email);
           toast.error(error[key] + ' 😃')
         });
-        console.log(response)
       }
       setLoading(false);
     }

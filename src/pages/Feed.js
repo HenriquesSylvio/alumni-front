@@ -62,7 +62,6 @@ export default function Feed() {
         try{
             const response = await getFeed(page);
             newPosts = response.data.posts.items;
-            console.log(newPosts);
             setPosts((oldPosts) => [...oldPosts, ...newPosts])
             page += 1
         } catch {

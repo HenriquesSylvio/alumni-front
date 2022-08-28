@@ -46,7 +46,6 @@ export default function WaitingUserTable() {
 
     const getUsers = async () => {
         const response = await getUserWaitingForValidation();
-        console.log(response.data.users);
         setUsers(response.data.users);
     };
 

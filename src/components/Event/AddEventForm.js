@@ -54,11 +54,9 @@ export default function AddEventForm() {
 
         const {name, value} = currentTarget;
 
-        console.log(value);
 
         setValues({...values, [name]: value})
         // setValues({...values, ["date"]: date})
-        console.log(values)
     }
 
     const handleSubmit = async event => {
@@ -66,7 +64,6 @@ export default function AddEventForm() {
         event.preventDefault();
 
         await setErrors(validate(values));
-        console.log(errors);
         if (Object.keys(errors).length === 0) {
             await addEvent(values);
             toast.success('L\'événement a été créer ! 😄')

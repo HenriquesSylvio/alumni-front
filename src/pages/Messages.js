@@ -45,7 +45,6 @@ export default function Messages() {
     const getConversations = async () => {
         const response = await getConversation()
         getLastConversation = response.data.conversations[0].id;
-        console.log(response.data.conversations[0].id);
         setConversations(response.data.conversations)
     };
 
@@ -54,7 +53,6 @@ export default function Messages() {
             setSelectedConversationIndex(conversations[0].id)
         }
         const response = await getMessages(selectedConversationIndex)
-        console.log(response);
         setMessageConversation(response.data.messages)
     };
 

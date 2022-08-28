@@ -53,7 +53,6 @@ export default function SubscriberDiplay({idUser}) {
     const getSubscribers = async () => {
         const response = await getSubscriber(idUser);
         setSubscribers(response.data.users)
-        console.log(response.data.users)
     };
 
     return (

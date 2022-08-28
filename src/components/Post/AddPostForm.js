@@ -41,7 +41,6 @@ export default function AddPostForm() {
         event.preventDefault();
 
         await setErrors(validate(values));
-        console.log(errors);
         if (Object.keys(errors).length === 0) {
             await addPost(values);
             toast.success('La publication a été créée ! 😄')

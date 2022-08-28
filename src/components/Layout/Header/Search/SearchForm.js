@@ -45,7 +45,6 @@ export default function SearchForm() {
             setAlignment(newAlignment);
             typeSearch = newAlignment
         }
-        console.log(typeSearch)
     };
 
     // const clickButtonSearch = event => {

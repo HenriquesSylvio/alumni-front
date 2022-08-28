@@ -66,7 +66,6 @@ export default function Profile() {
     const getProfileUser = async () => {
         const response = await getProfile(params.id)
         setUser(response.data)
-        console.log(response.data);
         userId = response.data.id;
     };
 
@@ -76,10 +75,8 @@ export default function Profile() {
     }
 
     const getPostByUserId = async () => {
-        console.log(userId);
         const response = await getPostByUser(userId)
         setPosts(response.data.posts)
-        console.log(response.data.posts);
     };
 
 

@@ -38,7 +38,6 @@ export default function AdminUserTable() {
 
     const getUsers = async () => {
         const response = await getAdminUser();
-        console.log(response.data.users);
         setUsers(response.data.users);
     };
 

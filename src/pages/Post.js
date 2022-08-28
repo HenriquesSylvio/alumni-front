@@ -74,14 +74,7 @@ export default function Post() {
         setLoadingComment(true);
         // if(loadingComment){
             try{
-                // console.log("teeest")
-
-                // console.log(params.id)
-                // console.log("teeest")
-                // console.log(idPost)
                 const response = await getCommentById(params.id, page)
-                console.log(response.data.posts.items)
-                console.log(page)
                 newComments = response.data.posts.items;
                 setComments((oldComments) => [...oldComments, ...newComments])
                 page += 1
@@ -104,7 +97,6 @@ export default function Post() {
 
     const handleScroll = async (e) =>{
         if(loadingDataComment === false) {
-            console.log("teeetst")
             loadingDataComment = true
             if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
                 await getComment()
@@ -121,15 +113,12 @@ export default function Post() {
             await getPost();
             await getComment();
             await getProfileAuthor();
-            // console.log(idPost)
             setLoading(false);
             loadingDataComment = false
         }
         // idActivePost = params.id
-        // console.log(idActivePost)
 
         getData();
-        console.log(activeProfile);
         window.addEventListener('scroll', handleScroll)
 
         return () => {

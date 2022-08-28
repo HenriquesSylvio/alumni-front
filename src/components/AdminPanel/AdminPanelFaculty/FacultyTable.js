@@ -84,7 +84,6 @@ export default function FacultyTable() {
 
     const getFaculties = async () => {
         const response = await getFaculty();
-        console.log(response.data.faculty);
         setFaculties(response.data.faculty);
     };
 

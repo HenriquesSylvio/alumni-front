@@ -84,7 +84,6 @@ export default function EventTable() {
         const {name, value} = currentTarget;
 
         setValues({...values, [name]: value})
-        console.log(values)
     }
 
     const handleDelete = async (index, idEvent) => {

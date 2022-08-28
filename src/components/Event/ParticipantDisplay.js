@@ -56,9 +56,7 @@ export default function ParticipantDisplay({idPost}) {
     }, []);
 
     const getParticipates = async () => {
-        console.log(isOpenParticipant)
         const response =  await getParticipate(isOpenParticipant);
-        console.log(response.data.participant)
         setParticipants(response.data.participant)
 
     };

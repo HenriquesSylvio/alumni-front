@@ -55,7 +55,6 @@ export default function SubscriptionDisplay({idUser}) {
     const getSubscriptions = async () => {
         const response = await getSubscription(idUser);
         setSubscriptions(response.data.users)
-        console.log(response.data.users)
     };
 
     return (

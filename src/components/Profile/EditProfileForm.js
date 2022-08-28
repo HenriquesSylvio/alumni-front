@@ -42,19 +42,16 @@ export default function EditProfileForm({firstName, lastName, urlProfilePicture,
     const handleSubmit = async event => {
         event.preventDefault();
         setErrors(validate(values));
-        console.log(errors);
         if (Object.keys(errors).length === 0) {
             setLoading(true);
             try {
                 await uploadImage();
-                console.log(values);
                 await EditProfile(values);
                 await deleteImage();
                 await getMyProfile();
                 window.location.reload();
             } catch ({response}) {
                 toast.error('Une erreur est survenue. Veuillez réessayer plus tard ! 😃')
-                console.log(response)
             }
         }
     }

@@ -34,7 +34,6 @@ export default function MainFeed({post, couleur, ...rest}) {
 
     const handleOpen = () => {
         setIsOpenAddComment(true)
-        console.log(post.idPost);
         setIdPost(post.idPost)
     }
     const LikePost = async () => {
@@ -58,7 +57,6 @@ export default function MainFeed({post, couleur, ...rest}) {
     }
 
     const goProfile = () => {
-        console.log(post.idUser);
         navigate(`/profile/${post.idUser}`);
     };
     const handleOpenUserMenu = (event) => {

@@ -62,7 +62,6 @@ export default function Search() {
         setLoadingNextPage(true);
         try{
             const response = await getUsers(page, params.word);
-            console.log(response);
             newData = response.data.data
             setUsers((oldUsers) => [...oldUsers, ...newData])
             page += 1
@@ -72,7 +71,6 @@ export default function Search() {
     }
 
     useEffect( () => {
-        // console.log(JSON.parse(getItem('Profile')).urlProfilePicture)
         setTypeSearch(params.typeSearch)
         const getData = async () => {
             setLoading(true);
@@ -95,7 +93,6 @@ export default function Search() {
         if(loadingData === false) {
             loadingData = true
             if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
-                // console.log("noice")
                 if (params.typeSearch === "post") {
                     await searchPosts()
                 } else if (params.typeSearch === "event"){

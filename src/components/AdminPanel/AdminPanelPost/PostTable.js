@@ -82,7 +82,6 @@ export default function PostTable() {
         const {name, value} = currentTarget;
 
         setValues({...values, [name]: value})
-        console.log(values)
     }
 
     const handleDelete = async (index, idPost) => {
@@ -90,7 +89,6 @@ export default function PostTable() {
 
             setPosts(posts.filter((v, i) => i !== index + (page * 15)))
             await deletePost(idPost);
-            console.log(posts.filter((v, i) => i !== index + (page * 10)))
         }
     }
 

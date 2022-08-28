@@ -49,12 +49,10 @@ export default function ButtonSearch() {
     const {isOpenSearch, setIsOpenSearch} = useContext(OpenModalSearch);
     const handleOpen = () => {
         setIsOpenSearch(true);
-        console.log(isOpenSearch)
     };
 
     const handleClose = () => {
         setIsOpenSearch(false)
-        console.log(isOpenSearch)
     }
     return (
         <Box>
