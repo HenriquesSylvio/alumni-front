@@ -21,6 +21,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import frLocale from 'date-fns/locale/fr';
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
+import Moment from "moment";
+import {useNavigate} from "react-router-dom";
 
 export default function AddEventForm() {
     const [errors, setErrors] = useState({});
@@ -33,6 +35,8 @@ export default function AddEventForm() {
     });
     const [date, setDate] = React.useState(new Date());
     const today = new Date()
+
+    let  navigate = useNavigate();
     // const handleChangeDate = (newDate: Date | null) => {
     //     setDate(newDate);
     // };
@@ -66,7 +70,10 @@ export default function AddEventForm() {
         if (Object.keys(errors).length === 0) {
             await addEvent(values);
             toast.success('L\'événement a été créer ! 😄')
+            // datesEvent.includes(Moment(stringifiedDate,'YYYY-MM-DD').add(+1, "days").format('DD/MM/YYYY 00:00'))
+            // setDatesEvent(date => [...date, values.date]);
             setIsOpenAddPost(false);
+
         }
         setLoadingForm(false);
     };

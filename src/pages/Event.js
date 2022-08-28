@@ -22,7 +22,6 @@ import OpenModalAddPost from "../contexts/OpenModalAddPost";
 import OpenModalParticipant from "../contexts/OpenModalParticipant";
 import ParticipantDisplay from "../components/Event/ParticipantDisplay";
 
-
 const styleResponsiveBox = {
     position: 'absolute',
     width: '100%',
@@ -119,7 +118,6 @@ export default function Event() {
             // console.log(response.data.dates[key].date)
             setDatesEvent(currentDate => [...currentDate, response.data.dates[key].date])
         });
-        console.log(Moment(response.data.dates[0].date,'DD/MM/YYYY').format('DD/MM/YYYY'));
     };
 
     const handleScroll = async (e) =>{

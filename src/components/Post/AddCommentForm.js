@@ -43,7 +43,7 @@ export default function AddCommentForm({idPost}) {
 
         if (Object.keys(errors).length === 0) {
             await addComment(values, idPost);
-            toast.success('Le commentaire a été créer ! 😄')
+            toast.success('Le commentaire a été créé ! 😄')
             setIsOpenAddComment(false)
         }
         setLoadingForm(false);

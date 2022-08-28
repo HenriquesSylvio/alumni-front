@@ -72,19 +72,22 @@ export default function Post() {
 
     const getComment = async () => {
         setLoadingComment(true);
-        try{
-            // console.log("teeest")
+        // if(loadingComment){
+            try{
+                // console.log("teeest")
 
-            // console.log(params.id)
-            // console.log("teeest")
-            // console.log(idPost)
+                // console.log(params.id)
+                // console.log("teeest")
+                // console.log(idPost)
                 const response = await getCommentById(params.id, page)
-            console.log(response.data.posts.items)
+                console.log(response.data.posts.items)
+                console.log(page)
                 newComments = response.data.posts.items;
                 setComments((oldComments) => [...oldComments, ...newComments])
                 page += 1
-        } catch {
-        }
+            } catch {
+            }
+        // }
         setLoadingComment(false);
     }
 
@@ -101,11 +104,10 @@ export default function Post() {
 
     const handleScroll = async (e) =>{
         if(loadingDataComment === false) {
-            console.log(params.id);
+            console.log("teeetst")
             loadingDataComment = true
             if (window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight) {
                 await getComment()
-
             }
             loadingDataComment = false
         }
@@ -113,6 +115,7 @@ export default function Post() {
 
     useEffect( () => {
         const getData = async () => {
+            loadingDataComment = true
             setLoading(true);
             setComments('')
             await getPost();
@@ -120,11 +123,15 @@ export default function Post() {
             await getProfileAuthor();
             // console.log(idPost)
             setLoading(false);
+            loadingDataComment = false
         }
-        idActivePost = params.id
+        // idActivePost = params.id
+        // console.log(idActivePost)
+
         getData();
         console.log(activeProfile);
         window.addEventListener('scroll', handleScroll)
+
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };

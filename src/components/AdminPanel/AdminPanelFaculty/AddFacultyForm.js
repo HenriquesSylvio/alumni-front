@@ -47,7 +47,7 @@ export default function AddFacultyForm() {
         if (Object.keys(errors).length === 0) {
             await addFaculty(values);
             setIsAddFaculty(false);
-            toast.success('La filière a été créer ! 😄');
+            toast.success('La filière a été créée ! 😄');
         }
         setLoadingForm(false)
         }

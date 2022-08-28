@@ -90,6 +90,10 @@ export default function Feed() {
         getData();
 
         window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 
         return (

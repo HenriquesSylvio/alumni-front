@@ -129,9 +129,19 @@ export default function DetailUser({idUser ,firstName, lastName, urlProfilePictu
                 </Typography>
             </Box>
             <CardContent>
-                <Typography color="text" align={"center"}>
-                    {sector} en promo {promo}
-                </Typography>
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Typography color="text" align={"center"} paddingRight={5}>
+                        Filière: {sector}
+                    </Typography>
+                    <Typography color="text" align={"center"}>
+                        Promo: {promo}
+                    </Typography>
+                </Grid>
             </CardContent>
             <Grid
                 container

@@ -44,7 +44,7 @@ export default function AddPostForm() {
         console.log(errors);
         if (Object.keys(errors).length === 0) {
             await addPost(values);
-            toast.success('Le poste a été créer ! 😄')
+            toast.success('La publication a été créée ! 😄')
             setIsOpenAddPost(false);
         }
         setLoadingForm(false);

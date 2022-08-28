@@ -124,7 +124,7 @@ export default function Profile() {
                                {
                                    posts.length ?
                                        <Typography marginLeft={5} variant="h6" component="div" style={{fontFamily: 'Fugaz One'}}>
-                                           Publications récents
+                                           Publications récentes
                                        </Typography>
                                        :
                                        <Typography marginLeft={5} variant="h5" component="div" style={{fontFamily: 'Fugaz One'}}>
