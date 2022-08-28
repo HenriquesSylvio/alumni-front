@@ -83,7 +83,7 @@ export default function Messages() {
         }
         getData();
 
-        setTimeout(() => setRepeater(prevState=>prevState+1), 1000);
+        setTimeout(() => setRepeater(prevState=>prevState+1), 500);
     }, [repeater]);
 
 

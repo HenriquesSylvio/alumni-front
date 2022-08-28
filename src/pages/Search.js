@@ -83,6 +83,7 @@ export default function Search() {
             }
             setLoading(false);
         }
+        setUsers("");
         getData();
 
 
