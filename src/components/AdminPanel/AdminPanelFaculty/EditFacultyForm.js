@@ -20,6 +20,8 @@ import {addFaculty} from "../../../services/AddFacultyApi";
 import validate from "../../../validators/AddFacultyValidator";
 import OpenModalEditFaculty from "../../../contexts/OpenModalEditFaculty";
 import {editFaculty} from "../../../services/EditFacultyApi";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function EditFacultyForm() {
     const {isOpenEditFaculty, setIsEditFaculty} = useContext(OpenModalEditFaculty);
@@ -58,6 +60,9 @@ export default function EditFacultyForm() {
     return (
         <Container component="main">
             <CssBaseline />
+            <IconButton onClick={() => setIsEditFaculty(false)}>
+                <CloseIcon/>
+            </IconButton>
             <Grid
                 container
                 spacing={0}

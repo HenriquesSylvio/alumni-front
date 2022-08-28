@@ -18,6 +18,8 @@ import {CircularProgress} from "@mui/material";
 import {addEvent} from "../../services/AddEventApi";
 import OpenModalSendMessage from "../../contexts/OpenModalSendMessage";
 import {sendMessage} from "../../services/SendMessageApi";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
 export default function SendMessageForm({idUser}) {
     const [errors, setErrors] = useState({});
@@ -53,6 +55,9 @@ export default function SendMessageForm({idUser}) {
     return (
         <Container component="main">
             <CssBaseline />
+            <IconButton onClick={() => setIsOpenSendMessage(false)}>
+                <CloseIcon/>
+            </IconButton>
             <Grid
                 container
                 spacing={0}

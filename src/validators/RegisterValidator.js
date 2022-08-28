@@ -5,8 +5,16 @@ export default function RegisterValidator(values) {
         errors.first_name = 'Le prénom est obligatoire'
     }
 
+    if (/\d/.test(values.first_name)){
+        errors.first_name = 'Le prénom ne peut pas contenir de chiffre'
+    }
+
     if (!values.last_name){
         errors.last_name = 'Le nom est obligatoire'
+    }
+
+    if (/\d/.test(values.last_name)){
+        errors.last_name = 'Le nom ne peut pas contenir de chiffre'
     }
 
     if (!values.email){
@@ -19,8 +27,13 @@ export default function RegisterValidator(values) {
         errors.promo = 'La promo est obligatoire.'
     }
 
+    if (!values.faculty.id) {
+        errors.faculty = 'La filière est obligatoire.'
+    }
+    // console.log(!values.faculty.id);
+
     if (!values.username) {
-        errors.username = 'Le prénom est obligatoire.';
+        errors.username = 'Le nom d\'utilisateur est obligatoire.';
     }
 
     if (!values.password) {

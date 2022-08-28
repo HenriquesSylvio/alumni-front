@@ -49,7 +49,7 @@ export default function SideMenu() {
 
     const list = (anchor) => (
         <Box
-            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250  }}
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
@@ -71,14 +71,14 @@ export default function SideMenu() {
                         <ListItemText primary="Evenements" />
                     </ListItemButton>
                 </ListItem>
-                <ListItem disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <WorkIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Emplois" />
-                    </ListItemButton>
-                </ListItem>
+                {/*<ListItem disablePadding>*/}
+                {/*    <ListItemButton>*/}
+                {/*        <ListItemIcon>*/}
+                {/*            <WorkIcon />*/}
+                {/*        </ListItemIcon>*/}
+                {/*        <ListItemText primary="Emplois" />*/}
+                {/*    </ListItemButton>*/}
+                {/*</ListItem>*/}
                 <ListItem disablePadding>
                     <ListItemButton onClick={() => navigate(`/messages`)}>
                         <ListItemIcon>

@@ -15,6 +15,8 @@ import {toast} from "react-toastify";
 import {addComment} from "../../services/AddCommentApi";
 import OpenModalAddComment from "../../contexts/OpenModalAddComment";
 import {CircularProgress} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function AddCommentForm({idPost}) {
     const {setIsOpenAddComment} = useContext(OpenModalAddComment);
@@ -41,7 +43,7 @@ export default function AddCommentForm({idPost}) {
 
         if (Object.keys(errors).length === 0) {
             await addComment(values, idPost);
-            toast.success('Le commentaire a été créer ! 😄')
+            toast.success('Le commentaire a été créé ! 😄')
             setIsOpenAddComment(false)
         }
         setLoadingForm(false);
@@ -50,6 +52,9 @@ export default function AddCommentForm({idPost}) {
     return (
         <Container component="main">
             <CssBaseline />
+            <IconButton onClick={() => setIsOpenAddComment(false)}>
+                <CloseIcon/>
+            </IconButton>
             <Grid
                 container
                 spacing={0}

@@ -7,7 +7,7 @@ import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import {logout} from "../../../services/AuthApi";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import Auth from "../../../contexts/Auth";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,6 +15,9 @@ import {useNavigate, withRouter } from "react-router-dom";
 import {Link} from "@mui/material";
 import {Navigate} from "react-router";
 import ActiveConnectedUser from "../../../contexts/ActiveConnectedUser";
+import {getItem} from "../../../services/LocaleStorage";
+import MessageRight from "../../Message/MessageRight";
+import MessageLeft from "../../Message/MessageLeft";
 
 export default function IconProfilePicture() {
     let navigate = useNavigate();
@@ -22,6 +25,8 @@ export default function IconProfilePicture() {
     const { setIsAuthenticated } = useContext(Auth);
     const { setActiveUser } = useContext(ActiveConnectedUser)
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    // const [img] = React.useState(JSON.parse(getItem('Profile')).urlProfilePicture)
+    // const [activeProfile] = useState(JSON.parse(getItem('Profile')));
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -39,11 +44,25 @@ export default function IconProfilePicture() {
     }
     return(
         <Box component="span"  sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
-                    <Avatar src="/static/images/avatar/2.jpg" />
-                </IconButton>
-            </Tooltip>
+            {/*{(getItem('Profile')).urlProfilePicture === null && (*/}
+            {/*    <Tooltip title="Open settings">*/}
+            {/*        <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>*/}
+            {/*            <Avatar src={JSON.parse(getItem('Profile')).urlProfilePicture} />*/}
+            {/*            /!*<Avatar />*!/*/}
+            {/*        </IconButton>*/}
+            {/*    </Tooltip>*/}
+            {/*    ) || null*/}
+            {/*}*/}
+            {/*{(getItem('Profile')).urlProfilePicture === null && (*/}
+                <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
+                        <Avatar src={JSON.parse(getItem('Profile')).urlProfilePicture} />
+                        {/*<Avatar />*/}
+                    </IconButton>
+                </Tooltip>
+            {/*) || null*/}
+            {/*}*/}
+
             <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"

@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -18,6 +18,11 @@ import OpenModalAddPost from "../../contexts/OpenModalAddPost";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers'
+import frLocale from 'date-fns/locale/fr';
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import Moment from "moment";
+import {useNavigate} from "react-router-dom";
 
 export default function AddEventForm() {
     const [errors, setErrors] = useState({});
@@ -26,10 +31,12 @@ export default function AddEventForm() {
     const [values, setValues] = useState({
         title: "",
         description: "",
-        date: new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear()
+        date: (new Date().getDate() + 1) + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear() + "00:00"
     });
     const [date, setDate] = React.useState(new Date());
+    const today = new Date()
 
+    let  navigate = useNavigate();
     // const handleChangeDate = (newDate: Date | null) => {
     //     setDate(newDate);
     // };
@@ -37,6 +44,11 @@ export default function AddEventForm() {
     function handleClick() {
         setErrors(validate(values));
     }
+
+    useEffect(() => {
+        // console.log((new Date().getMonth() + 1) );
+        setDate(today)
+    }, []);
 
     const handleChange = ({currentTarget}) => {
 
@@ -58,16 +70,20 @@ export default function AddEventForm() {
         if (Object.keys(errors).length === 0) {
             await addEvent(values);
             toast.success('L\'événement a été créer ! 😄')
+            // datesEvent.includes(Moment(stringifiedDate,'YYYY-MM-DD').add(+1, "days").format('DD/MM/YYYY 00:00'))
+            // setDatesEvent(date => [...date, values.date]);
             setIsOpenAddPost(false);
+
         }
         setLoadingForm(false);
     };
 
-
-
     return (
         <Container component="main">
             <CssBaseline />
+            <IconButton onClick={() => setIsOpenAddPost(false)}>
+                <CloseIcon/>
+            </IconButton>
             <Grid
                 container
                 spacing={0}
@@ -100,9 +116,15 @@ export default function AddEventForm() {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={frLocale}>
                                 <DatePicker
-                                    minDate={new Date()}
+                                    minDate={today.setDate(today.getDate() + 1)}
+                                    // minDate={() => {
+                                    //     // const dateFormat = new Date(newDate)
+                                    //     const date = new Date();
+                                    //     return date.setDate(date.getDate() + 1);
+                                    // }
+                                    // }
                                     label="Date de l'événement"
                                     value={date}
                                     onChange={(newDate) => {
@@ -113,7 +135,7 @@ export default function AddEventForm() {
                                         // console.log(dateFormat.getMonth())
                                         // console.log(dd + '/' + mm + '/' + yyyy);
                                         setDate(newDate)
-                                        setValues({...values, ["date"]: dd + '/' + mm + '/' + yyyy })
+                                        setValues({...values, ["date"]: dd + '/' + mm + '/' + yyyy +" 00:00"})
                                     }
                                     }
                                     renderInput={(params) => <TextField {...params} fullWidth required disabled={loadingForm}/>}

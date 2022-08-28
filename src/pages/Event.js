@@ -15,6 +15,35 @@ import { PickersDay, PickersDayProps } from "@mui/x-date-pickers/PickersDay";
 import Moment from 'moment';
 import getAllDateEvent from "../services/GetAllDateEventApi";
 import {getItem} from "../services/LocaleStorage";
+import frLocale from "date-fns/locale/fr";
+import Backdrop from "@mui/material/Backdrop";
+import AddEventForm from "../components/Event/AddEventForm";
+import OpenModalAddPost from "../contexts/OpenModalAddPost";
+import OpenModalParticipant from "../contexts/OpenModalParticipant";
+import ParticipantDisplay from "../components/Event/ParticipantDisplay";
+
+const styleResponsiveBox = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    display: { xs: 'flex', md: 'none' }
+};
+
+const styleBox = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 'auto',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+    display: { xs: 'none', md: 'flex' },
+};
 
 export default function Event() {
     const [activeProfile] = useState(JSON.parse(getItem('Profile')));
@@ -25,6 +54,7 @@ export default function Event() {
     const [loadingPage, setLoading] = useState(true);
     const [dateCalendar, setDateCalendar] = React.useState(new Date());
     const [datesEvent, setDatesEvent] = useState([]);
+    const {isOpenParticipant, setIsOpenParticipant} = useContext(OpenModalParticipant);
 
     // let datesEvent = []
     let date = new Date();
@@ -42,7 +72,10 @@ export default function Event() {
         const stringifiedDate = date.toISOString().slice(0, 10);
         // console.log(datesEvent)
         // Moment().add()
-        if (datesEvent.includes(Moment(stringifiedDate).add(+1, "days").format('DD/MM/YYYY'))) {
+        // console.log(stringifiedDate);
+        // console.log(Moment(syr,'DD-MM
+        // -YYYY').add(+1, "days").format('DD/MM/YYYY 00:00'))
+        if (datesEvent.includes(Moment(stringifiedDate,'YYYY-MM-DD').add(+1, "days").format('DD/MM/YYYY 00:00'))) {
             return <PickersDay {...pickersDayProps} />;
         }
         return <PickersDay {...pickersDayProps} disabled/>;
@@ -51,11 +84,12 @@ export default function Event() {
     const getEventsComing = async () => {
         setLoadingEvent(true);
         try{
-            console.log(Moment(date).format('YYYY-MM-DD'));
+            // console.log(Moment(date).format('YYYY-MM-DD'));
             const response = await getEvents(page, Moment(date).format('YYYY-MM-DD'));
             newEvents = response.data.data;
             setEvents((oldEvents) => [...oldEvents, ...newEvents])
             page += 1
+            console.log(response.data.data)
         } catch {
         }
         setLoadingEvent(false);
@@ -67,6 +101,8 @@ export default function Event() {
         date = newDate
         setEvents('')
         await getEventsComing()
+        // console.log(newDate)
+        // console.log(today.getTime())
         if (date.getTime() > today.getTime()) {
             setCanInterateEvent(false)
         } else {
@@ -79,7 +115,7 @@ export default function Event() {
         const response = await getAllDateEvent();
         Object.keys(response.data.dates).forEach(function(key) {
             // arr.push(response.data.dates[key]);
-            console.log(response.data.dates[key].date)
+            // console.log(response.data.dates[key].date)
             setDatesEvent(currentDate => [...currentDate, response.data.dates[key].date])
         });
     };
@@ -94,17 +130,19 @@ export default function Event() {
         }
     }
 
+    const handleClose = () => {
+        setIsOpenParticipant(0)
+    }
 
     useEffect(() => {
         const getData = async () => {
             setLoading(true);
             await getEventsComing();
             await getDateEvent();
-            console.log("dsddssqdqsdqdsqsd")
             setLoading(false);
         }
         getData();
-        console.log("test2")
+
         window.addEventListener('scroll', handleScroll)
     }, []);
 
@@ -136,10 +174,10 @@ export default function Event() {
                         lastName={activeProfile.lastName}
                         urlProfilePicture={activeProfile.urlProfilePicture}
                         nbSubscriber={activeProfile.followerNumber}
-                        nbPosts='5'
+                        nbPosts={activeProfile.nbPosts}
                         nbSubscription={activeProfile.followingNumber}
                         promo={activeProfile.promo}
-                        sector='Développeur'
+                        sector={activeProfile.faculty_label}
                         biography={activeProfile.biography}
                         idUser={activeProfile.id}
                         subscribe={activeProfile.subcribe}
@@ -187,7 +225,7 @@ export default function Event() {
                 </Grid>
                 <Grid item xs sx={{ display: { xs: 'none', md: 'block' }}}>
                     <Card>
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={frLocale}>
                             <CalendarPicker date={dateCalendar} renderDay={customDayRenderer} onChange={(newDate) => ChangeDate(newDate)} />
                         </LocalizationProvider>
                     </Card>
@@ -196,6 +234,29 @@ export default function Event() {
             </Grid>
 
             <ButtonAddEvent/>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={isOpenParticipant !== 0}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={isOpenParticipant !== 0}>
+                    <Box>
+                        <Box sx={styleBox}>
+                            <ParticipantDisplay/>
+                        </Box>
+                        <Box sx={styleResponsiveBox}>
+                            <ParticipantDisplay/>
+                        </Box>
+                    </Box>
+
+                </Fade>
+            </Modal>
         </Box>
             )}
 

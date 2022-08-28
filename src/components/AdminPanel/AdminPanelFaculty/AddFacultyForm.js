@@ -18,6 +18,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import OpenModalAddFaculty from "../../../contexts/OpenModalAddFaculty";
 import {addFaculty} from "../../../services/AddFacultyApi";
 import validate from "../../../validators/AddFacultyValidator";
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from "@mui/material/IconButton";
 
 export default function AddFacultyForm() {
     const {isOpenAddFaculty, setIsAddFaculty} = useContext(OpenModalAddFaculty);
@@ -45,7 +47,7 @@ export default function AddFacultyForm() {
         if (Object.keys(errors).length === 0) {
             await addFaculty(values);
             setIsAddFaculty(false);
-            toast.success('La filière a été créer ! 😄');
+            toast.success('La filière a été créée ! 😄');
         }
         setLoadingForm(false)
         }
@@ -54,6 +56,9 @@ export default function AddFacultyForm() {
     return (
         <Container component="main">
             <CssBaseline />
+            <IconButton onClick={() => setIsAddFaculty(false)}>
+                <CloseIcon/>
+            </IconButton>
             <Grid
                 container
                 spacing={0}

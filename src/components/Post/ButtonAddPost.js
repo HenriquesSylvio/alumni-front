@@ -39,8 +39,8 @@ const styleResponsiveBox = {
 const styleButton = {
     margin: 0,
     top: 'auto',
-    right: 100,
-    bottom: 100,
+    right: 50,
+    bottom: 65,
     left: 'auto',
     position: 'fixed',
 };

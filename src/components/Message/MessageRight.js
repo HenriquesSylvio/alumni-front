@@ -40,12 +40,13 @@ const MessageOrange = styled('div')(() => ({
     }
 ));
 
-export default function MessageRight({message, firstName, lastName}) {
+export default function MessageRight({message, time}) {
     return (
         <Box display="flex" justifyContent="flex-end">
             <MessageOrange>
                 <Box>
                     <Typography padding="0" margin="0" style={{ wordWrap: "break-word" }}>{message}</Typography>
+                    <Box position="absolute" fontSize=".85em" fontWeight="300" marginTop="10px" bottom="-3px" right="5px">{time}</Box>
                 </Box>
             </MessageOrange>
         </Box>
