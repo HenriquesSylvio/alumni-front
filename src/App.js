@@ -53,8 +53,8 @@ const App = () => {
     const [isOpenAuth, setIsOpenAuth] = useState(false);
     const [tabIndexAuth, setTabIndexAuth] = useState("1");
     const [isOpenEditProfile, setIsOpenEditProfile] = useState(false);
-    const [isOpenSubscriber, setIsOpenSubscriber] = useState(false);
-    const [isOpenSubscription, setIsOpenSubscription] = useState(false);
+    const [isOpenSubscriber, setIsOpenSubscriber] = useState(0);
+    const [isOpenSubscription, setIsOpenSubscription] = useState(0);
     const [isOpenParticipant, setIsOpenParticipant] = useState(0);
 
     return (

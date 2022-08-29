@@ -23,13 +23,14 @@ const styleBox = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     // width: 'auto',
-    minWidth: '550px',
+    minWidth: '600px',
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
     borderRadius: 2,
     display: { xs: 'none', md: 'flex' },
 };
+
 const styleResponsiveBox = {
     position: 'absolute',
     width: '100%',
@@ -47,19 +48,19 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
     //     console.log(idUser)
     // }
     const handleClickSubscriber = () => {
-        setIsOpenSubscriber(true)
+        setIsOpenSubscriber(idUser)
     }
 
     const handleCloseSubscriber = () => {
-        setIsOpenSubscriber(false)
+        setIsOpenSubscriber(0)
     }
 
     const handleClickSubscription = () => {
-        setIsOpenSubscription(true)
+        setIsOpenSubscription(idUser)
     }
 
     const handleCloseSubscription = () => {
-        setIsOpenSubscription(false)
+        setIsOpenSubscription(0)
     }
 
 
@@ -152,7 +153,7 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                     <Modal
                         aria-labelledby="transition-modal-title"
                         aria-describedby="transition-modal-description"
-                        open={isOpenSubscriber}
+                        open={isOpenSubscriber === idUser}
                         onClose={handleCloseSubscriber}
                         closeAfterTransition
                         BackdropComponent={Backdrop}
@@ -161,9 +162,9 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                         }}
                     >
                         {/*<Fade>*/}
-                        <Fade in={isOpenSubscriber}>
+                        <Fade in={isOpenSubscriber === idUser}>
                             <Box>
-                                <Paper sx={styleBox}>
+                                <Paper sx={styleBox} >
                                     <SubscriberDiplay idUser={idUser}/>
                                 </Paper>
                                 <Paper sx={styleResponsiveBox}>
@@ -176,7 +177,7 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
-                    open={isOpenSubscription}
+                    open={isOpenSubscription === idUser}
                     onClose={handleCloseSubscription}
                     closeAfterTransition
                     BackdropComponent={Backdrop}
@@ -185,7 +186,7 @@ export default function StatUser({nbSubscriber, nbSubscription, nbPosts, idUser}
                     }}
                 >
                     {/*<Fade>*/}
-                    <Fade in={isOpenSubscription}>
+                    <Fade in={isOpenSubscription === idUser}>
                         <Box>
                             <Paper sx={styleBox}>
                                 <SubscriptionDisplay idUser={idUser}/>

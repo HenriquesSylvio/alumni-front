@@ -59,7 +59,7 @@ export default function SubscriptionDisplay({idUser}) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main">
                 <CssBaseline />
                 <IconButton onClick={() => setIsOpenSubscription(false)}>
                     <CloseIcon/>

@@ -57,7 +57,7 @@ export default function SubscriberDiplay({idUser}) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main">
                 <CssBaseline />
                 <IconButton onClick={() => setIsOpenSubscriber(false)}>
                     <CloseIcon/>

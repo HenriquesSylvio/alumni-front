@@ -1,6 +1,6 @@
 import React from "react";
 
 export default React.createContext({
-    isOpenSubscription: false,
+    isOpenSubscription: 0,
     setIsOpenSubscription: value => {}
 });

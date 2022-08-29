@@ -66,7 +66,7 @@ export default function AddEventForm() {
         await setErrors(validate(values));
         if (Object.keys(errors).length === 0) {
             await addEvent(values);
-            toast.success('L\'événement a été créer ! 😄')
+            toast.success('L\'événement a été créé ! 😄')
             // datesEvent.includes(Moment(stringifiedDate,'YYYY-MM-DD').add(+1, "days").format('DD/MM/YYYY 00:00'))
             // setDatesEvent(date => [...date, values.date]);
             setIsOpenAddPost(false);
