@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor/android": "^4.1.0",
+    "@capacitor/cli": "^4.1.0",
+    "@capacitor/core": "^4.1.0",
+    "@capacitor/ios": "^4.1.0",
     "@date-io/date-fns": "^2.14.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.8.1",
